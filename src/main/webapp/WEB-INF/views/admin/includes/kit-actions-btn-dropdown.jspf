@@ -1,0 +1,12 @@
+<div class="pull-right dropdown">
+  <button class="btn btn-xs btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true">
+    <span class="glyphicon glyphicon-cog"></span> Actions
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+    <li><a href="<c:url value="/admin/edit"/>?id=${kit.id}"><span class="glyphicon glyphicon-pencil"></span> Edit Sexual Assault Kit</a></li>
+    <li><a href="<c:url value="/timeline"/>?serialNumber=${kit.serialNumber}"><i class="fa fa-clock-o font14" aria-hidden="true"></i> Kit Timeline</a></li>
+    <li><a href="<c:url value="/admin/manageEvents"/>?kitId=${kit.id}"><span class="glyphicon glyphicon-wrench"></span> Manage Kit Timeline</a></li>
+    <li><a href="<c:url value="/admin/viewAudit"/>?kitId=${kit.id}"><span class="glyphicon glyphicon-open-file"></span> Admin Change Log</a></li>
+  </ul>
+</div>

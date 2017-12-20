@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="form-group col-sm-6">
+    <label class="control-label ">Requesting Law Enforcement Agency</label>
+    <cjisTags:select name="verifiedRequestingLeAgencyId" from="${leOrgs}" value="${kit.labDetails.requestingLeAgency.id}" emptyOption="" cssClass="form-control" optionKey="id" optionValue="name"  />
+  </div>
+  <div class="form-group col-sm-3">
+    <label class="control-label ">Case Number</label>
+    <input type="text" class="form-control" name="labDetails.caseNumber" value="${kit.labDetails.caseNumber}"/>
+  </div>
+  <div class="form-group col-sm-3">
+    <label class="control-label ">Date Completed</label>
+    <input type="text" class="form-control hasDatePicker" name="labDetails.dateCompleted" value="<cjisTags:fmtTemporal value="${kit.labDetails.dateCompleted}" pattern="${dateFormat}" />"/>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-3">
+    <div class="form-group">
+      <label class="control-label">DNA Database Entry</label>
+      <div class="radio radio-primary">
+        <label class="radio-inline">
+          <input type="radio" name="labDetails.dnaDatabaseEntry" data-show="[data-dnaDatabase]" value="YES" ${kit.labDetails.dnaDatabaseEntry == 'YES' ? 'checked' : ''}/> Yes
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="labDetails.dnaDatabaseEntry" data-hide="[data-dnaDatabase]" value="NO" ${kit.labDetails.dnaDatabaseEntry == 'NO' ? 'checked' : ''}/> No
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="labDetails.dnaDatabaseEntry" data-hide="[data-dnaDatabase]" value="NA" ${kit.labDetails.dnaDatabaseEntry == 'NA' ? 'checked' : ''}/> N/A
+        </label>
+      </div>
+    </div>
+  </div>
+  <div data-dnaDatabase class="<c:if test="${kit.labDetails.dnaDatabaseEntry != 'YES'}">hidden</c:if>">
+    <div class="form-group col-sm-3">
+      <label class="required">DNA Database Entry Date</label>
+      <input type="text" data-required class="form-control hasDatePicker" name="labDetails.dnaDatabaseEntryDate" value="<cjisTags:fmtTemporal value="${kit.labDetails.dnaDatabaseEntryDate}" pattern="${dateFormat}" />"/>
+    </div>
+    <div class="form-group col-sm-3">
+      <label>DNA Database Hit Date</label>
+      <input type="text" data-always-editable="true" class="form-control hasDatePicker" name="labDetails.dnaDatabaseHitDate" value="<cjisTags:fmtTemporal value="${kit.labDetails.dnaDatabaseHitDate}" pattern="${dateFormat}" />"/>
+    </div>
+    <div class="form-group col-sm-3">
+      <label>DNA Database Expunged Date</label>
+      <input type="text" data-always-editable="true" class="form-control hasDatePicker" name="labDetails.expungedDate" value="<cjisTags:fmtTemporal value="${kit.labDetails.expungedDate}" pattern="${dateFormat}" />"/>
+    </div>
+  </div>
+</div>

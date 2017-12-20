@@ -1,0 +1,39 @@
+<div id="agreeModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Agree With Non-Submission</h4>
+      </div>
+      
+      <form action="<c:url value='/legal/agree'/>" method="POST">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <input type="hidden" name="kitId" value="${kit.id}"/>
+        
+        <div class="modal-body">
+         
+          <div class="row">
+            <div class="col-sm-12 top10">
+              <p>By clicking <strong>Agree</strong>, your name will be logged as 
+                the deciding attorney determining that this kit <b>does not</b> meet submission
+                criteria.  You are agreeing with the law enforcement agency that this kit
+                <b>should not be submitted</b> to the lab for further analysis.</p>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-sm-12 top10">
+              <label class="required">Notes</label>
+              <textarea name="notes" class="form-control">${kit.legalDetails.prosecutorNotes}</textarea>
+            </div>
+          </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Agree</button>
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

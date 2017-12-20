@@ -1,0 +1,57 @@
+<div class="row top5">
+  <c:choose>
+    <c:when test="${kitsInLab == null || kitsInLab.getTotalElements() < 1}">
+      <div class="col-xs-12 font12">
+        There are currently no sexual assault kits at the lab.
+      </div>
+    </c:when>
+    <c:otherwise>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th><t:columnsort sort="${kitsInLab.sort}" sortParameterName="inLabSort" propertyName="serialNumber" text="Serial #"/></th>
+          <th><t:columnsort sort="${kitsInLab.sort}" sortParameterName="inLabSort" propertyName="leCaseNumber" text="LE Case #"/></th>
+          <th><t:columnsort sort="${kitsInLab.sort}" sortParameterName="inLabSort" propertyName="eventDate" text="Received On"/></th>
+          <th><t:columnsort sort="${kitsInLab.sort}" sortParameterName="inLabSort" propertyName="actor" text="Received By"/></th>
+          <th class="noSort"></th>
+        </tr>
+        </thead>
+        <tbody>
+          <c:forEach var="kit" items="${kitsInLab.content}">
+            <tr>
+              <td>
+                <a href="<c:url value="/law-enforcement/view"/>?id=${kit.id}">${kit.serialNumber}</a>
+              </td>
+              <td>
+                ${kit.leDetails.caseNumber}
+              </td>
+              <td>
+                <cjisTags:fmtTemporal value="${kit.currentCustody.eventDate}" pattern="${dateFormat}" />
+              </td>
+              <td>
+                ${kit.currentCustody.actor}
+              </td>
+              <td style="width: 5%">
+                <div class="dropdown">
+                  <a href="javascript://nop/" data-toggle="dropdown"><span class="font18 glyphicon glyphicon-option-horizontal"></span></a>
+                  <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="<c:url value="/timeline"/>?serialNumber=${kit.serialNumber}"><i class="fa fa-clock-o font14" aria-hidden="true"></i> Kit Timeline</a></li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          </c:forEach>
+        </tbody>
+      </table>
+                  
+      <c:if test="${kitsInLab.size < kitsInLab.totalElements}">
+        <div class="col-sm-12">
+          <div class="pull-right">
+            <cjisTags:pager resultsGroupSize="5" pageVarName="inLabPage" page="${kitsInLab.number}" resultsPerPage="${kitsInLab.size}" totalListSize="${kitsInLab.totalElements}" showInfo="true"/>
+          </div>
+        </div>
+      </c:if>
+                  
+    </c:otherwise>
+  </c:choose>  
+</div>

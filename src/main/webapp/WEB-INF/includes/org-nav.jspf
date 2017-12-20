@@ -1,0 +1,36 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="cjisTags" uri="http://isp.idaho.gov/jsp/cjisTags"%>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="<c:url value="/"/>">Sexual Assault Kit Tracking</a>
+      <cjisTags:message key="test.mode" var="testMode"/>
+      <c:if test="${testMode}"><img id="test-image" class="top5 right10" src="<c:url value='/assets/images/test-banner-small.png'/>" alt="TEST" height="35" width="43"/></c:if>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="${pageContext.request.requestURI.contains("/dashboard") ? 'active' : ''}"><a href="<c:url value="/"/>">Home</a></li>
+        <li class="${pageContext.request.requestURI.endsWith("search.jsp") ? 'active' : ''}"><a href="<c:url value="/search"/>">Search</a></li>
+        <c:choose>
+          <c:when test="${user.isOrganizationAdmin()}">
+            <li class="${pageContext.request.requestURI.endsWith("organization-form.jsp") ? 'active' : ''}"><a href="<c:url value="/organization/${organization.id}"/>">Manage</a></li>
+          </c:when>
+          <c:otherwise>
+            <li class="${pageContext.request.requestURI.endsWith("edit-user.jsp") ? 'active' : ''}"><a href="<c:url value="/manageAccount"/>">Manage</a></li>
+          </c:otherwise>
+        </c:choose>
+        <li class="${pageContext.request.requestURI.endsWith("help.jsp") ? 'active' : ''}"><a href="<c:url value='/help'/>">Help</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="<c:url value="/logout"/>">Logout</a></li>
+      </ul>
+      <%@include file="serial-number-search.jspf" %>
+    </div>
+  </div>
+</nav>

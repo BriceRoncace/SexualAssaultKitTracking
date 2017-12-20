@@ -1,0 +1,53 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="cjisTags" uri="http://isp.idaho.gov/jsp/cjisTags"%>
+<form id="saveOrgForm" action="<c:url value="/organization/save"/>" method="POST">
+  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+  <input type="hidden" name="orgId" value="${organization.id}"/>
+  <div class="panel panel-primary">
+    <div class="panel-heading">Info</div>
+    <div class="panel-body row">
+      <div class="col-xs-6">
+        <div class="checkbox">
+          <label><cjisTags:checkbox id="orgEnabled" name="enabled" checked="${organization.enabled || organization.id == null}"/> Enabled</label>
+        </div>
+      </div>
+      <div class="col-xs-6">
+        <div class="checkbox">
+          <label><cjisTags:checkbox id="orgAllowLdapUsers" name="allowLdapUsers" checked="${organization.allowLdapUsers == true}"/> Allow LDAP Users</label>
+        </div>
+      </div>  
+      <div class="col-xs-12">
+        <div class="form-group">
+          <label class="control-label required">Name</label>
+          <input type="text" class="form-control" name="name" data-required data-focus-if-empty value="${organization.name}"/>
+        </div>
+      </div>
+      <div class="col-xs-6">
+        <div class="form-group">
+          <label class="control-label required">Type</label>
+          <cjisTags:select id="org-type" from="${orgTypes}" name="type" optionValue="label" value="${organization.type}" emptyOption="" cssClass="form-control" dataAttributes="data-required"/>
+        </div>
+      </div>
+      <div class="col-xs-6">
+        <div class="form-group">
+          <label class="control-label required">Jurisdiction</label>
+          <cjisTags:select from="${jurisdictions}" name="jurisdictionId" optionKey="id" optionValue="displayName" value="${organization.jurisdiction.id}" emptyOption="" cssClass="form-control" dataAttributes="data-required"/>
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <div class="form-group">
+          <label class="control-label required">Passkey</label>
+          <div class="input-group">
+            <input id="passkeyInput" type="text" readonly="readonly" data-required class="form-control" name="passkey" value="${organization.passkey}"/>
+            <input id="origPasskey" type="hidden" value="${organization.passkey}"/>
+            <span class="input-group-btn"><button id="changePasskey" type="button" class="btn btn-default">Change</button></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel-footer text-right">
+      <a href="<c:url value="/admin/dashboard"/>" class="btn btn-default">Cancel</a>
+      <button id="saveOrgBtn" type="button" class="btn btn-primary">Save</button>
+    </div>
+  </div>
+</form>

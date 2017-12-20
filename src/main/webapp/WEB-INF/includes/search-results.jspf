@@ -1,0 +1,51 @@
+<c:choose>
+  <c:when test="${page != null && page.totalElements > 0}">
+    <div class="pull-right">
+      <cjisTags:pager resultsGroupSize="5" pageVarName="page" page="${page.number}" resultsPerPageVarName="size" resultsPerPage="${page.size}" totalListSize="${page.totalElements}" showInfo="true"/>
+    </div>
+
+    <table class="table table-condensed table-hover">
+      <thead>
+        <tr>
+          <th><t:columnsort sort="${page.sort}" propertyName="serialNumber" text="Serial #"/></th>
+          <th><t:columnsort sort="${page.sort}" propertyName="currentAssignment.name" text="Current Organization"/></th>
+          <th><t:columnsort sort="${page.sort}" propertyName="medicalDetails.collectionDate" text="Collected"/></th>
+          <th><t:columnsort sort="${page.sort}" propertyName="labDetails.dateCompleted" text="Analyzed"/></th>
+          <th><t:columnsort sort="${page.sort}" propertyName="lastModified" text="Last Modified"/></th>
+          <th><t:columnsort sort="${page.sort}" propertyName="lastModifiedBy" text="Last Modified By"/></th>
+          <th>Most Recent Event</th>
+          <th/>
+        </tr>
+      </thead>
+      <tbody>
+        <c:forEach var="kit" items="${page.content}">
+          <tr>
+            <td><a href="<c:url value='/${user.type.label}/view'/>?id=${kit.id}">${kit.serialNumber}</a></td>
+            <td><c:out value="${kit.currentAssignment}"/></td>
+          <td><cjisTags:fmtTemporal value="${kit.medicalDetails.collectionDate}" pattern="${dateFormat}"/></td>
+          <td><cjisTags:fmtTemporal value="${kit.labDetails.dateCompleted}" pattern="${dateFormat}"/></td>
+          <td><cjisTags:fmtTemporal value="${kit.lastModified}" pattern="${dateFormat}"/></td>          
+          <td><c:out value="${kit.lastModifiedBy}"/></td>
+          <td><c:out value="${kit.currentCustody.prettyPrint(false)}"/></td>
+          <td style="width: 5%">
+            <div class="dropdown">
+              <a href="javascript://nop/" data-toggle="dropdown"><span class="font18 glyphicon glyphicon-option-horizontal"></span></a>
+              <ul class="dropdown-menu dropdown-menu-right">
+                <li><a href="<c:url value='/${user.type.label}/view'/>?id=${kit.id}"><span class="glyphicon glyphicon-pencil"></span> Edit</a></li>
+                <li><a href="<c:url value='/timeline'/>?serialNumber=${kit.serialNumber}"><i class="fa fa-clock-o font14" aria-hidden="true"></i> Kit timeline</a></li>
+              </ul>
+            </div>
+          </td>
+          </tr>
+        </c:forEach>
+      </tbody>
+    </table>
+
+    <div class="pull-right">
+      <cjisTags:pager resultsGroupSize="5" pageVarName="page" page="${page.number}" resultsPerPageVarName="size" resultsPerPage="${page.size}" totalListSize="${page.totalElements}" showInfo="true"/>
+    </div>
+  </c:when>
+  <c:otherwise>
+    <p>No results found.</p>
+  </c:otherwise>
+</c:choose>

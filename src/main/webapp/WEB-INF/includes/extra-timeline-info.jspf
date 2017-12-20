@@ -1,0 +1,42 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:if test="${kit.medicalDetails.collectionDate != null || kit.labDetails.dnaDatabaseHitDate != null || kit.labDetails.expungedDate != null}">
+  <div class="alert-info">
+    <table class="table no-border-first table-condensed table-nonfluid">
+      <c:if test="${kit.medicalDetails.collectionDate != null}">
+        <tr>
+          <td>Collection Date</td>
+          <td><cjisTags:fmtTemporal value="${kit.medicalDetails.collectionDate}" pattern="${dateFormat}" /></td>
+        </tr>
+      </c:if>
+        
+      <c:if test="${kit.labDetails.dnaDatabaseEntryDate != null}">
+        <tr>
+          <td>DNA Database Entry Date</td>
+          <td><cjisTags:fmtTemporal value="${kit.labDetails.dnaDatabaseEntryDate}" pattern="${dateFormat}" /></td>
+        </tr>
+      </c:if>
+
+      <c:if test="${kit.labDetails.dnaDatabaseHitDate != null}">
+        <tr>
+          <td>DNA Database Hit Date</td>
+          <td><cjisTags:fmtTemporal value="${kit.labDetails.dnaDatabaseHitDate}" pattern="${dateFormat}" /></td>
+        </tr>
+      </c:if>
+
+      <c:if test="${kit.labDetails.expungedDate != null}">
+        <tr>
+          <td>DNA Database Expunged Date</td>
+          <td><cjisTags:fmtTemporal value="${kit.labDetails.expungedDate}" pattern="${dateFormat}" /></td>
+        </tr>
+      </c:if>
+
+      <c:if test="${kit.leDetails.plannedDestructionDate != null}">
+        <tr>
+          <td>Planned Destruction Date</td>
+          <td><cjisTags:fmtTemporal value="${kit.leDetails.plannedDestructionDate}" pattern="${dateFormat}" /></td>
+        </tr>
+      </c:if>  
+    </table>
+  </div>
+  <hr/>
+</c:if>

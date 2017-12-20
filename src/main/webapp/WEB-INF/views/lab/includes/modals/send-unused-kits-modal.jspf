@@ -1,0 +1,76 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<div class="modal fade" id="sendKitsModal" tabindex="-1" role="dialog" aria-labelledby="sendKitsModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Send Sexual Assault Kits</h4>
+      </div>
+      
+      <form id="lab-batch-send-form" action="<c:url value='/lab/batchSendToMedical'/>" method="POST">
+
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <div class="modal-body">
+
+          <div class="row">
+            <div class="col-sm-12">
+              <label>Send To</label><br/>
+              <label class="radio-inline">
+                <input type="radio" name="organizationType" data-action="<c:url value='/lab/batchSendToMedical'/>" data-show="[data-medical-select]" data-hide="[data-lawEnforcement-select],[data-lab-select]" value="MEDICAL" checked="checked"> Medical Facility
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="organizationType" data-action="<c:url value='/lab/batchSendToLawEnforcement'/>" data-show="[data-lawEnforcement-select]" data-hide="[data-medical-select],[data-lab-select]" value="LAW_ENFORCEMENT"> Law Enforcement Agency
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="organizationType" data-action="<c:url value='/lab/batchSendToLab'/>"  data-show="[data-lab-select]" data-hide="[data-medical-select],[data-lawEnforcement-select]" value="LAB"> Lab
+              </label>
+            </div>
+          </div>  
+
+          <div data-medical-select class="row top10">
+            <div class="col-sm-12">
+              <label class="required">Medical Facility</label>
+              <select data-modal-focus data-required id="medicalOrgSelect" name="orgId" class="form-control" data-organizations-url="<c:url value='/organizations?type=MEDICAL'/>"></select>
+            </div>
+          </div>
+          <div data-lawEnforcement-select class="hidden row top10">
+            <div class="col-sm-12">
+              <label class="required">Law Enforcement Agency</label>
+              <select data-modal-focus data-required id="lawEnforcementOrgSelect" disabled="disabled" name="orgId" class="form-control" data-organizations-url="<c:url value='/organizations?type=LAW_ENFORCEMENT'/>"></select>
+            </div>
+          </div>
+          <div data-lab-select class="hidden row top10">
+            <div class="col-sm-12">
+              <label class="required">Lab</label>
+              <select data-modal-focus data-required id="labOrgSelect" disabled="disabled" name="orgId" class="form-control" data-organizations-url="<c:url value='/organizations?type=LAB'/>"></select>
+            </div>
+          </div>
+
+          <div class="row top10">
+            <div class="col-sm-4">
+              <label class="required">Kit Serial Number(s)</label>
+              <textarea rows="6" data-required id="serialNumbersToSend" data-modal-clear name="serialNumbers" class="form-control"></textarea>
+            </div>
+            <div class="col-sm-8">
+              <div class="row">
+                <div class="col-sm-12">
+                  <label class="required">Send Date</label>
+                  <input type="text" id="eventDate" name="eventDate" data-required class="hasDatePicker form-control" value="<cjisTags:fmtTemporal value='${currentDate}' pattern='${dateFormat}' />"/>
+                </div>
+                <div class="col-sm-12 top10">
+                  <label>Notes</label>
+                  <textarea id="notes" name="notes" class="form-control"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Send</button>
+        </div>
+      </form>
+                
+    </div>
+  </div>
+</div>    

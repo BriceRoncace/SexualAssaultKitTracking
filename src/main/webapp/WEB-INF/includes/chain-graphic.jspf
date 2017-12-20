@@ -1,0 +1,84 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<div class="row bottom15">
+  <div class="col-sm-12"><div class="pull-right">Status: <strong>${kit.status.label}</strong></div></div>
+</div>
+
+<c:if test="${kit.status == 'WILL_NOT_BE_ANALYZED'}">
+  <div class="panel panel-warning">
+    <div class="panel-heading">
+      <span class="glyphicon glyphicon-alert"></span>
+      &nbsp; ${kit.medicalDetails.requestingLeAgency.name} and the prosecuting attorney's office have determined this kit <strong>will not</strong> be submitted to the laboratory. If you have questions about this decision, please contact:
+    </div>
+    <div class="row">
+      <c:forEach var="contact" items="${orgContacts}">
+        <div class="col-xs-3 contact-address">
+          <address>
+            <strong>${contact.displayName}</strong><br/>
+            Phone: ${contact.phone}
+          </address>
+        </div>
+      </c:forEach>
+    </div>
+  </div>
+</c:if>
+
+<div class="row">
+  <div class="col-sm-12">
+    <c:forEach var="coc" items="${kit.chainOfCustody}">
+      <c:choose>
+        <c:when test="${coc.eventType == 'CREATE'}">
+          <div class="coc-assignment-tile">
+            <strong>Created <cjisTags:fmtTemporal value="${coc.eventDate}" pattern="${dateFormat}"/></strong><br/>
+            <i class="fa fa-flask font24" aria-hidden="true"></i><br/>
+            <c:out value="${coc.to.name}"/>
+          </div>
+        </c:when>
+
+        <c:when test="${coc.eventType == 'SEND'}">
+          <div class="coc-sent-tile">
+            Sent<br/>
+            <cjisTags:fmtTemporal value="${coc.eventDate}" pattern="MM/dd/yy"/><br/>
+            <span class="glyphicon glyphicon-arrow-right font18"></span>
+          </div>
+        </c:when> 
+
+        <c:when test="${coc.eventType == 'RECEIVE'}">
+          <div class="coc-assignment-tile">
+            <strong>Received <cjisTags:fmtTemporal value="${coc.eventDate}" pattern="${dateFormat}"/></strong><br/>
+            <c:choose>
+              <c:when test="${coc.to.type == 'MEDICAL'}">
+                <i class="fa fa-hospital-o font24" aria-hidden="true"></i><br/>
+              </c:when>
+              <c:when test="${coc.to.type == 'LAW_ENFORCEMENT'}">
+                <i class="fa fa-star font24" aria-hidden="true"></i><br/>
+              </c:when>
+              <c:when test="${coc.to.type == 'LAB'}">
+                <i class="fa fa-flask font24" aria-hidden="true"></i><br/>
+              </c:when>
+            </c:choose>
+              <c:out value="${coc.to.name}"/>
+          </div>
+        </c:when>  
+
+        <c:when test="${coc.eventType == 'DESTROY'}">
+          <div class="coc-assignment-tile">
+            <strong>Destroyed <cjisTags:fmtTemporal value="${coc.eventDate}" pattern="${dateFormat}"/></strong><br/>
+            <span class="glyphicon glyphicon-fire font18"></span><br/>
+            <c:out value="${coc.from.name}"/>
+          </div>
+        </c:when>
+
+
+        <c:when test="${coc.eventType == 'REPURPOSE'}">
+          <div class="coc-assignment-tile">
+            <strong>Repurposed <cjisTags:fmtTemporal value="${coc.eventDate}" pattern="${dateFormat}"/></strong><br/>
+            <span class="glyphicon glyphicon-transfer font18"></span><br/>
+            <c:out value="${coc.from.name}"/>
+          </div>
+        </c:when>
+        
+      </c:choose>
+    </c:forEach>
+  </div>
+</div>

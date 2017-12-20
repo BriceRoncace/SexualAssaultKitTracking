@@ -1,0 +1,40 @@
+<div id="disagreeModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Disagree With Non-Submission</h4>
+      </div>
+      
+      <form action="<c:url value='/legal/disagree'/>" method="POST">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <input type="hidden" name="kitId" value="${kit.id}"/>
+        
+        <div class="modal-body">
+         
+          <div class="row">
+            <div class="col-sm-12 top10">
+              <p>By clicking <strong>Disagree</strong>, your name will be logged as 
+                the deciding attorney determining that this kit <b>does</b> meet the criteria
+                for submission.  You are disagreeing with the law enforcement agency's 
+                assessment; this kit <b>must be submitted</b> to the lab for further analysis.</p>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-sm-12 top10">
+              <label class="required">Notes</label>
+              <textarea name="notes" class="form-control">${kit.legalDetails.prosecutorNotes}</textarea>
+            </div>
+          </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Disagree</button>
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+

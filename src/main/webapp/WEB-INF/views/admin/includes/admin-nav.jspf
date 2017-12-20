@@ -1,0 +1,47 @@
+<%@taglib prefix="cjisTags" uri="http://isp.idaho.gov/jsp/cjisTags"%>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="<c:url value='/'/>">Sexual Assault Kit Tracking</a>
+      <cjisTags:message key="test.mode" var="testMode"/>
+      <c:if test="${testMode}"><img id="test-image" class="top5 right10" src="<c:url value='/assets/images/test-banner-small.png'/>" alt="TEST" height="35" width="43"/></c:if>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="${pageContext.request.requestURI.endsWith("dashboard.jsp") ? 'active' : ''}" <%--style="margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px;"--%>><a href="<c:url value='/'/>" class="banner-button-sides" <%--style="margin-left: 0px; margin-right: 0px; padding-left: 12px; padding-right: 12px;"--%>>Home</a></li>
+        <li class="${pageContext.request.requestURI.endsWith("search.jsp") ? 'active' : ''}"><a href="<c:url value='/admin/search'/>" class="banner-button-sides">Search</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle banner-button-sides" data-toggle="dropdown" role="button">Reports <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="<c:url value='/report/lifeCycle?forward=1'/>">Kit Life Cycle Report</a></li>
+            <li><a href="<c:url value='/report/timeframe'/>">Kit Statistics for Specified Time Frame</a></li>
+            <li><a href="<c:url value='/report/collectedKitsNotReceived?forward=1'/>">Kit Collected but not Received Report</a></li>
+            <li><a href="<c:url value='/report/unusedKits?forward=1'/>">Unused Kits Report</a></li>
+            <li><a href="<c:url value='/report/exceedingStatutoryRequirements?forward=1'/>">Kits Exceeding Statutory Requirements</a></li>
+            <li><a href="<c:url value='/report/cocErrors'/>">Kits with Questionable Events</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle banner-button-sides" data-toggle="dropdown" role="button">Configuration <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="${pageContext.request.requestURI.endsWith("manage-admin.jsp") ? 'active' : ''}"><a href="<c:url value='/adminUser'/>">FS Admins</a></li>
+            <li class="${pageContext.request.requestURI.endsWith("jurisdictions.jsp") ? 'active' : ''}"><a href="<c:url value='/jurisdictions/list'/>">Jurisdictions</a></li>
+            <li class="${pageContext.request.requestURI.endsWith("data-migration.jsp") ? 'active' : ''}"><a href="<c:url value='/dataMigration'/>">Data Migration</a></li>
+            <li><a href="<c:url value='/users/download'/>"><i class="fa fa-arrow-circle-o-down font18" title="download"></i> User Export</a></li>
+          </ul>
+        </li>
+        <li class="${pageContext.request.requestURI.endsWith("help.jsp") ? 'active' : ''}"><a href="<c:url value='/help'/>" class="banner-button-sides">Help</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right" style="padding-right: 0; padding-left: 0;">
+        <li><a href="<c:url value='/logout'/>" class="banner-button-sides">Logout</a></li>
+      </ul>
+      <%@include file="../../../includes/serial-number-search.jspf" %>
+    </div>
+  </div>
+</nav>

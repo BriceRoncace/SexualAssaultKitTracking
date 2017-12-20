@@ -1,0 +1,73 @@
+<%@ taglib prefix="cjisTags" uri="http://isp.idaho.gov/jsp/cjisTags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="pull-right">
+      <button type="button" class="btn btn-xs btn-default" data-toggle="modal" data-target="#receiveAnyKitModal"><span class="glyphicon glyphicon-arrow-down"></span> Receive Kit</button>
+    </div>
+  </div>
+</div>
+
+<div class="row top5">
+  <c:choose>
+    <c:when test="${incomingKits == null || !incomingKits.hasContent()}">
+      <div class="col-xs-12 font12">
+        There are currently no sexual assault kits ready to be received.
+      </div>
+    </c:when>
+    <c:otherwise>
+      <table id="incomingKitsTable" class="table table-striped">
+        <thead>
+          <tr>
+            <th><t:columnsort sort="${incomingKits.sort}" sortParameterName="incomingSort" propertyName="serialNumber" text="Serial #"/></th>
+            <th><t:columnsort sort="${incomingKits.sort}" sortParameterName="incomingSort" propertyName="caseNumber" text="Lab Case #"/></th>
+            <th><t:columnsort sort="${incomingKits.sort}" sortParameterName="incomingSort" propertyName="eventDate" text="Sent On"/></th>
+            <th><t:columnsort sort="${incomingKits.sort}" sortParameterName="incomingSort" propertyName="from" text="Sent By"/></th>
+            <th class="noSort"/>
+          </tr>
+        </thead>
+        <tbody>
+          <c:forEach var="kit" items="${incomingKits.content}">
+            <tr>
+              <td>
+                <a href="<c:url value="/lab/view"/>?id=${kit.id}">${kit.serialNumber}</a>
+              </td>
+              <td>
+                ${kit.labDetails.caseNumber}
+              </td>
+              <td>
+                <cjisTags:fmtTemporal value="${kit.currentCustody.eventDate}" pattern="${dateFormat}" />
+              </td>
+              <td>
+                <c:out value="${kit.currentCustody.from}"/>
+              </td>
+              <td style="width: 5%">
+                <div class="dropdown">
+                  <a href="javascript://nop/" data-toggle="dropdown"><span class="font18 glyphicon glyphicon-option-horizontal"></span></a>
+                  <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="<c:url value="/lab/view"/>?id=${kit.id}"><span class="glyphicon glyphicon-search"></span> View</a></li>
+                    <li><a href="javascript://nop/" data-toggle="modal" data-receive-kit="${kit.serialNumber}" data-kit-from="${kit.currentCustody.from.id}" data-target="#receiveKitModal"><span class="glyphicon glyphicon-arrow-down"></span> Receive Kit</a></li>
+                    <li><a href="<c:url value="/timeline"/>?serialNumber=${kit.serialNumber}"><i class="fa fa-clock-o font14" aria-hidden="true"></i> Kit Timeline</a></li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          </c:forEach>
+        </tbody>
+      </table>
+                  
+      <c:if test="${incomingKits.size < incomingKits.totalElements}">
+        <div class="col-sm-12">
+          <div class="pull-right">
+            <cjisTags:pager resultsGroupSize="5" pageVarName="incomingPage" page="${incomingKits.number}" resultsPerPage="${incomingKits.size}" totalListSize="${incomingKits.totalElements}" showInfo="true"/>
+          </div>
+        </div>
+      </c:if>
+                  
+    </c:otherwise>
+  </c:choose>  
+</div>
+
+<%@include file="../modals/receive-kit-modal.jspf" %>
+<%@include file="../modals/receive-any-kit-modal.jspf" %>

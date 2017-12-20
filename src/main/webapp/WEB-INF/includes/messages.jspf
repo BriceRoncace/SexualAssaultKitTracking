@@ -1,0 +1,50 @@
+<div id="action-messages" class="hidden-print">
+  <c:set var="messages" value="${messages != null ? messages : param.messages}"/>
+  <c:if test="${messages != null && !empty messages}">
+    <div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>
+      <c:choose>
+        <c:when test="${messages.getClass().name == 'java.lang.String'}">
+          <c:out value="${messages}"/>
+        </c:when>
+        <c:otherwise>
+          <c:forEach items="${messages}" var="message" varStatus="s">
+            <c:out value="${message}"/> ${not s.last ? '<br/>' : ''}
+          </c:forEach>
+        </c:otherwise>
+      </c:choose> 
+    </div> 
+  </c:if>
+          
+  <c:set var="errors" value="${errors != null ? errors : param.errors}"/>
+  <c:if test="${errors != null && !empty errors}">
+    <div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>
+      <c:choose>
+        <c:when test="${errors.getClass().name == 'java.lang.String'}">
+          <c:out value="${errors}"/>
+        </c:when>
+        <c:otherwise>
+          <c:forEach items="${errors}" var="error" varStatus="s">
+            <c:out value="${error}"/> ${not s.last ? '<br/>' : ''}
+          </c:forEach>
+        </c:otherwise>
+      </c:choose> 
+    </div>
+  </c:if>
+          
+  <c:set var="alerts" value="${alerts != null ? alerts : param.alerts}"/>
+  <c:if test="${alerts != null && !empty alerts}">
+    <div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert">&times;</button>
+      <c:choose>
+        <c:when test="${alerts.getClass().name == 'java.lang.String'}">
+          <c:out value="${alerts}"/>
+        </c:when>
+        <c:otherwise>
+          <c:forEach items="${alerts}" var="alert" varStatus="s">
+            <c:out value="${alert}"/> ${not s.last ? '<br/>' : ''}
+          </c:forEach>
+        </c:otherwise>
+      </c:choose> 
+    </div>
+  </c:if>
+          
+</div>

@@ -1,0 +1,48 @@
+<div id="receiveAnyKitModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Receive Sexual Assault Kit</h4>
+      </div>
+      
+      <form action="<c:url value="/lab/receive"/>" method="POST">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <div class="modal-body">
+          
+          <div class="row">
+            <div class="col-sm-12">
+              <label class="required">Kit Serial Number</label><br/>
+              <input type="text" data-modal-focus data-required name="serialNumber" class="form-control"/>
+            </div>
+          </div>
+          
+          <div class="row top10">
+            <div class="col-sm-12">
+              <label class="required">From</label><br/>
+              <select data-required  data-organizations-url="<c:url value='/organizations?type=LAW_ENFORCEMENT&type=MEDICAL&type=LAB'/>" id="receiveFromSelect" name="orgId" class="form-control"></select>
+            </div>
+          </div>
+          
+          <div class="row top10">
+            <div class="col-sm-12">
+              <label class="required">Received Date</label>
+              <input type="text" id="eventDate" name="eventDate" data-required class="hasDatePicker form-control" value="<cjisTags:fmtTemporal value='${currentDate}' pattern='${dateFormat}' />"/>
+            </div>
+          </div>
+          
+          <div class="row top10">
+            <div class="col-sm-12">
+              <label>Notes</label>
+              <textarea id="notes" name="notes" class="form-control"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Receive</button>
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

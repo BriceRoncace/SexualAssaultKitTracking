@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/SexualAssaultKitTracking">
+  <Resource auth="Container" driverClassName="${db.driver}" logAbandoned="true" minEvictableIdleTimeMillis="1200000" name="jdbc/saktrackDS" numTestsPerEvictionRun="3" password="${db.password}" removeAbandonedOnMaintenance="true" removeAbandonedTimeout="300" testOnBorrow="true" testWhileIdle="true" timeBetweenEvictionRunsMillis="300000" type="javax.sql.DataSource" url="${db.url}" username="${db.username}" validationQuery="${db.validation.query}"/>
+</Context>

@@ -1,0 +1,55 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="cjisTags" uri="http://isp.idaho.gov/jsp/cjisTags"%>
+
+<div id="userPreferences" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">User Preferences</h4>
+      </div>
+      <div class="modal-body">
+        <div class="panel panel-primary">
+          <div class="panel-heading">Email Notifications</div>
+          <div class="panel-body">
+            <p>Your account is configured to receive the following notification types:</p>
+            <hr/>
+            <c:if test="${orgUser.isOrganizationAdmin()}">
+              <div class="form-group">
+                <div class="checkbox">
+                  <label>
+                    <cjisTags:checkbox id="sendUserEmail" name="orgUser.sendUserEmail" checked="${orgUser.id == null ? 'true' : orgUser.sendUserEmail}" />
+                    New user verification.
+                  </label>
+                </div>
+              </div>
+            </c:if>
+            <c:if test="${organization.type == 'LAW_ENFORCEMENT'}">
+              <div class="form-group">
+                <div class="checkbox">
+                  <label>
+                    <cjisTags:checkbox id="sendAttorneyReviewedEmail" name="orgUser.sendAttorneyReviewedEmail" checked="${orgUser.id == null ? 'true' : orgUser.sendAttorneyReviewedEmail}"/>
+                    Sexual assault kit has been reviewed by a prosecutor.
+                  </label>
+                </div>
+              </div>
+            </c:if>
+            <div class="form-group">
+              <div class="checkbox">
+                <label>
+                  <cjisTags:checkbox id="incomingKitEmail" name="orgUser.incomingKitEmail" checked="${orgUser.incomingKitEmail}"/>
+                  <c:set var="incomingKitCheckboxVerbiage" value="Kit has been sent to your organization."/>
+                  <c:if test="${organization.type == 'PROSECUTOR'}"><c:set var="incomingKitCheckboxVerbiage" value="Sexual assault kit requires review."/></c:if>
+                  ${incomingKitCheckboxVerbiage}
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

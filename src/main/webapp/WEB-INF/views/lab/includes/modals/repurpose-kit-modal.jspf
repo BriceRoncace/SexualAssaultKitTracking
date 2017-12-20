@@ -1,0 +1,44 @@
+<div id="repurposeKitModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Repurpose Sexual Assault Kit</h4>
+      </div>
+      
+      <form action="<c:url value='/lab/repurpose'/>" method="POST">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <input type="hidden" name="orgId" value="${organization.id}"/>
+        <div class="modal-body">
+          <p>A <strong>repurposed</strong> kit is one used for any purpose other than sexual assault evidence collection.  Examples include kits used for suspect collection or reference samples.</p>
+          
+          <div class="row">
+            <div class="col-sm-12">
+              <label class="required">Kit Serial Number</label>
+              <input type="text" value="${kit.serialNumber}"  name="serialNumber" readonly="readonly" class="form-control"/>
+            </div>
+          </div>
+            
+          <div class="row top10">
+            <div class="col-sm-12">
+              <label class="required">Repurpose Date</label>
+              <input type="text" data-modal-focus id="eventDate" name="eventDate" data-required class="hasDatePicker form-control"/>
+            </div>
+          </div>
+            
+          <div class="row">
+            <div class="col-sm-12 top10">
+              <label>Notes</label>
+              <textarea id="notes" name="notes" class="form-control"></textarea>
+            </div>
+          </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Repurpose</button>
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

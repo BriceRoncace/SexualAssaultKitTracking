@@ -1,0 +1,78 @@
+<div id="sendKitModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Send Sexual Assault Kit</h4>
+      </div>
+      
+      <form action="<c:url value='/law-enforcement/sendToLab'/>" method="POST">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <div class="modal-body">
+          
+          <div class="row">
+            <div class="col-sm-12">
+              <label class="required">Kit Serial Number</label>
+              <input type="text" name="serialNumber" value="${kit.serialNumber}" readonly="readonly" class="form-control"/>
+            </div>
+          </div>
+          
+          <div class="row top10">
+            <div class="col-sm-12">
+              <label>Send To</label><br/>
+              <label class="radio-inline">
+                <input type="radio" name="organizationType" data-action="<c:url value='/law-enforcement/sendToLab'/>" data-show="#lab" data-hide=".lab-hide" value="LAB" checked="checked"> Forensic Lab
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="organizationType" data-action="<c:url value='/law-enforcement/sendToLawEnforcement'/>" data-show="#lawEnforcementOrg" data-hide=".law-hide" value="LAW_ENFORCEMENT"> Law Enforcement
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="organizationType" data-action="<c:url value='/law-enforcement/sendToMedical'/>" data-show="#medicalOrg" data-hide=".med-hide" value="MEDICAL"> Medical Facility
+              </label>
+            </div>
+          </div>
+          
+          <div id="lab" class="row top10 law-hide med-hide">
+            <div class="col-sm-12">
+              <label class="required">Forensic Lab</label>
+              <select data-modal-focus data-required data-organizations-url="<c:url value='/organizations?type=LAB'/>" id="labOrganizationsSelect" name="orgId" class="form-control"></select>
+            </div>
+          </div>
+          
+          <div id="lawEnforcementOrg" class="row top10 lab-hide med-hide hidden">
+            <div class="col-sm-12">
+              <label class="required">Law Enforcement Agency</label>
+              <select data-required data-organizations-url="<c:url value='/organizations?type=LAW_ENFORCEMENT'/>" id="lawEnforcementOrganizationsSelect" name="orgId" class="form-control" disabled="disabled"></select>
+            </div>
+          </div>
+            
+          <div id="medicalOrg" class="row top10 lab-hide law-hide hidden">
+            <div class="col-sm-12">
+              <label class="required">Medical Facility</label>
+              <select data-required data-organizations-url="<c:url value='/organizations?type=MEDICAL'/>" id="medicalOrganizationsSelect" name="orgId" class="form-control" disabled="disabled"></select>
+            </div>
+          </div>
+          
+          <div class="row top10">
+            <div class="col-sm-12">
+              <label class="required">Send Date</label>
+              <input type="text" id="eventDate" name="eventDate" data-required class="hasDatePicker form-control" value="<cjisTags:fmtTemporal value='${currentDate}' pattern='${dateFormat}' />"/>
+            </div>
+          </div>
+            
+          <div class="row">
+            <div class="col-sm-12 top10">
+              <label>Notes</label>
+              <textarea id="notes" name="notes" class="form-control"></textarea>
+            </div>
+          </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Send</button>
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

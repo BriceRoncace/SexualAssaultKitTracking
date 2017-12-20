@@ -1,0 +1,95 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="cjisTags" uri="http://isp.idaho.gov/jsp/cjisTags"%>
+<div class="row">
+  <div class="col-sm-6">
+    <c:choose>
+      <c:when test="${user.admin}">
+        <%@include file="organization-form.jspf" %>
+      </c:when>
+      <c:otherwise>
+        <%@include file="organization-passkey-form.jspf" %>
+      </c:otherwise>
+    </c:choose>
+  </div>
+
+  <c:if test="${organization.id != null}">
+    <div class="col-sm-6">
+      
+        <div class="panel panel-primary">
+          <div class="panel-heading">Contacts</div>
+          <table class="table table-condensed table-hover">
+            <tbody>
+              <c:forEach var="user" items="${contactUsers}">
+                <tr class="${user.enabled ? '' : 'disabled'}">
+                  <td><c:out value="${user.displayName}"/></td>
+                  <td>Phone: <c:out value="${user.phone}"/></td>
+                  <td>Email: <c:out value="${user.email}"/></td>
+                </tr>
+              </c:forEach>
+            </tbody>
+          </table>
+        </div>
+      
+      <c:if test="${not empty unverifiedUsers}">
+        <div class="panel panel-primary">
+          <div class="panel-heading">Unverified Users</div>
+          <table class="table table-condensed table-hover">
+            <tbody>
+              <c:forEach var="user" items="${unverifiedUsers}">
+                <tr class="${user.enabled ? '' : 'disabled'}">
+                  <td class="clickable ${user.isOrganizationAdmin() ? 'admin-user' : ''}" data-href="<c:url value="/organization/${organization.id}/user/${user.id}"/>"><c:out value="${user.displayName}"/></td>
+                  <td style="width: 5%;"><a href="javascript://nop" data-remove-user="${user.id}" data-remove-user-name="<c:out value="${user.displayName}"/>"><span class="glyphicon glyphicon-trash"></span></a></td>
+                </tr>
+              </c:forEach>
+            </tbody>
+          </table>
+        </div>
+      </c:if>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          Users
+          <small class="pull-right">
+            <a class="btn btn-xs btn-info topNeg3" href="<c:url value="/organization/${organization.id}/user/new"/>"><span class="glyphicon glyphicon-user"></span> New</a>
+          </small>
+        </div>
+        <table class="table table-condensed table-hover">
+          <tbody>
+            <c:forEach var="user" items="${orgUsers}">
+              <tr class="${user.enabled ? '' : 'disabled'}">
+                <td class="clickable" data-href="<c:url value="/organization/${organization.id}/user/${user.id}"/>"><c:out value="${user.displayName}"/><c:if test="${!user.enabled}">&nbsp;&nbsp;<small><span class="glyphicon glyphicon-ban-circle hover-pointer med-blue-text" data-toggle="tooltip" title="User Disabled"></span></small></c:if><c:if test="${user.organizationContact}">&nbsp;&nbsp;<small><span class="glyphicon glyphicon-phone-alt hover-pointer med-blue-text" data-toggle="tooltip" title="Organization Contact"></span></small></c:if><c:if test="${user.isOrganizationAdmin()}">&nbsp;&nbsp;<small><span class="glyphicon glyphicon-star hover-pointer med-blue-text" data-toggle="tooltip" title="Organization Administrator"></span></small></c:if></td>
+                <td class="width20"><a href="javascript://nop" data-remove-user="${user.id}" data-remove-user-name="<c:out value="${user.displayName}"/>"><span class="glyphicon glyphicon-trash"></span></a></td>
+              </tr>
+            </c:forEach>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </c:if>
+
+</div>
+
+<form id="removeUserForm" action="<c:url value="/organization/${organization.id}/user/remove"/>" method="POST">
+  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+  <input id="removeUserId" type="hidden" name="id"/>
+</form>
+
+<div id="confirmAdminActionDialog" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4>Are you sure?</h4>
+      </div>
+      <div id="confirmAdminActionMessage" class="modal-body"></div>
+      <div class="modal-footer">
+        <div class="toggle-me">
+          <button data-submit-form="" class="btn btn-danger">Yes</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        </div>
+        <div class="toggle-me hidden">
+          Processing....
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

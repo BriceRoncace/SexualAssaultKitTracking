@@ -1,0 +1,63 @@
+ul {border:0; margin:0; padding:0;}
+
+.paging-container {
+  margin-left:25px;
+}
+
+.paging-info {
+  font-style:italic;
+  font-size: .8em;
+  margin-left: 10px;
+}
+
+#pagination-clean {
+  display:inline-block;
+  margin:0;
+  padding:0;
+}
+
+#pagination-clean li {
+  border:0;
+  margin:0;
+  padding:0;
+  list-style:none;
+  display:inline;
+  font-weight:bold;
+  margin:5px;
+}
+
+#pagination-clean a {
+  margin-right: 2px;
+  margin-left: 2px;
+}
+
+#pagination-clean .active a {
+  color:#E99002;
+  font-weight:bold;
+}
+
+#pagination-clean .previous-off a {
+  margin:2px;
+  color:#ccc;
+}
+
+#pagination-clean .previous a {
+  margin:2px;
+}
+
+#pagination-clean .previous, #pagination-clean .previous-off {
+  border-right:solid 1px #DEDEDE;
+}
+
+#pagination-clean .next-off a {
+  margin:2px;
+  color: #ccc;
+}
+
+#pagination-clean .next a {
+  margin:2px;
+}
+
+#pagination-clean .next, #pagination-clean .next-off {
+  border-left:solid 1px #DEDEDE;
+}

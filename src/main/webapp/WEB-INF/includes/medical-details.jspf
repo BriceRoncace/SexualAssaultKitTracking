@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-sm-6">
+    <label class="control-label">Destination Law Enforcement Agency</label>
+    <cjisTags:select name="requestingLeAgencyId" from="${leOrgs}" value="${kit.medicalDetails.requestingLeAgency.id}" emptyOption="" cssClass="form-control" optionKey="id" optionValue="name"  />
+  </div>
+  <div class="col-sm-3">
+    <div class="form-group">
+      <label class="control-label">Collection Date</label>
+      <input type="text" class="form-control hasDatePicker" name="medicalDetails.collectionDate" value="<cjisTags:fmtTemporal value='${kit.medicalDetails.collectionDate}' pattern='${dateFormat}' />"/>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <label class="control-label">Victim Type</label>
+    <div class="form-group">
+        <div class="radio radio-primary">
+          <label class="radio-inline">
+            <input type="radio" name="medicalDetails.victimType" value="NAMED" <c:if test="${kit.medicalDetails.victimType == 'NAMED'}">checked</c:if>/> Named
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="medicalDetails.victimType" value="ANONYMOUS" <c:if test="${kit.medicalDetails.victimType == 'ANONYMOUS'}">checked</c:if>/> Anonymous
+          </label>
+        </div>
+      </div>
+  </div>
+</div>

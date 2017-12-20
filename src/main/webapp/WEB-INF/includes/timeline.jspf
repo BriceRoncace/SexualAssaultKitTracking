@@ -1,0 +1,31 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:choose>
+  <c:when test="${kit == null || empty kit.chainOfCustody}">
+    No records found.
+  </c:when>
+  <c:otherwise>
+    <%@include file="../includes/chain-graphic.jspf" %>
+    <hr/>
+    <%@include file="../includes/extra-timeline-info.jspf" %>
+    <ul class="list-group">
+      <c:forEach var="coc" items="${kit.chainOfCustody}">
+        <li class="list-group-item font14">
+          <h4 class="list-group-item-heading text-capitalize">
+            ${coc.eventType.pastTenseLabel}&nbsp;<cjisTags:fmtTemporal value="${coc.eventDate}" pattern="${dateFormat}"/> 
+            <c:if test="${user.admin}">
+              <div class="small pull-right"><small><cjisTags:fmtTemporal value="${coc.digitalTimestamp}" pattern="${dateTimeFormat}"/></small></div>
+            </c:if>
+          </h4>
+
+          <c:out value="${coc.getDescription(true)}"/>
+          <c:if test="${coc.notes != null && (user.admin || user.organization == coc.actorOrganization)}">
+            <blockquote class="blockquote-reverse no-margin font12" >
+              ${coc.notes}
+            </blockquote>
+          </c:if>
+        </li>
+      </c:forEach>
+    </ul>
+  </c:otherwise>
+</c:choose>

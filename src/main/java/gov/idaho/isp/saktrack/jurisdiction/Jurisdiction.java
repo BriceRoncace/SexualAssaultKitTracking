@@ -3,6 +3,7 @@ package gov.idaho.isp.saktrack.jurisdiction;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,6 +38,7 @@ public class Jurisdiction implements Serializable {
   @NotBlank(message = "{name.blank}")
   private String name;
 
+  @Enumerated(EnumType.STRING)
   private Type type;
 
   public Long getId() {

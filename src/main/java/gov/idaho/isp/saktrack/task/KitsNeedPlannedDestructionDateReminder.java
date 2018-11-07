@@ -24,9 +24,6 @@ public class KitsNeedPlannedDestructionDateReminder implements Task {
   public void run() {
     LocalDate collectedAYearAgo = LocalDate.now().minusYears(1);
     List<SexualAssaultKit> kits = sexualAssaultKitRepository.findKitsNeedDestructionDateReminder(collectedAYearAgo);
-
-    System.out.println("kits needing destrution date: " + kits);
-
     Map<Organization, List<SexualAssaultKit>> kitMap = kits.stream().filter(kit -> kit.getMedicalDetails().getRequestingLeAgency() != null).collect(Collectors.groupingBy(kit -> kit.getMedicalDetails().getRequestingLeAgency()));
     kitMap.entrySet().forEach(entry -> emailService.sendPlannedDestructionDateReminder(entry.getValue()));
   }

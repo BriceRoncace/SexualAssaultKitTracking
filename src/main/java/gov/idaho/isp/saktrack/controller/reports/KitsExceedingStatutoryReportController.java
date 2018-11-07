@@ -1,12 +1,12 @@
 package gov.idaho.isp.saktrack.controller.reports;
 
-import gov.idaho.isp.saktrack.SexualAssaultKit;
-import gov.idaho.isp.saktrack.jurisdiction.JurisdictionRepository;
-import gov.idaho.isp.saktrack.organization.OrganizationRepository;
-import gov.idaho.isp.saktrack.organization.OrganizationType;
-import gov.idaho.isp.saktrack.persistence.SexualAssaultKitRepository;
-import gov.idaho.isp.saktrack.persistence.search.SexualAssaultKitSearchCriteria;
-import gov.idaho.isp.saktrack.persistence.search.SexualAssaultKitSpec;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.jurisdiction.JurisdictionRepository;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationRepository;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationType;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
+import gov.idaho.isp.saktrack.domain.search.SexualAssaultKitSearchCriteria;
+import gov.idaho.isp.saktrack.domain.search.SexualAssaultKitSpec;
 import gov.idaho.isp.saktrack.report.StatutoryRequirementReport;
 import gov.idaho.isp.saktrack.service.FilterTextService;
 import gov.idaho.isp.saktrack.service.csv.CsvExportService;
@@ -18,8 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class KitsExceedingStatutoryReportController {
@@ -37,7 +36,7 @@ public class KitsExceedingStatutoryReportController {
     this.csvExportService = csvExportService;
   }
 
-  @RequestMapping(value = "/report/exceedingStatutoryRequirements", method = RequestMethod.GET)
+  @GetMapping("/report/exceedingStatutoryRequirements")
   public String postReport(SexualAssaultKitSearchCriteria criteria, Optional<Boolean> forward, Model model) {
     if (!Boolean.TRUE.equals(forward.orElse(Boolean.FALSE))) {
       model.addAttribute("report", buildReport(criteria));
@@ -50,7 +49,7 @@ public class KitsExceedingStatutoryReportController {
     return "/admin/reports/exceeding-statutory-requirements";
   }
 
-  @RequestMapping(value = "/report/exceedingStatutoryRequirements/download", method = RequestMethod.GET)
+  @GetMapping("/report/exceedingStatutoryRequirements/download")
   public HttpEntity<byte[]> downloadReport(SexualAssaultKitSearchCriteria criteria) {
     return csvExportService.exportExceedingStatutoryRequirementsReport(buildReport(criteria)).toHttpEntity();
   }

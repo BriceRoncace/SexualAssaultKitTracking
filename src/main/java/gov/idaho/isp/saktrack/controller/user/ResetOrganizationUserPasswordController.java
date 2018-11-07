@@ -1,14 +1,14 @@
 package gov.idaho.isp.saktrack.controller.user;
 
 import gov.idaho.isp.saktrack.controller.BaseController;
+import gov.idaho.isp.saktrack.domain.user.password.dto.ResetPasswordPair;
 import gov.idaho.isp.saktrack.service.PasswordResetService;
-import gov.idaho.isp.saktrack.user.password.dto.ResetPasswordPair;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -20,7 +20,7 @@ public class ResetOrganizationUserPasswordController extends BaseController {
     this.passwordResetService = passwordResetService;
   }
 
-  @RequestMapping(value = "/reset/password", method = RequestMethod.GET)
+  @GetMapping("/reset/password")
   public String loadPasswordResetRequest(@RequestParam String request, Model model) {
     if (!passwordResetService.isRequestValid(request)) {
       model.addAttribute("errors", getText("password.reset.invalid"));
@@ -31,7 +31,7 @@ public class ResetOrganizationUserPasswordController extends BaseController {
     return "/public/password-reset";
   }
 
-  @RequestMapping(value = "/reset/password", method = RequestMethod.POST)
+  @PostMapping("/reset/password")
   public String savePasswordResetRequest(@Validated ResetPasswordPair passwordPair, BindingResult br, Model model, RedirectAttributes ra) {
     if (br.hasErrors()) {
       model.addAttribute("errors", getErrors(br));

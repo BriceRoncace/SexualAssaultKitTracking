@@ -1,5 +1,5 @@
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="cjisTags" uri="http://isp.idaho.gov/jsp/cjisTags"%>
 
 <div class="row top5">
   <c:choose>
@@ -40,7 +40,7 @@
                 ${kit.leDetails.caseNumber}
               </td>
               <td>
-                <cjisTags:fmtTemporal value="${kit.currentCustody.eventDate}" pattern="${dateFormat}" />
+                ${dateFormatter.format(kit.currentCustody.eventDate)}
               </td>
               <td>
                 ${kit.currentCustody.actor}
@@ -63,11 +63,7 @@
       </table>
           
       <c:if test="${inProcessKits.size < inProcessKits.totalElements}">
-        <div class="col-sm-12">
-          <div class="pull-right">
-            <cjisTags:pager resultsGroupSize="5" pageVarName="inProcessPage" page="${inProcessKits.number}" resultsPerPage="${inProcessKits.size}" totalListSize="${inProcessKits.totalElements}" showInfo="true"/>
-          </div>
-        </div>
+        <t:pager page="${inProcessKits}" pageVarName="inProcessPage" showInfo="true"/>
       </c:if>
       
     </c:otherwise>

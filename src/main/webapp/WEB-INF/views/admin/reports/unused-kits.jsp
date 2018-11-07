@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@ taglib prefix="cjisTags" uri="http://isp.idaho.gov/jsp/cjisTags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <t:page>
   <jsp:attribute name="body">
     <%@include file="../includes/admin-nav.jspf" %>
@@ -14,13 +14,13 @@
             <div class="col-xs-4">
               <div class="form-group">
                 <label class="control-label">Jurisdiction</label>
-                <cjisTags:select name="currentJurisdictionId" from="${jurisdictions}" emptyOption="" cssClass="form-control" optionKey="id" optionValue="displayName" value="${criteria.currentJurisdictionId}"/>
+                <t:select name="currentJurisdictionId" from="${jurisdictions}" emptyOption="" cssClass="form-control" optionKey="id" optionValue="displayName" value="${criteria.currentJurisdictionId}"/>
               </div>
             </div>
             <div class="col-xs-4">
               <div class="form-group">
                 <label class="control-label">Organization</label>
-                <cjisTags:select name="currentAgencyId" from="${organizations}" emptyOption="" cssClass="form-control" optionKey="id" optionValue="name" value="${criteria.currentAgencyId}"/>
+                <t:select name="currentAgencyId" from="${organizations}" emptyOption="" cssClass="form-control" optionKey="id" optionValue="name" value="${criteria.currentAgencyId}"/>
               </div>
             </div>
           </div>
@@ -55,7 +55,7 @@
                 <tr class="kitRows hidden ${group.groupId}">
                   <td><c:out value="${row.name}"/></td>
                   <td><a href="<c:url value="/admin/view?id=${row.id}"/>">${row.serialNumber}</a></td>
-                  <td><cjisTags:fmtTemporal value="${row.expirationDate}" pattern="${dateFormat}" /></td>
+                  <td>${dateFormatter.format(row.expirationDate)}</td>
                 </tr>
               </c:forEach>
                 <tr class="groupTotal" data-clickable="${group.groupId}">

@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="cjisTags" uri="http://isp.idaho.gov/jsp/cjisTags"%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <t:page>
   <jsp:attribute name="head">
     <link href="<c:url value="/assets/css/lazyYT.css"/>" rel="stylesheet" type="text/css" />
@@ -66,11 +66,11 @@
       </div>
       <div class="col-sm-4">
         Manage Administrators
-        <div data-youtube-id="V1Bh1_8g_bQ" data-title="Managing FS Admins">loading...</div>
+        <div data-youtube-id="V1Bh1_8g_bQ" data-title="Managing Admins">loading...</div>
       </div>
       <div class="col-sm-4">
         Administrator Actions
-        <div data-youtube-id="Olh7ry6QFrU" data-title="FS Admin Actions">loading...</div>
+        <div data-youtube-id="Olh7ry6QFrU" data-title="Admin Actions">loading...</div>
       </div>
     </div>
   </jsp:attribute>

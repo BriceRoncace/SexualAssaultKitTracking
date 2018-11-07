@@ -1,7 +1,7 @@
 package gov.idaho.isp.saktrack.controller.interceptor;
 
-import gov.idaho.isp.saktrack.user.organization.OrganizationUser;
-import gov.idaho.isp.saktrack.user.persistence.OrganizationUserRepository;
+import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUser;
+import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUserRepository;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +18,7 @@ public class OrgUserPasskeyCheckInterceptor extends HandlerInterceptorAdapter {
   }
 
   @Override
-  public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+  public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) throws Exception {
     if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
       final Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -26,7 +26,7 @@ public class OrgUserPasskeyCheckInterceptor extends HandlerInterceptorAdapter {
         UserDetails details = (UserDetails) userDetails;
         OrganizationUser user = organizationUserRepository.findByUsernameIgnoreCase(details.getUsername());
         if (user != null && (user.getPasskey() == null || !user.getPasskey().equals(user.getOrganization().getPasskey()))) {
-          response.sendRedirect(request.getContextPath() + "/passkey");
+          res.sendRedirect(req.getContextPath() + "/passkey");
           return false;
         }
       }

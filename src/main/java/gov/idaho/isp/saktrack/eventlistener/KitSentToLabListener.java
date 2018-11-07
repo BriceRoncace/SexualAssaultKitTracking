@@ -1,12 +1,12 @@
 package gov.idaho.isp.saktrack.eventlistener;
 
-import gov.idaho.isp.saktrack.ChainOfCustodyEvent;
-import gov.idaho.isp.saktrack.KitStatus;
-import gov.idaho.isp.saktrack.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent;
+import gov.idaho.isp.saktrack.domain.KitStatus;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
 import gov.idaho.isp.saktrack.event.KitSendEvent;
-import gov.idaho.isp.saktrack.organization.Organization;
-import gov.idaho.isp.saktrack.organization.OrganizationType;
-import gov.idaho.isp.saktrack.persistence.SexualAssaultKitRepository;
+import gov.idaho.isp.saktrack.domain.organization.Organization;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationType;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;

@@ -1,11 +1,11 @@
 package gov.idaho.isp.saktrack.controller;
 
-import gov.idaho.isp.saktrack.SexualAssaultKit;
-import gov.idaho.isp.saktrack.persistence.SexualAssaultKitRepository;
-import gov.idaho.isp.saktrack.user.User;
-import gov.idaho.isp.saktrack.user.UserUtils;
-import gov.idaho.isp.saktrack.user.organization.AbstractOrganizationUser;
-import gov.idaho.isp.saktrack.user.persistence.OrganizationUserRepository;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
+import gov.idaho.isp.saktrack.domain.user.User;
+import gov.idaho.isp.saktrack.domain.user.organization.AbstractOrganizationUser;
+import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUserRepository;
+import gov.idaho.isp.saktrack.util.UserUtils;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -13,9 +13,8 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -28,7 +27,7 @@ public class ViewChainOfCustodyController {
     this.organizationUserRepository = organizationUserRepository;
   }
 
-  @RequestMapping(value = "/timeline", method = RequestMethod.GET)
+  @GetMapping("/timeline")
   public String viewChainOfCustody(@RequestAttribute Optional<User> user, @RequestParam String serialNumber, Model model) {
     if (StringUtils.isNotBlank(serialNumber)) {
       SexualAssaultKit kit = sexualAssaultKitRepository.findBySerialNumber(serialNumber);

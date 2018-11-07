@@ -1,19 +1,18 @@
 package gov.idaho.isp.saktrack.controller.lawenforcement;
 
-import gov.idaho.isp.saktrack.KitStatus;
-import gov.idaho.isp.saktrack.LawEnforcementDetails.NonSubmissionReason;
-import gov.idaho.isp.saktrack.SexualAssaultKit;
-import gov.idaho.isp.saktrack.organization.OrganizationRepository;
-import gov.idaho.isp.saktrack.organization.OrganizationType;
-import gov.idaho.isp.saktrack.persistence.SexualAssaultKitRepository;
-import gov.idaho.isp.saktrack.user.User;
-import gov.idaho.isp.saktrack.user.organization.LawEnforcementUser;
+import gov.idaho.isp.saktrack.domain.KitStatus;
+import gov.idaho.isp.saktrack.domain.LawEnforcementDetails.NonSubmissionReason;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationRepository;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationType;
+import gov.idaho.isp.saktrack.domain.user.User;
+import gov.idaho.isp.saktrack.domain.user.organization.LawEnforcementUser;
 import gov.idaho.isp.saktrack.util.RoutingUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -26,9 +25,9 @@ public class LoadLawEnforcementDetailsController {
     this.organizationRepository = organizationRepository;
   }
 
-  @RequestMapping(value = "/law-enforcement/view", method = RequestMethod.GET)
+  @GetMapping("/law-enforcement/view")
   public String viewOrEditKit(@RequestParam Long id, Model model, @RequestAttribute User user) {
-    SexualAssaultKit kit = sexualAssaultKitRepository.findOne(id);
+    SexualAssaultKit kit = sexualAssaultKitRepository.findById(id).orElse(null);
     model.addAttribute("kit", kit);
     model.addAttribute("nonSubmissionReasons", NonSubmissionReason.values());
     model.addAttribute("prosecutors", organizationRepository.findByTypeOrderByNameAsc(OrganizationType.LEGAL));

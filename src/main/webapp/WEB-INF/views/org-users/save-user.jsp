@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@ taglib prefix="cjisTags" uri="http://isp.idaho.gov/jsp/cjisTags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <t:page>
   <jsp:attribute name="css">
     <link href="<c:url value="/assets/css/typeahead.js-bootstrap.css"/>" rel="stylesheet" type="text/css" />
@@ -20,18 +20,15 @@
     
     <c:choose>
       <c:when test="${user.admin || user.organizationAdmin}">
-        <c:url var="saveLdapUser" value="/organization/${organization.id}/ldapUser/save"/>
-        <c:url var="saveDbUser" value="/organization/${organization.id}/user/save"/>
+        <c:url var="saveUser" value="/organization/${organization.id}/user/save"/>
         <c:url var="cancelLink" value="/organization/${organization.id}"/>
       </c:when>
       <c:otherwise>
-        <c:url var="saveLdapUser" value="/manageAccount/ldap"/>
-        <c:url var="saveDbUser" value="/manageAccount/db"/>
+        <c:url var="saveUser" value="/manageAccount/db"/>
         <c:url var="cancelLink" value="/${user.type.label}/dashboard"/>
       </c:otherwise>
     </c:choose>
     
-    <c:url var="canBeLdap" value="${organization.allowLdapUsers}"/>
     <c:url var="newUser" value="${orgUser.id == null}"/>
     
     <div class="col-sm-offset-3 col-sm-6">
@@ -44,7 +41,7 @@
             </button>
           </span>
         </div>
-        <form id="userForm" action="${canBeLdap && orgUser.authMethod == 'LDAP' ? saveLdapUser : saveDbUser}" method="POST">
+        <form id="userForm" action="${saveUser}" method="POST">
           <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
           <input type="hidden" name="orgId" value="${organization.id}"/>
           <input type="hidden" name="userId" value="${orgUser.id}"/>
@@ -52,50 +49,28 @@
           <div class="panel-body">
             <c:if test="${user.isOrganizationAdmin()}">
               <div class="row">
-              <div class="col-xs-12">
-                <c:choose>
-                  <c:when test="${newUser}">
-                    <input type="hidden" name="orgUser.enabled" value="true"/>
-                  </c:when>
-                  <c:otherwise>
-                    <div class="checkbox-inline">
-                      <label><cjisTags:checkbox id="enabled-checkbox" name="orgUser.enabled" checked="${orgUser.id == null || orgUser.enabled}" /> Enabled</label>
-                    </div>
-                  </c:otherwise>
-                </c:choose>
-                <div class="checkbox-inline">
-                  <label><cjisTags:checkbox id="orgAdmin-checkbox" name="orgUser.organizationAdmin" checked="${orgUser.isOrganizationAdmin()}" /> Organization Administrator</label>
-                </div>
+                <div class="col-xs-12">
+                  <c:choose>
+                    <c:when test="${newUser}">
+                      <input type="hidden" name="orgUser.enabled" value="true"/>
+                    </c:when>
+                    <c:otherwise>
+                      <div class="checkbox-inline">
+                        <label><t:checkbox id="enabled-checkbox" name="orgUser.enabled" checked="${orgUser.id == null || orgUser.enabled}" /> Enabled</label>
+                      </div>
+                    </c:otherwise>
+                  </c:choose>
                   <div class="checkbox-inline">
-                    <label><cjisTags:checkbox id="orgContact-checkbox" name="orgUser.organizationContact" checked="${orgUser.isOrganizationContact()}" /> Organization Contact</label>
+                    <label><t:checkbox id="orgAdmin-checkbox" name="orgUser.organizationAdmin" checked="${orgUser.isOrganizationAdmin()}" /> Organization Administrator</label>
                   </div>
-              </div>
-              </div>
-              <c:if test="${canBeLdap && newUser}">
-                <div class="row">
-                  <div class="col-xs-12">
-                    <div class="radio">
-                      <label class="radio-inline"><input type="radio" data-show="#setupDbUser" data-hide="#setupLdapUser" data-action="${saveDbUser}" name="userAuthMethod" value="DATABASE" ${orgUser.authMethod != 'LDAP' ? 'checked' : ''}/> Standard</label>
- 	                    <label class="radio-inline"><input type="radio" data-show="#setupLdapUser" data-hide="#setupDbUser" data-action="${saveLdapUser}" name="userAuthMethod" value="LDAP" ${orgUser.authMethod == 'LDAP' ? 'checked' : ''}/> LDAP</label>
+                    <div class="checkbox-inline">
+                      <label><t:checkbox id="orgContact-checkbox" name="orgUser.organizationContact" checked="${orgUser.isOrganizationContact()}" /> Organization Contact</label>
                     </div>
-                  </div>
-                </div>
-              </c:if>
-            </c:if>
-                
-            <c:if test="${canBeLdap}">
-              <div id="setupLdapUser" class="row ${orgUser.authMethod == 'LDAP' ? '' : 'hidden'}">
-                <div class="col-sm-12">
-                  <div class="form-group">
-                    <label class="control-label required">Find ISP User by Last Name</label>
-                    <input id="ldapUserLastName" type="text" data-required class="form-control" data-ldap-user-suggest value="${orgUser.displayName}" ${orgUser.id == null ? '' : 'disabled'}/>
-                    <input id="ldapUsername" type="hidden" name="ldapUsername" value="${orgUser.username}"/>
-                  </div>
                 </div>
               </div>
             </c:if>
             
-            <div id="setupDbUser" class="row ${orgUser.authMethod == 'LDAP' ? 'hidden' : ''}">
+            <div id="setupUser" class="row">
               <div class="col-sm-6">
                 <div class="form-group">
                   <label class="control-label required">Username</label>
@@ -146,31 +121,5 @@
 
   </jsp:attribute>
   <jsp:attribute name="scripts">
-    <c:if test="${canBeLdap}">
-      <script src="<c:url value="/assets/js/typeahead.min.js"/>" ></script>
-      <script src="<c:url value="/assets/js/bloodhound.min.js"/>" ></script>
-      <script src="<c:url value="/assets/js/ldap-user-suggest.js"/>" ></script>
-      <script type="text/javascript">
-        $(function () {
-          ldapUserSuggest.setup({url: '<c:url value="/ldapUser/lastNameLike/%QUERY"/>', onSelect: ldapUserSelected});
-          
-          $("[name='userAuthMethod']:checked").trigger("click");
-          $("[name='userAuthMethod']").on("cjis:show", function() {
-            var $this = $(this);
-            $('#userForm').attr('action', $this.data("action"));
-            if ($this.data('show') === '#setupLdapUser') {
-              $('#ldapUserLastName').focus();
-            }
-            else {
-              $('#newUsername').focus();
-            }
-          });
-
-          function ldapUserSelected(selection) {
-            $('#ldapUsername').val(selection.username);
-          }
-        });
-      </script>
-    </c:if>
   </jsp:attribute>
 </t:page>

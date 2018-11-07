@@ -30,21 +30,16 @@
               <tbody>
                 <tr>
                   <td>1st Column</td>
-                  <td>Allow LDAP Users</td>
-                  <td>True or False, you can use <b>1</b>, <b>true</b>, or <b>yes</b> for true and <b>0</b>, <b>false</b>, <b>no</b>, or <b>&lt;blank&gt;</b> for false.</td>
-                </tr>
-                <tr>
-                  <td>2nd Column</td>
                   <td>Name</td>
                   <td>Any <b>unique</b> string.</td>
                 </tr>
                 <tr>
-                  <td>3rd Column</td>
+                  <td>2nd Column</td>
                   <td>Type</td>
                   <td>Must be one of: <b>Lab, Law Enforcement, Medical,</b> or <b>Prosecutor</b>.</td>
                 </tr>
                 <tr>
-                  <td>4th Column</td>
+                  <td>3rd Column</td>
                   <td>Jurisdiction</td>
                   <td>Must be a valid jurisdiction name. Click <a href="#jurisdictionList" data-toggle="modal">here</a> for a complete list.</td>
                 </tr>

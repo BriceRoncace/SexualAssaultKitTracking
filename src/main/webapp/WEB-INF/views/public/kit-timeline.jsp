@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="cjisTags" uri="http://isp.idaho.gov/jsp/cjisTags"%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <t:page>
   <jsp:attribute name="body">
     <%@include file="includes/public-nav.jspf" %>
@@ -20,7 +20,7 @@
         <ul class="list-group">
           <c:forEach var="coc" items="${kit.chainOfCustody}">
             <li class="list-group-item">
-              <h4 class="list-group-item-heading text-capitalize">${coc.eventType.pastTenseLabel}&nbsp;<cjisTags:fmtTemporal value="${coc.eventDate}" pattern="${dateFormat}"/></h4>
+              <h4 class="list-group-item-heading text-capitalize">${coc.eventType.pastTenseLabel}&nbsp;${dateFormatter.format(coc.eventDate)}</h4>
               <c:out value="${coc.getDescription(false)}"/>
             </li>
           </c:forEach>

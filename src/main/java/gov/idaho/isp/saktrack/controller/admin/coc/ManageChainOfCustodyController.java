@@ -1,15 +1,14 @@
 package gov.idaho.isp.saktrack.controller.admin.coc;
 
-import gov.idaho.isp.saktrack.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
 import gov.idaho.isp.saktrack.controller.BaseController;
-import gov.idaho.isp.saktrack.organization.OrganizationRepository;
-import gov.idaho.isp.saktrack.persistence.SexualAssaultKitRepository;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationRepository;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
 import gov.idaho.isp.saktrack.util.EventUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -24,10 +23,10 @@ public class ManageChainOfCustodyController extends BaseController {
 
   @ModelAttribute("kit")
   public SexualAssaultKit loadKit(@RequestParam Long kitId) {
-    return sexualAssaultKitRepository.findOne(kitId);
+    return sexualAssaultKitRepository.findById(kitId).orElse(null);
   }
 
-  @RequestMapping(value = "/admin/manageEvents", method = RequestMethod.GET)
+  @GetMapping("/admin/manageEvents")
   public String manageChainOfCustodyEvents(@ModelAttribute("kit") SexualAssaultKit kit, Model model) {
     model.addAttribute("organizations", organizationRepository.findAssignableOrganizations());
     model.addAttribute("missingSendEvents", EventUtil.getMissingSendEvents(kit.getChainOfCustody()));

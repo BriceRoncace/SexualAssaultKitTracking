@@ -1,18 +1,17 @@
 package gov.idaho.isp.saktrack.controller.jurisdiction;
 
 import gov.idaho.isp.saktrack.controller.BaseController;
-import gov.idaho.isp.saktrack.jurisdiction.Jurisdiction;
-import gov.idaho.isp.saktrack.jurisdiction.JurisdictionRepository;
-import gov.idaho.isp.saktrack.organization.Organization;
-import gov.idaho.isp.saktrack.organization.OrganizationRepository;
+import gov.idaho.isp.saktrack.domain.jurisdiction.Jurisdiction;
+import gov.idaho.isp.saktrack.domain.jurisdiction.JurisdictionRepository;
+import gov.idaho.isp.saktrack.domain.organization.Organization;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationRepository;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -26,13 +25,13 @@ public class RemoveJurisdictionController extends BaseController {
     this.organizationRepository = organizationRepository;
   }
 
-  @RequestMapping(value = "/jurisdiction/remove", method = RequestMethod.POST)
+  @PostMapping("/jurisdiction/remove")
   public String listJurisdictions(@RequestParam Optional<Long> jurisdictionId, Model model, RedirectAttributes ra) {
     if (jurisdictionIdIsMissing(jurisdictionId)) {
       return setupModelForFailure(model, "Unable to load jurisdiction.");
     }
 
-    Jurisdiction jurisdiction = jurisdictionRepository.findOne(jurisdictionId.get());
+    Jurisdiction jurisdiction = jurisdictionRepository.findById(jurisdictionId.get()).orElse(null);
 
     if (hasOrganizationsWithThisJurisdiction(jurisdiction)) {
       return setupModelForFailure(model, "Unable to remove jurisdiction while in use.");

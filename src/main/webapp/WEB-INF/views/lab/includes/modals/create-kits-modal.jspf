@@ -20,7 +20,7 @@
               <div class="row">
                 <div class="col-sm-12">
                   <label class="required">Created Date</label>
-                  <input type="text" data-required id="eventDate" name="eventDate" class="hasDatePicker form-control" value="<cjisTags:fmtTemporal value='${currentDate}' pattern='${dateFormat}' />"/>
+                  <input type="text" data-required id="eventDate" name="eventDate" class="hasDatePicker form-control" value="${dateFormatter.format(currentDate)}"/>
                 </div>
               </div>
               <div class="row top10">

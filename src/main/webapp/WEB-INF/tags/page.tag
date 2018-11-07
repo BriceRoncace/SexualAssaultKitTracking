@@ -10,8 +10,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <%-- current page: ${pageContext.request.requestURI} --%>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- current page: ${pageContext.request.requestURI} -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><c:choose><c:when test="${title == null}">Sexual Assault Kit Tracking</c:when><c:otherwise><jsp:invoke fragment="title" /></c:otherwise></c:choose></title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <jsp:invoke fragment="head" />

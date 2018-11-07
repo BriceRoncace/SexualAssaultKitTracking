@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.provisioning.UserDetailsManager;
 
-public class CustomInMemoryUserDetailsManager implements UserDetailsManager {
+public final class CustomInMemoryUserDetailsManager implements UserDetailsManager {
   private final Map<String,UserDetails> users = new HashMap<>();
 
   public CustomInMemoryUserDetailsManager(UserDetails... users) {

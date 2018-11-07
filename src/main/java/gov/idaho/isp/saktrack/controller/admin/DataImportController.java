@@ -1,14 +1,14 @@
 package gov.idaho.isp.saktrack.controller.admin;
 
+import gov.idaho.isp.saktrack.domain.jurisdiction.JurisdictionRepository;
 import gov.idaho.isp.saktrack.exception.SexualAssaultKitTrackingException;
-import gov.idaho.isp.saktrack.jurisdiction.JurisdictionRepository;
 import gov.idaho.isp.saktrack.service.DataMigration;
 import java.util.function.Function;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -22,18 +22,18 @@ public class DataImportController {
     this.jurisdictionRepository = jurisdictionRepository;
   }
 
-  @RequestMapping(value = "/dataMigration", method = RequestMethod.GET)
+  @GetMapping("/dataMigration")
   public String dataMigration(Model model) {
-    model.addAttribute("jurisdictions", jurisdictionRepository.findAll(new Sort("name")));
+    model.addAttribute("jurisdictions", jurisdictionRepository.findAll(Sort.by("name")));
     return "admin/data-migration";
   }
 
-  @RequestMapping(value = "/orgImport", method = RequestMethod.POST)
+  @PostMapping("/orgImport")
   public String orgImport(MultipartFile file, RedirectAttributes ra) {
     return processFile(file, ra, f -> dataMigration.importNewOrganizations(f));
   }
 
-  @RequestMapping(value = "/userImport", method = RequestMethod.POST)
+  @PostMapping("/userImport")
   public String userImport(MultipartFile file, RedirectAttributes ra) {
     return processFile(file, ra, f -> dataMigration.importNewOrganizationUsers(f));
   }

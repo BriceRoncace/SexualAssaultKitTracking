@@ -1,5 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="cjisTags" uri="http://isp.idaho.gov/jsp/cjisTags"%>
 
 <div id="userPreferences" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -18,7 +17,7 @@
               <div class="form-group">
                 <div class="checkbox">
                   <label>
-                    <cjisTags:checkbox id="sendUserEmail" name="orgUser.sendUserEmail" checked="${orgUser.id == null ? 'true' : orgUser.sendUserEmail}" />
+                    <t:checkbox id="sendUserEmail" name="orgUser.sendUserEmail" checked="${orgUser.id == null ? 'true' : orgUser.sendUserEmail}" />
                     New user verification.
                   </label>
                 </div>
@@ -28,7 +27,7 @@
               <div class="form-group">
                 <div class="checkbox">
                   <label>
-                    <cjisTags:checkbox id="sendAttorneyReviewedEmail" name="orgUser.sendAttorneyReviewedEmail" checked="${orgUser.id == null ? 'true' : orgUser.sendAttorneyReviewedEmail}"/>
+                    <t:checkbox id="sendAttorneyReviewedEmail" name="orgUser.sendAttorneyReviewedEmail" checked="${orgUser.id == null ? 'true' : orgUser.sendAttorneyReviewedEmail}"/>
                     Sexual assault kit has been reviewed by a prosecutor.
                   </label>
                 </div>
@@ -37,7 +36,7 @@
             <div class="form-group">
               <div class="checkbox">
                 <label>
-                  <cjisTags:checkbox id="incomingKitEmail" name="orgUser.incomingKitEmail" checked="${orgUser.incomingKitEmail}"/>
+                  <t:checkbox id="incomingKitEmail" name="orgUser.incomingKitEmail" checked="${orgUser.incomingKitEmail}"/>
                   <c:set var="incomingKitCheckboxVerbiage" value="Kit has been sent to your organization."/>
                   <c:if test="${organization.type == 'PROSECUTOR'}"><c:set var="incomingKitCheckboxVerbiage" value="Sexual assault kit requires review."/></c:if>
                   ${incomingKitCheckboxVerbiage}

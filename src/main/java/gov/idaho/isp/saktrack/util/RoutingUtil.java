@@ -1,15 +1,14 @@
 package gov.idaho.isp.saktrack.util;
 
-import gov.idaho.isp.saktrack.ChainOfCustodyEvent.EventType;
-import gov.idaho.isp.saktrack.KitStatus;
-import gov.idaho.isp.saktrack.SexualAssaultKit;
-import gov.idaho.isp.saktrack.organization.Organization;
-import gov.idaho.isp.saktrack.organization.OrganizationType;
-import gov.idaho.isp.saktrack.user.AdminUser;
-import gov.idaho.isp.saktrack.user.User;
-import gov.idaho.isp.saktrack.user.UserUtils;
-import gov.idaho.isp.saktrack.user.organization.LegalUser;
-import gov.idaho.isp.saktrack.user.organization.OrganizationUser;
+import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent.EventType;
+import gov.idaho.isp.saktrack.domain.KitStatus;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.organization.Organization;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationType;
+import gov.idaho.isp.saktrack.domain.user.AdminUser;
+import gov.idaho.isp.saktrack.domain.user.User;
+import gov.idaho.isp.saktrack.domain.user.organization.LegalUser;
+import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUser;
 
 public class RoutingUtil {
 

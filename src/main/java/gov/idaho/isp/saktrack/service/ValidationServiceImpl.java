@@ -1,23 +1,27 @@
 package gov.idaho.isp.saktrack.service;
 
-import gov.idaho.isp.saktrack.ChainOfCustodyEvent;
-import gov.idaho.isp.saktrack.LabDetails;
-import gov.idaho.isp.saktrack.LawEnforcementDetails;
-import gov.idaho.isp.saktrack.LegalDetails;
-import gov.idaho.isp.saktrack.MedicalDetails;
-import gov.idaho.isp.saktrack.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent;
+import gov.idaho.isp.saktrack.domain.LabDetails;
+import gov.idaho.isp.saktrack.domain.LawEnforcementDetails;
+import gov.idaho.isp.saktrack.domain.LegalDetails;
+import gov.idaho.isp.saktrack.domain.MedicalDetails;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
 import gov.idaho.isp.saktrack.exception.NullSexualAssaultKitException;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ValidationServiceImpl implements ValidationService {
-  private Validator validator;
-  private MessageService messageService;
+  private final Validator validator;
+  private final MessageService messageService;
+
+  public ValidationServiceImpl(Validator validator, MessageService messageService) {
+    this.validator = validator;
+    this.messageService = messageService;
+  }
 
   @Override
   public Set<String> validateKit(SexualAssaultKit kit, Class... groups) {
@@ -78,15 +82,5 @@ public class ValidationServiceImpl implements ValidationService {
 
   private String constraintViolaionToErrorString(ConstraintViolation cv) {
     return messageService.getMessageText(cv.getMessage());
-  }
-
-  @Autowired
-  public void setValidator(Validator validator) {
-    this.validator = validator;
-  }
-
-  @Autowired
-  public void setMessageService(MessageService messageService) {
-    this.messageService = messageService;
   }
 }

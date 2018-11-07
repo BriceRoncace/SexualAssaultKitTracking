@@ -1,6 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="cjisTags" uri="http://isp.idaho.gov/jsp/cjisTags"%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <t:page>
   <jsp:attribute name="head">
@@ -38,7 +37,7 @@
                   <tr>
                     <td><a href="<c:url value="/legal/view"/>?id=${kit.id}">${kit.serialNumber}</a></td>
                     <td>
-                      <cjisTags:fmtTemporal value="${kit.leDetails.crimeDate}" pattern="${dateFormat}" />
+                      ${dateFormatter.format(kit.leDetails.crimeDate)}
                     </td>
                     <td><c:out value="${kit.currentAssignment.name}"/></td>
                     <td>${kit.leDetails.caseNumber}</td>
@@ -58,11 +57,7 @@
             </table>
             
             <c:if test="${prosecutorKits.size < prosecutorKits.totalElements}">
-             <div class="col-sm-12">
-               <div class="pull-right">
-                 <cjisTags:pager resultsGroupSize="5" pageVarName="page" page="${prosecutorKits.number}" resultsPerPageVarName="size" resultsPerPage="${prosecutorKits.size}" totalListSize="${prosecutorKits.totalElements}" showInfo="true"/>
-               </div>
-             </div>
+              <t:pager page="${prosecutorKits}" showInfo="true"/>
            </c:if>
            
           </c:otherwise>

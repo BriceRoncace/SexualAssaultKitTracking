@@ -1,11 +1,11 @@
 package gov.idaho.isp.saktrack.controller.medical;
 
-import gov.idaho.isp.saktrack.SexualAssaultKit;
 import gov.idaho.isp.saktrack.controller.BaseController;
-import gov.idaho.isp.saktrack.organization.OrganizationRepository;
-import gov.idaho.isp.saktrack.organization.OrganizationType;
-import gov.idaho.isp.saktrack.persistence.SexualAssaultKitRepository;
-import gov.idaho.isp.saktrack.user.User;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationRepository;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationType;
+import gov.idaho.isp.saktrack.domain.user.User;
 import gov.idaho.isp.saktrack.util.RoutingUtil;
 import java.util.Optional;
 import javax.validation.Valid;
@@ -13,9 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -31,15 +30,15 @@ public class SaveMedicalDetailsController extends BaseController {
 
   @ModelAttribute
   public SexualAssaultKit prepareKit(@RequestParam Long id, @RequestParam Optional<Long> requestingLeAgencyId) {
-    SexualAssaultKit kit = sexualAssaultKitRepository.findOne(id);
+    SexualAssaultKit kit = sexualAssaultKitRepository.findById(id).orElse(null);
     kit.getMedicalDetails().setRequestingLeAgency(null);
     if (requestingLeAgencyId.isPresent()) {
-      kit.getMedicalDetails().setRequestingLeAgency(organizationRepository.findOne(requestingLeAgencyId.get()));
+      kit.getMedicalDetails().setRequestingLeAgency(organizationRepository.findById(requestingLeAgencyId.get()).orElse(null));
     }
     return kit;
   }
 
-  @RequestMapping(value = "/medical/saveDetails", method = RequestMethod.POST)
+  @PostMapping("/medical/saveDetails")
   public String saveDetails(@Valid SexualAssaultKit kit, BindingResult br, Model model, RedirectAttributes ra, @RequestAttribute User user) {
     if (br.hasErrors()) {
       model.addAttribute("errors", getErrors(br));

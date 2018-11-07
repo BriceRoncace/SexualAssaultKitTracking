@@ -29,7 +29,7 @@
       <c:choose>
         <c:when test="${coc.eventType == 'CREATE'}">
           <div class="coc-assignment-tile">
-            <strong>Created <cjisTags:fmtTemporal value="${coc.eventDate}" pattern="${dateFormat}"/></strong><br/>
+            <strong>Created ${dateFormatter.format(coc.eventDate)}</strong><br/>
             <i class="fa fa-flask font24" aria-hidden="true"></i><br/>
             <c:out value="${coc.to.name}"/>
           </div>
@@ -38,14 +38,14 @@
         <c:when test="${coc.eventType == 'SEND'}">
           <div class="coc-sent-tile">
             Sent<br/>
-            <cjisTags:fmtTemporal value="${coc.eventDate}" pattern="MM/dd/yy"/><br/>
+            ${dateFormatter.format(coc.eventDate)}<br/>
             <span class="glyphicon glyphicon-arrow-right font18"></span>
           </div>
         </c:when> 
 
         <c:when test="${coc.eventType == 'RECEIVE'}">
           <div class="coc-assignment-tile">
-            <strong>Received <cjisTags:fmtTemporal value="${coc.eventDate}" pattern="${dateFormat}"/></strong><br/>
+            <strong>Received ${dateFormatter.format(coc.eventDate)}<br/>
             <c:choose>
               <c:when test="${coc.to.type == 'MEDICAL'}">
                 <i class="fa fa-hospital-o font24" aria-hidden="true"></i><br/>
@@ -63,7 +63,7 @@
 
         <c:when test="${coc.eventType == 'DESTROY'}">
           <div class="coc-assignment-tile">
-            <strong>Destroyed <cjisTags:fmtTemporal value="${coc.eventDate}" pattern="${dateFormat}"/></strong><br/>
+            <strong>Destroyed ${dateFormatter.format(coc.eventDate)}</strong><br/>
             <span class="glyphicon glyphicon-fire font18"></span><br/>
             <c:out value="${coc.from.name}"/>
           </div>
@@ -72,7 +72,7 @@
 
         <c:when test="${coc.eventType == 'REPURPOSE'}">
           <div class="coc-assignment-tile">
-            <strong>Repurposed <cjisTags:fmtTemporal value="${coc.eventDate}" pattern="${dateFormat}"/></strong><br/>
+            <strong>Repurposed ${dateFormatter.format(coc.eventDate)}</strong><br/>
             <span class="glyphicon glyphicon-transfer font18"></span><br/>
             <c:out value="${coc.from.name}"/>
           </div>

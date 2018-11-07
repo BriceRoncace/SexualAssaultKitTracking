@@ -1,20 +1,19 @@
 package gov.idaho.isp.saktrack.controller.organization;
 
 import gov.idaho.isp.saktrack.controller.BaseController;
-import gov.idaho.isp.saktrack.organization.Organization;
-import gov.idaho.isp.saktrack.organization.OrganizationRepository;
-import gov.idaho.isp.saktrack.persistence.SexualAssaultKitRepository;
-import gov.idaho.isp.saktrack.persistence.search.SexualAssaultKitSearchCriteria;
-import gov.idaho.isp.saktrack.persistence.search.SexualAssaultKitSpec;
-import gov.idaho.isp.saktrack.user.User;
-import gov.idaho.isp.saktrack.user.organization.AbstractOrganizationUser;
-import gov.idaho.isp.saktrack.user.persistence.OrganizationUserRepository;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
+import gov.idaho.isp.saktrack.domain.organization.Organization;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationRepository;
+import gov.idaho.isp.saktrack.domain.search.SexualAssaultKitSearchCriteria;
+import gov.idaho.isp.saktrack.domain.search.SexualAssaultKitSpec;
+import gov.idaho.isp.saktrack.domain.user.User;
+import gov.idaho.isp.saktrack.domain.user.organization.AbstractOrganizationUser;
+import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUserRepository;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -29,9 +28,9 @@ public class RemoveOrganizationContoller extends BaseController {
     this.sexualAssaultKitRepository = sexualAssaultKitRepository;
   }
 
-  @RequestMapping(value = "/organization/{orgId}/remove", method = RequestMethod.POST)
+  @PostMapping("/organization/{orgId}/remove")
   public String removeOrganization(@PathVariable Long orgId, RedirectAttributes ra, @RequestAttribute User user) {
-    Organization org = organizationRepository.findOne(orgId);
+    Organization org = organizationRepository.findById(orgId).orElse(null);
     if (isOrganizationAssociatedToAnyKits(org)) {
       ra.addFlashAttribute("errors", String.format("%s cannot be removed because it is associated to sexual assault kits.", org.getName()));
       return "redirect:/";
@@ -61,7 +60,7 @@ public class RemoveOrganizationContoller extends BaseController {
 
   private void removeAllUsers(Organization org) {
     List<AbstractOrganizationUser> users = organizationUserRepository.findByOrganizationIdOrderByDisplayNameAsc(org.getId());
-    organizationUserRepository.delete(users);
+    organizationUserRepository.deleteAll(users);
   }
 
   private void removeOrganization(Organization org) {

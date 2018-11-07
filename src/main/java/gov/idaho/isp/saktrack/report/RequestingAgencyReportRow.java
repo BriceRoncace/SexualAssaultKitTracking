@@ -1,9 +1,9 @@
 package gov.idaho.isp.saktrack.report;
 
-import gov.idaho.isp.saktrack.ChainOfCustodyEvent;
-import gov.idaho.isp.saktrack.EventFlag;
-import gov.idaho.isp.saktrack.LawEnforcementDetails.NonSubmissionReason;
-import gov.idaho.isp.saktrack.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent;
+import gov.idaho.isp.saktrack.domain.EventFlag;
+import gov.idaho.isp.saktrack.domain.LawEnforcementDetails.NonSubmissionReason;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
 import gov.idaho.isp.saktrack.util.MilestoneUtils;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

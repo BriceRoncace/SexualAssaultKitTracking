@@ -1,6 +1,6 @@
 package gov.idaho.isp.saktrack.util;
 
-import gov.idaho.isp.saktrack.organization.Organization;
+import gov.idaho.isp.saktrack.domain.organization.Organization;
 
 public class MissingSendEvent {
   private Organization from;

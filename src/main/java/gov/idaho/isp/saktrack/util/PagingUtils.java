@@ -14,7 +14,7 @@ public class PagingUtils {
     Page<T> page = getPageFunction.apply(pageable);
     int requestedPage = pageable.getPageNumber();
     if (requestedPage != 0 && pageNumberDoesNotExist(requestedPage, page)) {
-      return getPageFunction.apply(new PageRequest(0, pageable.getPageSize(), pageable.getSort()));
+      return getPageFunction.apply(PageRequest.of(0, pageable.getPageSize(), pageable.getSort()));
     }
     return page;
   }
@@ -24,7 +24,7 @@ public class PagingUtils {
   }
 
   public static <T, R> Page<R> toNewPage(Page<T> page, List<R> newPageContent) {
-    return new PageImpl<>(newPageContent, new PageRequest(page.getNumber(), page.getSize(), page.getSort()), page.getTotalElements());
+    return new PageImpl<>(newPageContent, PageRequest.of(page.getNumber(), page.getSize(), page.getSort()), page.getTotalElements());
   }
 
   public static String getSingleOrderBy(SortWrapper sortWrapper) {

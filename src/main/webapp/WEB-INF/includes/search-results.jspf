@@ -1,8 +1,8 @@
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+
 <c:choose>
   <c:when test="${page != null && page.totalElements > 0}">
-    <div class="pull-right">
-      <cjisTags:pager resultsGroupSize="5" pageVarName="page" page="${page.number}" resultsPerPageVarName="size" resultsPerPage="${page.size}" totalListSize="${page.totalElements}" showInfo="true"/>
-    </div>
+    <t:pager page="${page}" showInfo="false"/>
 
     <table class="table table-condensed table-hover">
       <thead>
@@ -22,9 +22,9 @@
           <tr>
             <td><a href="<c:url value='/${user.type.label}/view'/>?id=${kit.id}">${kit.serialNumber}</a></td>
             <td><c:out value="${kit.currentAssignment}"/></td>
-          <td><cjisTags:fmtTemporal value="${kit.medicalDetails.collectionDate}" pattern="${dateFormat}"/></td>
-          <td><cjisTags:fmtTemporal value="${kit.labDetails.dateCompleted}" pattern="${dateFormat}"/></td>
-          <td><cjisTags:fmtTemporal value="${kit.lastModified}" pattern="${dateFormat}"/></td>          
+          <td>${dateFormatter.format(kit.medicalDetails.collectionDate)}</td>
+          <td>${dateFormatter.format(kit.labDetails.dateCompleted)}</td>
+          <td>${dateFormatter.format(kit.lastModified.toLocalDate())}</td>          
           <td><c:out value="${kit.lastModifiedBy}"/></td>
           <td><c:out value="${kit.currentCustody.prettyPrint(false)}"/></td>
           <td style="width: 5%">
@@ -40,10 +40,9 @@
         </c:forEach>
       </tbody>
     </table>
-
-    <div class="pull-right">
-      <cjisTags:pager resultsGroupSize="5" pageVarName="page" page="${page.number}" resultsPerPageVarName="size" resultsPerPage="${page.size}" totalListSize="${page.totalElements}" showInfo="true"/>
-    </div>
+    
+    <t:pager page="${page}" showInfo="true"/>
+    
   </c:when>
   <c:otherwise>
     <p>No results found.</p>

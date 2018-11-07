@@ -1,7 +1,7 @@
 <%@tag trimDirectiveWhitespaces="true" %>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@taglib prefix="cjisTags" uri="http://isp.idaho.gov/jsp/cjisTags"%>
 
 <%@attribute name="sort" required="true" type="org.springframework.data.domain.Sort" %>
 <%@attribute name="propertyName" required="true" type="java.lang.String" %>
@@ -23,8 +23,8 @@
   <c:set var="sortParameterName" value="sort"/>
 </c:if>
 
-<cjisTags:query-string var="params" exclude="${sortParameterName}"/>
-<c:url var="searchUrl" value="${requestScope['javax.servlet.forward.servlet_path']}?${params}">
+<c:set var="pagingUrl"><t:currenturl excludeParameterName="${sortParameterName}" /></c:set>
+<c:url context="/" var="searchUrl" value="${pagingUrl}">
   <c:param name="${sortParameterName}" value="${propertyName}${direction}"/>
 </c:url>
 

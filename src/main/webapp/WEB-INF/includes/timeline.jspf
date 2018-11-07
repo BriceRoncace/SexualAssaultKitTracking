@@ -12,9 +12,9 @@
       <c:forEach var="coc" items="${kit.chainOfCustody}">
         <li class="list-group-item font14">
           <h4 class="list-group-item-heading text-capitalize">
-            ${coc.eventType.pastTenseLabel}&nbsp;<cjisTags:fmtTemporal value="${coc.eventDate}" pattern="${dateFormat}"/> 
+            ${coc.eventType.pastTenseLabel}&nbsp;${dateFormatter.format(coc.eventDate)} 
             <c:if test="${user.admin}">
-              <div class="small pull-right"><small><cjisTags:fmtTemporal value="${coc.digitalTimestamp}" pattern="${dateTimeFormat}"/></small></div>
+              <div class="small pull-right"><small>${dateTimeFormatter.format(coc.digitalTimestamp)}</small></div>
             </c:if>
           </h4>
 

@@ -1,8 +1,8 @@
 package gov.idaho.isp.saktrack.controller.interceptor;
 
-import gov.idaho.isp.saktrack.organization.OrganizationRepository;
-import gov.idaho.isp.saktrack.user.User;
-import gov.idaho.isp.saktrack.user.organization.OrganizationUser;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationRepository;
+import gov.idaho.isp.saktrack.domain.user.User;
+import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUser;
 import java.util.Arrays;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -20,17 +20,17 @@ public class OrganizationInterceptor extends HandlerInterceptorAdapter {
   }
 
   @Override
-  public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+  public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) throws Exception {
     if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
-      User user = (User) request.getAttribute("user");
+      User user = (User) req.getAttribute("user");
       if (user != null && user instanceof OrganizationUser) {
         OrganizationUser orgUser = (OrganizationUser) user;
-        request.setAttribute("organization", orgUser.getOrganization());
+        req.setAttribute("organization", orgUser.getOrganization());
         return true;
       }
-      Long orgId = findOrgId(request);
+      Long orgId = findOrgId(req);
       if (orgId != null) {
-        request.setAttribute("organization", organizationRepository.findOne(orgId));
+        req.setAttribute("organization", organizationRepository.findById(orgId).orElse(null));
         return true;
       }
     }

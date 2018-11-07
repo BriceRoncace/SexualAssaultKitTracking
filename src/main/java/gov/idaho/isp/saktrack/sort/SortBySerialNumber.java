@@ -1,6 +1,6 @@
 package gov.idaho.isp.saktrack.sort;
 
-import gov.idaho.isp.saktrack.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
 import java.util.Comparator;
 import org.apache.commons.lang3.StringUtils;
 

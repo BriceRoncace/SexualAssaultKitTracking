@@ -1,15 +1,15 @@
 package gov.idaho.isp.saktrack.controller.medical;
 
-import gov.idaho.isp.saktrack.SexualAssaultKit;
 import gov.idaho.isp.saktrack.controller.BaseController;
 import gov.idaho.isp.saktrack.controller.advice.LoadEventDetailsAdvice.LoadEventDetails;
-import gov.idaho.isp.saktrack.dto.EventDetails;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
+import gov.idaho.isp.saktrack.domain.dto.EventDetails;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationRepository;
+import gov.idaho.isp.saktrack.domain.user.User;
+import gov.idaho.isp.saktrack.domain.user.organization.MedicalUser;
 import gov.idaho.isp.saktrack.exception.SexualAssaultKitTrackingException;
-import gov.idaho.isp.saktrack.organization.OrganizationRepository;
-import gov.idaho.isp.saktrack.persistence.SexualAssaultKitRepository;
-import gov.idaho.isp.saktrack.user.User;
-import gov.idaho.isp.saktrack.user.UserUtils;
-import gov.idaho.isp.saktrack.user.organization.MedicalUser;
+import gov.idaho.isp.saktrack.util.UserUtils;
 import gov.idaho.isp.saktrack.validation.group.Single;
 import java.util.Optional;
 import javax.validation.Valid;
@@ -17,9 +17,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -42,9 +41,9 @@ public class MedicalSendToLawEnforcementController extends BaseController {
 
   @ModelAttribute
   public SexualAssaultKit prepareKit(@RequestParam Long id, @RequestParam Optional<Long> requestingLeAgencyId) {
-    SexualAssaultKit kit = sexualAssaultKitRepository.findOne(id);
+    SexualAssaultKit kit = sexualAssaultKitRepository.findById(id).orElse(null);
     if (requestingLeAgencyId.isPresent()) {
-      kit.getMedicalDetails().setRequestingLeAgency(organizationRepository.findOne(requestingLeAgencyId.get()));
+      kit.getMedicalDetails().setRequestingLeAgency(organizationRepository.findById(requestingLeAgencyId.get()).orElse(null));
     }
     else {
       kit.getMedicalDetails().setRequestingLeAgency(null);
@@ -52,7 +51,7 @@ public class MedicalSendToLawEnforcementController extends BaseController {
     return kit;
   }
 
-  @RequestMapping(value = "/medical/sendToLawEnforcement", method = RequestMethod.POST)
+  @PostMapping("/medical/sendToLawEnforcement")
   public String send(@Valid SexualAssaultKit kit, BindingResult br, @Validated(Single.class) EventDetails details, BindingResult br2, MedicalUser medicalUser, RedirectAttributes ra) {
     if (br.hasErrors() || br2.hasErrors()) {
       ra.addFlashAttribute("errors", getErrors(br, br2));

@@ -1,11 +1,11 @@
 package gov.idaho.isp.saktrack.controller.medical;
 
-import gov.idaho.isp.saktrack.SexualAssaultKit;
 import gov.idaho.isp.saktrack.controller.BaseOrganizationController;
-import gov.idaho.isp.saktrack.organization.Organization;
-import gov.idaho.isp.saktrack.persistence.SexualAssaultKitRepository;
-import gov.idaho.isp.saktrack.user.User;
-import gov.idaho.isp.saktrack.user.persistence.OrganizationUserRepository;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
+import gov.idaho.isp.saktrack.domain.organization.Organization;
+import gov.idaho.isp.saktrack.domain.user.User;
+import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUserRepository;
 import gov.idaho.isp.saktrack.util.CookieUtils;
 import gov.idaho.isp.saktrack.util.PagingUtils;
 import gov.idaho.isp.saktrack.util.SortWrapper;
@@ -19,9 +19,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -33,7 +32,7 @@ public class MedicalDashboardController extends BaseOrganizationController {
     this.sexualAssaultKitRepository = sexualAssaultKitRepository;
   }
 
-  @RequestMapping(value = "/medical/dashboard", method = RequestMethod.GET)
+  @GetMapping("/medical/dashboard")
   public String dashboard(@CookieValue Optional<String> medicalPagingParams,
                           @RequestAttribute Organization organization,
                           MedDashboardPageRequest pageRequests,
@@ -107,16 +106,16 @@ public class MedicalDashboardController extends BaseOrganizationController {
 
     public PageRequest getIncoming() {
       if (incomingSort != null) {
-        return new PageRequest(incomingPage, DEFAULT_PAGE_SIZE, incomingSort.unwrap());
+        return PageRequest.of(incomingPage, DEFAULT_PAGE_SIZE, incomingSort.unwrap());
       }
-      return new PageRequest(incomingPage, DEFAULT_PAGE_SIZE);
+      return PageRequest.of(incomingPage, DEFAULT_PAGE_SIZE);
     }
 
     public PageRequest getInProcess() {
       if (inProcessSort != null) {
-        return new PageRequest(inProcessPage, DEFAULT_PAGE_SIZE, inProcessSort.unwrap());
+        return PageRequest.of(inProcessPage, DEFAULT_PAGE_SIZE, inProcessSort.unwrap());
       }
-      return new PageRequest(inProcessPage, DEFAULT_PAGE_SIZE);
+      return PageRequest.of(inProcessPage, DEFAULT_PAGE_SIZE);
     }
 
     public String getAsUrlParams() {

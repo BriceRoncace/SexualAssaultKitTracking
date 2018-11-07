@@ -1,8 +1,8 @@
 package gov.idaho.isp.saktrack.report;
 
-import gov.idaho.isp.saktrack.ChainOfCustodyEvent;
-import gov.idaho.isp.saktrack.SexualAssaultKit;
-import gov.idaho.isp.saktrack.organization.OrganizationType;
+import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationType;
 import java.time.LocalDate;
 import java.util.Optional;
 

@@ -1,7 +1,7 @@
 package gov.idaho.isp.saktrack.controller.interceptor;
 
-import gov.idaho.isp.saktrack.user.organization.AbstractOrganizationUser;
-import gov.idaho.isp.saktrack.user.persistence.OrganizationUserRepository;
+import gov.idaho.isp.saktrack.domain.user.organization.AbstractOrganizationUser;
+import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUserRepository;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +18,7 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
   }
 
   @Override
-  public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+  public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) throws Exception {
     if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
       Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
       if (userDetails != null && userDetails instanceof UserDetails) {
@@ -28,7 +28,7 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
             userDetails = organizationUserRepository.findByUsernameIgnoreCase(u.getUsername());
           }
         }
-        request.setAttribute("user", userDetails);
+        req.setAttribute("user", userDetails);
       }
     }
     return true;

@@ -1,7 +1,7 @@
 package gov.idaho.isp.saktrack.service.csv;
 
-import gov.idaho.isp.saktrack.LawEnforcementDetails;
-import gov.idaho.isp.saktrack.organization.OrganizationType;
+import gov.idaho.isp.saktrack.domain.LawEnforcementDetails;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationType;
 import gov.idaho.isp.saktrack.report.CurrentAssignmentReport;
 import gov.idaho.isp.saktrack.report.CurrentAssignmentReportGroup;
 import gov.idaho.isp.saktrack.report.CurrentAssignmentReportRow;

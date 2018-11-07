@@ -1,7 +1,7 @@
 package gov.idaho.isp.saktrack.validation;
 
-import gov.idaho.isp.saktrack.KitStatus;
-import gov.idaho.isp.saktrack.LawEnforcementDetails;
+import gov.idaho.isp.saktrack.domain.KitStatus;
+import gov.idaho.isp.saktrack.domain.LawEnforcementDetails;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 

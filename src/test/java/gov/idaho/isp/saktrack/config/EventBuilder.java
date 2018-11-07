@@ -1,8 +1,8 @@
 package gov.idaho.isp.saktrack.config;
 
-import gov.idaho.isp.saktrack.ChainOfCustodyEvent;
-import gov.idaho.isp.saktrack.EventFlag;
-import gov.idaho.isp.saktrack.organization.Organization;
+import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent;
+import gov.idaho.isp.saktrack.domain.EventFlag;
+import gov.idaho.isp.saktrack.domain.organization.Organization;
 import java.time.LocalDate;
 
 public class EventBuilder {

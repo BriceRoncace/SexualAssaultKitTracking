@@ -1,13 +1,12 @@
 package gov.idaho.isp.saktrack.controller.user;
 
-import gov.idaho.isp.saktrack.organization.OrganizationRepository;
-import gov.idaho.isp.saktrack.user.organization.OrganizationUser;
-import gov.idaho.isp.saktrack.user.persistence.OrganizationUserRepository;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationRepository;
+import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUser;
+import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class LoadOrganizationUserController {
@@ -19,14 +18,14 @@ public class LoadOrganizationUserController {
     this.organizationUserRepository = organizationUserRepository;
   }
 
-  @RequestMapping(value = "/organization/{orgId}/user/{userId}", method = RequestMethod.GET)
+  @GetMapping("/organization/{orgId}/user/{userId}")
   public String loadOrganizationUser(@PathVariable Long orgId, @PathVariable Long userId, Model model) {
-    OrganizationUser orgUser = organizationUserRepository.findOne(userId);
+    OrganizationUser orgUser = organizationUserRepository.findById(userId).orElse(null);
 
     if (orgUser != null && orgUser.getOrganization() != null && orgId.equals(orgUser.getOrganization().getId())) {
       model.addAttribute("orgUser", orgUser);
     }
-    model.addAttribute("organization", organizationRepository.findOne(orgId));
+    model.addAttribute("organization", organizationRepository.findById(orgId).orElse(null));
     return "org-users/save-user";
   }
 }

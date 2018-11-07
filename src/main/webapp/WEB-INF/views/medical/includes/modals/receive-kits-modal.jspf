@@ -25,7 +25,7 @@
               <div class="row">
                 <div class="col-sm-12">
                   <label class="required">Receive Date</label>
-                  <input type="text" id="eventDate" name="eventDate" data-required class="hasDatePicker form-control" value="<cjisTags:fmtTemporal value='${currentDate}' pattern='${dateFormat}' />"/>
+                  <input type="text" id="eventDate" name="eventDate" data-required class="hasDatePicker form-control" value="${dateFormatter.format(currentDate)}"/>
                 </div>
                 <div class="col-sm-12 top10">
                   <label>Notes</label>

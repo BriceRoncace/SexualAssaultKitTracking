@@ -1,6 +1,6 @@
 package gov.idaho.isp.saktrack.service;
 
-import gov.idaho.isp.saktrack.user.password.dto.ResetPasswordPair;
+import gov.idaho.isp.saktrack.domain.user.password.dto.ResetPasswordPair;
 
 public interface PasswordResetService {
   String requestReset(String username);

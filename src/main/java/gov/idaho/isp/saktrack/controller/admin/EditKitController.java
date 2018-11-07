@@ -1,16 +1,15 @@
 package gov.idaho.isp.saktrack.controller.admin;
 
-import gov.idaho.isp.saktrack.LawEnforcementDetails;
-import gov.idaho.isp.saktrack.SexualAssaultKit;
-import gov.idaho.isp.saktrack.organization.OrganizationRepository;
-import gov.idaho.isp.saktrack.organization.OrganizationType;
-import gov.idaho.isp.saktrack.persistence.SexualAssaultKitRepository;
+import gov.idaho.isp.saktrack.domain.LawEnforcementDetails;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationRepository;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationType;
 import java.util.Optional;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -25,10 +24,10 @@ public class EditKitController {
 
   @ModelAttribute
   public SexualAssaultKit prepareKit(@RequestParam Long id, @RequestParam Optional<Long> requestingLeAgencyId, @RequestParam Optional<Long> verifiedRequestingLeAgencyId) {
-    return sexualAssaultKitRepository.findOne(id);
+    return sexualAssaultKitRepository.findById(id).orElse(null);
   }
 
-  @RequestMapping(value = {"/admin/view", "/admin/edit"}, method = RequestMethod.GET)
+  @GetMapping({"/admin/view", "/admin/edit"})
   public String editDetails(SexualAssaultKit kit, Model model) {
     model.addAttribute("kit", kit);
     model.addAttribute("leOrgs", organizationRepository.findByTypeOrderByNameAsc(OrganizationType.LAW_ENFORCEMENT));

@@ -1,8 +1,8 @@
 package gov.idaho.isp.saktrack.validation;
 
-import gov.idaho.isp.saktrack.user.organization.OrganizationUser;
-import gov.idaho.isp.saktrack.user.password.dto.ChangePasswordRequest;
-import gov.idaho.isp.saktrack.user.persistence.OrganizationUserRepository;
+import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUser;
+import gov.idaho.isp.saktrack.domain.user.password.dto.ChangePasswordRequest;
+import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUserRepository;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import org.apache.commons.lang3.StringUtils;

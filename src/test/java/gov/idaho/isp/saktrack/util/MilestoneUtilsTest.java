@@ -1,7 +1,7 @@
 package gov.idaho.isp.saktrack.util;
 
-import gov.idaho.isp.saktrack.EventFlag;
-import gov.idaho.isp.saktrack.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.EventFlag;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
 import gov.idaho.isp.saktrack.config.EventBuilder;
 import java.time.LocalDate;
 import static org.junit.Assert.*;

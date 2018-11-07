@@ -1,11 +1,11 @@
 package gov.idaho.isp.saktrack.controller.legal;
 
-import gov.idaho.isp.saktrack.SexualAssaultKit;
 import gov.idaho.isp.saktrack.controller.BaseOrganizationController;
-import gov.idaho.isp.saktrack.organization.Organization;
-import gov.idaho.isp.saktrack.persistence.SexualAssaultKitRepository;
-import gov.idaho.isp.saktrack.user.User;
-import gov.idaho.isp.saktrack.user.persistence.OrganizationUserRepository;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
+import gov.idaho.isp.saktrack.domain.organization.Organization;
+import gov.idaho.isp.saktrack.domain.user.User;
+import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUserRepository;
 import gov.idaho.isp.saktrack.util.CookieUtils;
 import gov.idaho.isp.saktrack.util.PagingUtils;
 import gov.idaho.isp.saktrack.util.SortWrapper;
@@ -84,9 +84,9 @@ public class LegalDashboardController extends BaseOrganizationController {
 
     public PageRequest getPageRequest() {
       if (sort != null) {
-        return new PageRequest(page, DEFAULT_PAGE_SIZE, sort.unwrap());
+        return PageRequest.of(page, DEFAULT_PAGE_SIZE, sort.unwrap());
       }
-      return new PageRequest(page, DEFAULT_PAGE_SIZE);
+      return PageRequest.of(page, DEFAULT_PAGE_SIZE);
     }
 
     public String getAsUrlParams() {

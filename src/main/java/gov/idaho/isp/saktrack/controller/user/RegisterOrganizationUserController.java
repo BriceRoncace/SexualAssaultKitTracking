@@ -1,11 +1,11 @@
 package gov.idaho.isp.saktrack.controller.user;
 
 import gov.idaho.isp.saktrack.controller.BaseController;
-import gov.idaho.isp.saktrack.organization.OrganizationRepository;
-import gov.idaho.isp.saktrack.service.EmailService;
-import gov.idaho.isp.saktrack.service.OrganizationUserPreparer;
-import gov.idaho.isp.saktrack.user.persistence.OrganizationUserRepository;
-import gov.idaho.isp.saktrack.user.view.DbUserForm;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationRepository;
+import gov.idaho.isp.saktrack.domain.user.dto.OrgUserForm;
+import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUserRepository;
+import gov.idaho.isp.saktrack.service.email.EmailService;
+import gov.idaho.isp.saktrack.service.UserFormFactory;
 import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,8 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -22,36 +21,36 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class RegisterOrganizationUserController extends BaseController {
   private final OrganizationRepository organizationRepository;
   private final OrganizationUserRepository organizationUserRepository;
-  private final OrganizationUserPreparer organizationUserPreparer;
+  private final UserFormFactory userFormFactory;
   private final PasswordEncoder passwordEncoder;
   private final EmailService emailService;
 
-  public RegisterOrganizationUserController(OrganizationRepository organizationRepository, OrganizationUserRepository organizationUserRepository, OrganizationUserPreparer organizationUserPreparer, PasswordEncoder passwordEncoder, EmailService emailService) {
+  public RegisterOrganizationUserController(OrganizationRepository organizationRepository, OrganizationUserRepository organizationUserRepository, UserFormFactory userFormFactory, PasswordEncoder passwordEncoder, EmailService emailService) {
     this.organizationRepository = organizationRepository;
     this.organizationUserRepository = organizationUserRepository;
-    this.organizationUserPreparer = organizationUserPreparer;
+    this.userFormFactory = userFormFactory;
     this.passwordEncoder = passwordEncoder;
     this.emailService = emailService;
   }
 
   @ModelAttribute
-  public DbUserForm prepareOrganizationUser(@RequestParam Optional<Long> orgId) {
-    return organizationUserPreparer.prepareNewDbUserForm(orgId);
+  public OrgUserForm prepareOrganizationUser(@RequestParam Optional<Long> orgId) {
+    return userFormFactory.getOrgUserForm(orgId);
   }
 
-  @RequestMapping(value = "/register", method = RequestMethod.POST)
-  public String saveRegisterOrganizationUser(@Valid DbUserForm userForm, BindingResult br, Model model, RedirectAttributes ra) {
+  @PostMapping("/register")
+  public String saveRegisterOrganizationUser(@Valid OrgUserForm orgUserForm, BindingResult br, Model model, RedirectAttributes ra) {
     if (br.hasErrors()) {
       model.addAttribute("errors", getErrors(br));
       model.addAttribute("organizations", organizationRepository.findByEnabledOrderByNameAsc(true));
-      model.addAttribute("orgUser", userForm.getOrgUser());
+      model.addAttribute("orgUser", orgUserForm.getOrgUser());
       return "/public/user-registration";
     }
 
-    userForm.encodePasswordIfNecessary(passwordEncoder);
-    organizationUserRepository.save(userForm.getOrgUser());
-    emailService.sendUserRegisteredEmail(userForm.getOrgUser());
-    ra.addFlashAttribute("messages", getText("register.success", userForm.getOrgUser().getDisplayName()));
+    orgUserForm.encodePasswordIfNecessary(passwordEncoder);
+    organizationUserRepository.save(orgUserForm.getOrgUser());
+    emailService.sendUserRegisteredEmail(orgUserForm.getOrgUser());
+    ra.addFlashAttribute("messages", getText("register.success", orgUserForm.getOrgUser().getDisplayName()));
     return "redirect:/login";
   }
 }

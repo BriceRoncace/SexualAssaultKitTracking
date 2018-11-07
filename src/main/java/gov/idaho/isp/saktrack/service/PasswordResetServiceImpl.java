@@ -1,35 +1,37 @@
 package gov.idaho.isp.saktrack.service;
 
-import gov.idaho.isp.saktrack.user.User.AuthMethod;
-import gov.idaho.isp.saktrack.user.organization.AbstractOrganizationUser;
-import gov.idaho.isp.saktrack.user.organization.OrganizationUser;
-import gov.idaho.isp.saktrack.user.password.PasswordToken;
-import gov.idaho.isp.saktrack.user.password.PasswordTokenRepository;
-import gov.idaho.isp.saktrack.user.password.dto.ResetPasswordPair;
-import gov.idaho.isp.saktrack.user.persistence.OrganizationUserRepository;
+import gov.idaho.isp.saktrack.service.email.EmailService;
+import gov.idaho.isp.saktrack.domain.user.AbstractUser;
+import gov.idaho.isp.saktrack.domain.user.AbstractUserRepository;
+import gov.idaho.isp.saktrack.domain.user.User;
+import gov.idaho.isp.saktrack.domain.user.password.PasswordToken;
+import gov.idaho.isp.saktrack.domain.user.password.PasswordTokenRepository;
+import gov.idaho.isp.saktrack.domain.user.password.dto.ResetPasswordPair;
 import java.time.LocalDateTime;
 import java.util.Random;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PasswordResetServiceImpl implements PasswordResetService {
-  private PasswordTokenRepository passwordTokenRepository;
-  private EmailService emailService;
-  private OrganizationUserRepository organizationUserRepository;
-  private PasswordEncoder passwordEncoder;
+  private final PasswordTokenRepository passwordTokenRepository;
+  private final EmailService emailService;
+  private final AbstractUserRepository abstractUserRepository;
+  private final PasswordEncoder passwordEncoder;
+
+  public PasswordResetServiceImpl(PasswordTokenRepository passwordTokenRepository, EmailService emailService, AbstractUserRepository abstractUserRepository, PasswordEncoder passwordEncoder) {
+    this.passwordTokenRepository = passwordTokenRepository;
+    this.emailService = emailService;
+    this.abstractUserRepository = abstractUserRepository;
+    this.passwordEncoder = passwordEncoder;
+  }
 
   @Override
   public String requestReset(String username) {
-    OrganizationUser user = organizationUserRepository.findByUsernameIgnoreCase(username);
+    User user = abstractUserRepository.findByUsernameIgnoreCase(username);
     if (user == null) {
       return "password.reset.user.null";
     }
-    else if (user.getAuthMethod() != AuthMethod.DATABASE) {
-      return "password.reset.user.invalid.auth.method";
-    }
-
 
     PasswordToken token = new PasswordToken(generateToken(40), user.getId());
     if (!emailService.sendPasswordResetEmail(token, user)) {
@@ -54,9 +56,9 @@ public class PasswordResetServiceImpl implements PasswordResetService {
       return false;
     }
 
-    AbstractOrganizationUser user = organizationUserRepository.findOne(passwordToken.getUserId());
+    AbstractUser user = abstractUserRepository.findById(passwordToken.getUserId()).orElse(null);
     user.setPassword(passwordEncoder.encode(passwordPair.getPasswordOne()));
-    organizationUserRepository.save(user);
+    abstractUserRepository.save(user);
     passwordTokenRepository.deleteInBatch(passwordTokenRepository.findByUserId(passwordToken.getUserId()));
     return true;
   }
@@ -69,25 +71,5 @@ public class PasswordResetServiceImpl implements PasswordResetService {
       token.append(CHARS.charAt(random.nextInt(CHARS.length())));
     }
     return token.toString();
-  }
-
-  @Autowired
-  public void setPasswordTokenRepository(PasswordTokenRepository passwordTokenRepository) {
-    this.passwordTokenRepository = passwordTokenRepository;
-  }
-
-  @Autowired
-  public void setEmailService(EmailService emailService) {
-    this.emailService = emailService;
-  }
-
-  @Autowired
-  public void setOrganizationUserRepository(OrganizationUserRepository organizationUserRepository) {
-    this.organizationUserRepository = organizationUserRepository;
-  }
-
-  @Autowired
-  public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-    this.passwordEncoder = passwordEncoder;
   }
 }

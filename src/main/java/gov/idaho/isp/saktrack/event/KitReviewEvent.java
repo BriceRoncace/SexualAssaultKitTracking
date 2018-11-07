@@ -1,7 +1,7 @@
 package gov.idaho.isp.saktrack.event;
 
-import gov.idaho.isp.saktrack.SexualAssaultKit;
-import gov.idaho.isp.saktrack.user.organization.LegalUser;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.user.organization.LegalUser;
 import java.time.LocalDateTime;
 
 public class KitReviewEvent {

@@ -1,11 +1,11 @@
 package gov.idaho.isp.saktrack.service;
 
-import gov.idaho.isp.saktrack.ChainOfCustodyEvent;
-import gov.idaho.isp.saktrack.LabDetails;
-import gov.idaho.isp.saktrack.LawEnforcementDetails;
-import gov.idaho.isp.saktrack.LegalDetails;
-import gov.idaho.isp.saktrack.MedicalDetails;
-import gov.idaho.isp.saktrack.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent;
+import gov.idaho.isp.saktrack.domain.LabDetails;
+import gov.idaho.isp.saktrack.domain.LawEnforcementDetails;
+import gov.idaho.isp.saktrack.domain.LegalDetails;
+import gov.idaho.isp.saktrack.domain.MedicalDetails;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
 import java.util.Set;
 
 public interface ValidationService {

@@ -1,22 +1,21 @@
 package gov.idaho.isp.saktrack.config;
 
-import gov.idaho.isp.saktrack.ChainOfCustodyEvent;
-import gov.idaho.isp.saktrack.ChainOfCustodyEvent.EventType;
-import gov.idaho.isp.saktrack.LabDetails;
-import gov.idaho.isp.saktrack.LawEnforcementDetails;
-import gov.idaho.isp.saktrack.LegalDetails;
-import gov.idaho.isp.saktrack.MedicalDetails;
-import gov.idaho.isp.saktrack.SexualAssaultKit;
-import gov.idaho.isp.saktrack.YesNoNa;
-import gov.idaho.isp.saktrack.dto.CreateKitEventDetails;
-import gov.idaho.isp.saktrack.dto.EventDetails;
-import gov.idaho.isp.saktrack.jurisdiction.Jurisdiction;
-import gov.idaho.isp.saktrack.organization.Organization;
-import gov.idaho.isp.saktrack.organization.OrganizationType;
-import gov.idaho.isp.saktrack.user.AdminUser;
-import gov.idaho.isp.saktrack.user.User;
-import gov.idaho.isp.saktrack.user.organization.AbstractOrganizationUser;
-import gov.idaho.isp.saktrack.user.organization.OrganizationUser;
+import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent;
+import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent.EventType;
+import gov.idaho.isp.saktrack.domain.LabDetails;
+import gov.idaho.isp.saktrack.domain.LawEnforcementDetails;
+import gov.idaho.isp.saktrack.domain.LegalDetails;
+import gov.idaho.isp.saktrack.domain.MedicalDetails;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.YesNoNa;
+import gov.idaho.isp.saktrack.domain.dto.CreateKitEventDetails;
+import gov.idaho.isp.saktrack.domain.dto.EventDetails;
+import gov.idaho.isp.saktrack.domain.jurisdiction.Jurisdiction;
+import gov.idaho.isp.saktrack.domain.organization.Organization;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationType;
+import gov.idaho.isp.saktrack.domain.user.AdminUser;
+import gov.idaho.isp.saktrack.domain.user.organization.AbstractOrganizationUser;
+import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUser;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -67,7 +66,6 @@ public class MockObjUtils {
     user.setPhone("1-208-123-4567");
     user.setEmail(user.getUsername() + "@bogus-email.com");
     user.setOrganizationAdmin(Boolean.FALSE);
-    user.setAuthMethod(User.AuthMethod.DATABASE);
     return (T) user;
   }
 

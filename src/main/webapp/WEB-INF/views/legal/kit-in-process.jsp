@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="cjisTags" uri="http://isp.idaho.gov/jsp/cjisTags"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <t:page>
   <jsp:attribute name="body">
     <%@include file="../../includes/org-nav.jspf" %>
@@ -39,7 +39,7 @@
       </div>
       <div class="form-group col-sm-3">
         <label class="control-label required">Crime Date</label>
-        <input type="text" class="form-control" name="leDetails.crimeDate" value="<cjisTags:fmtTemporal value="${kit.leDetails.crimeDate}" pattern="${dateFormat}" />" readonly/>
+        <input type="text" class="form-control" name="leDetails.crimeDate" value="${dateFormatter.format(kit.leDetails.crimeDate)}" readonly/>
       </div>
     </div>
     <div class="row">
@@ -49,12 +49,12 @@
       </div>
       <div class="form-group col-sm-3">
         <label class="control-label required">Planned Destruction Date</label>
-        <input type="text" class="form-control" name="leDetails.plannedDestructionDate" value="<cjisTags:fmtTemporal value="${kit.leDetails.plannedDestructionDate}" pattern="${dateFormat}" />" readonly/>
+        <input type="text" class="form-control" name="leDetails.plannedDestructionDate" value="${dateFormatter.format(kit.leDetails.plannedDestructionDate)}" readonly/>
       </div>
       <div class="form-group col-sm-3">
         <label class="control-label">Notify Victim Prior to Destruction <span class="glyphicon glyphicon-question-sign hover-pointer med-blue-text" data-toggle="tooltip" title="Law enforcement agency will check this box when the victim has requested notification from the law enforcement agency prior to kit destruction.  Per Idaho Statute, notification is required when this box is checked. When checked, an automated email will be sent 6 months prior to the planned destruction date to all law enforcment organization administrators with the requesting agency reminding them to notify the victim concerning the upcoming planned destruction."></span></label>
         <div class="checkbox">
-          <label><cjisTags:checkbox id="destructionNotification" name="leDetails.plannedDestructionNotificationRequested" disabled="true" checked="${kit.leDetails.plannedDestructionNotificationRequested}"/></label>
+          <label><t:checkbox id="destructionNotification" name="leDetails.plannedDestructionNotificationRequested" disabled="true" checked="${kit.leDetails.plannedDestructionNotificationRequested}"/></label>
         </div>
       </div>
     </div>
@@ -67,7 +67,7 @@
       </div>
       <div class="form-group col-sm-9">
         <label class="control-label required">Non-Submission Reason</label>
-        <cjisTags:select from="${nonSubmissionReasons}" name="leDetails.nonSubmissionReason" optionValue="label" value="${kit.leDetails.nonSubmissionReason}" emptyOption="" cssClass="form-control" disabled="true"/>
+        <t:select from="${nonSubmissionReasons}" name="leDetails.nonSubmissionReason" optionValue="label" value="${kit.leDetails.nonSubmissionReason}" emptyOption="" cssClass="form-control" disabled="true"/>
       </div>
     </div>
         
@@ -79,7 +79,7 @@
           <div class="col-sm-12">
             <h4 class="line-under">
               Prosecuting Attorney Review
-              <span class="pull-right small">Released for Review on <cjisTags:fmtTemporal value='${kit.legalDetails.releasedForReview}' pattern='${dateFormat}' /></span>
+              <span class="pull-right small">Released for Review on ${dateFormatter.format(kit.legalDetails.releasedForReview)}</span>
             </h4>
           </div>
         </div>

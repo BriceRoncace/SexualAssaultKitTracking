@@ -1,17 +1,17 @@
 package gov.idaho.isp.saktrack.service;
 
-import gov.idaho.isp.saktrack.ChainOfCustodyEvent;
-import gov.idaho.isp.saktrack.HasLabel;
-import gov.idaho.isp.saktrack.LabDetails;
-import gov.idaho.isp.saktrack.LawEnforcementDetails;
-import gov.idaho.isp.saktrack.LegalDetails;
-import gov.idaho.isp.saktrack.MedicalDetails;
-import gov.idaho.isp.saktrack.SexualAssaultKit;
-import gov.idaho.isp.saktrack.audit.KitAudit;
-import gov.idaho.isp.saktrack.audit.KitAuditRepository;
-import gov.idaho.isp.saktrack.organization.Organization;
-import gov.idaho.isp.saktrack.persistence.SexualAssaultKitRepository;
-import gov.idaho.isp.saktrack.user.User;
+import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent;
+import gov.idaho.isp.saktrack.domain.HasLabel;
+import gov.idaho.isp.saktrack.domain.LabDetails;
+import gov.idaho.isp.saktrack.domain.LawEnforcementDetails;
+import gov.idaho.isp.saktrack.domain.LegalDetails;
+import gov.idaho.isp.saktrack.domain.MedicalDetails;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
+import gov.idaho.isp.saktrack.domain.audit.KitAudit;
+import gov.idaho.isp.saktrack.domain.audit.KitAuditRepository;
+import gov.idaho.isp.saktrack.domain.organization.Organization;
+import gov.idaho.isp.saktrack.domain.user.User;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -21,16 +21,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AuditServiceImpl implements AuditService {
-  private SexualAssaultKitRepository sexualAssaultKitRepository;
-  private KitAuditRepository kitAuditRepository;
-  private DateTimeFormatter formatter;
-
   private final String CHANGED = "%1s was changed from \"%2s\" to \"%3s\".";
   private final String ADDED = "Event \"%s\" was added.";
   private final String REMOVED = "Event \"$s\" was removed.";
@@ -38,7 +34,17 @@ public class AuditServiceImpl implements AuditService {
   private final String MOVED_UP = "Event \"%s\" moved up.";
   private final String MOVED_DOWN = "Event \"%s\" moved down.";
 
-  @Override
+  private final SexualAssaultKitRepository sexualAssaultKitRepository;
+  private final KitAuditRepository kitAuditRepository;
+  private final DateTimeFormatter formatter;
+
+  public AuditServiceImpl(SexualAssaultKitRepository sexualAssaultKitRepository, KitAuditRepository kitAuditRepository, @Value("${date.format}") String datePattern) {
+    this.sexualAssaultKitRepository = sexualAssaultKitRepository;
+    this.kitAuditRepository = kitAuditRepository;
+    this.formatter = DateTimeFormatter.ofPattern(datePattern);
+  }
+
+  @Override @Transactional
   public KitAudit auditKit(SexualAssaultKit modifiedKit, String notes, User user) {
     if (StringUtils.isBlank(notes)) {
       throw new IllegalArgumentException("Notes/reason must be provided when auditing a sexual assault kit modification.");
@@ -84,7 +90,6 @@ public class AuditServiceImpl implements AuditService {
     changes.add(processItem("DNA Database Entry", getLabel(oldDetails.getDnaDatabaseEntry()), getLabel(newDetails.getDnaDatabaseEntry())));
     changes.add(processItem("DNA Database Hit Date", getLocalDate(oldDetails.getDnaDatabaseHitDate()), getLocalDate(newDetails.getDnaDatabaseHitDate())));
     changes.add(processItem("Expunged Date", getLocalDate(oldDetails.getExpungedDate()), getLocalDate(newDetails.getExpungedDate())));
-
     return changes;
   }
 
@@ -127,7 +132,6 @@ public class AuditServiceImpl implements AuditService {
     changes.add(processItem("Victim Type", getLabel(oldDetails.getVictimType()), getLabel(newDetails.getVictimType())));
     changes.add(processItem("Requesting LE Agency (on medical details)", getOrganizationName(oldDetails.getRequestingLeAgency()), getOrganizationName(newDetails.getRequestingLeAgency())));
     changes.add(processItem("Collection Date", getLocalDate(oldDetails.getCollectionDate()), getLocalDate(newDetails.getCollectionDate())));
-
     return changes;
   }
 
@@ -230,22 +234,5 @@ public class AuditServiceImpl implements AuditService {
       this.event = event;
       this.index = index;
     }
-  }
-
-  @Value(value = "${date.format}")
-  public void setPattern(String pattern) {
-    if (StringUtils.isNotEmpty(pattern)) {
-      formatter = DateTimeFormatter.ofPattern(pattern);
-    }
-  }
-
-  @Autowired
-  public void setSexualAssaultKitRepository(SexualAssaultKitRepository sexualAssaultKitRepository) {
-    this.sexualAssaultKitRepository = sexualAssaultKitRepository;
-  }
-
-  @Autowired
-  public void setKitAuditRepository(KitAuditRepository kitAuditRepository) {
-    this.kitAuditRepository = kitAuditRepository;
   }
 }

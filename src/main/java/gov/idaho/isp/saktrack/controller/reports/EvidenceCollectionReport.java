@@ -1,8 +1,8 @@
 package gov.idaho.isp.saktrack.controller.reports;
 
-import gov.idaho.isp.saktrack.LawEnforcementDetails.NonSubmissionReason;
-import gov.idaho.isp.saktrack.SexualAssaultKit;
-import gov.idaho.isp.saktrack.persistence.SexualAssaultKitRepository;
+import gov.idaho.isp.saktrack.domain.LawEnforcementDetails.NonSubmissionReason;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
 import gov.idaho.isp.saktrack.report.CurrentAssignmentReport;
 import gov.idaho.isp.saktrack.report.RequestingAgencyReport;
 import gov.idaho.isp.saktrack.service.csv.CsvExportService;
@@ -12,8 +12,8 @@ import java.util.stream.Collectors;
 import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -26,12 +26,12 @@ public class EvidenceCollectionReport {
     this.csvExportService = csvExportService;
   }
 
-  @RequestMapping(value = "/report/timeframe", method = RequestMethod.GET)
+  @GetMapping("/report/timeframe")
   public String loadTimeframeReport() {
     return "/admin/reports/timeframe";
   }
 
-  @RequestMapping(value = "/report/timeframe", method = RequestMethod.POST)
+  @PostMapping("/report/timeframe")
   public String getTimeframeReport(@RequestParam LocalDate start, @RequestParam LocalDate end, Model model) {
     model.addAttribute("startDate", start);
     model.addAttribute("endDate", end);
@@ -55,32 +55,32 @@ public class EvidenceCollectionReport {
     return "/admin/reports/timeframe";
   }
 
-  @RequestMapping(value = "/report/distributedKitsReport/download", method = RequestMethod.GET)
+  @GetMapping("/report/distributedKitsReport/download")
   public HttpEntity<byte[]> downloadDistributedKitsReport(@RequestParam LocalDate start, @RequestParam LocalDate end) {
     return csvExportService.exportUnusedKitsReport(buildDistributedKitsReport(start, end)).toHttpEntity();
   }
 
-  @RequestMapping(value = "/report/receivedCollectedKitsReport/download", method = RequestMethod.GET)
+  @GetMapping("/report/receivedCollectedKitsReport/download")
   public HttpEntity<byte[]> downloadReceivedCollectedKitsReport(@RequestParam LocalDate start, @RequestParam LocalDate end) {
     return csvExportService.exportReceivedCollectedKitsReport(buildReceivedCollectedKitsReport(start, end)).toHttpEntity();
   }
 
-  @RequestMapping(value = "/report/unsubmittableKitsReport/download", method = RequestMethod.GET)
+  @GetMapping("/report/unsubmittableKitsReport/download")
   public HttpEntity<byte[]> downloadUnsubmittableKitsReport(@RequestParam LocalDate start, @RequestParam LocalDate end) {
     return csvExportService.exportUnsubmittableKitsReport(new RequestingAgencyReport(sexualAssaultKitRepository.findUnsubmittableInDateRange(start, end))).toHttpEntity();
   }
 
-  @RequestMapping(value = "/report/submittedKitsReport/download", method = RequestMethod.GET)
+  @GetMapping("/report/submittedKitsReport/download")
   public HttpEntity<byte[]> downloadSubmittedKitsReport(@RequestParam LocalDate start, @RequestParam LocalDate end) {
     return csvExportService.exportSubmittedKitsReport(buildSubmittedKitsReport(start, end)).toHttpEntity();
   }
 
-  @RequestMapping(value = "/report/databaseKitsReport/download", method = RequestMethod.GET)
+  @GetMapping("/report/databaseKitsReport/download")
   public HttpEntity<byte[]> downloadDatabaseKitsReport(@RequestParam LocalDate start, @RequestParam LocalDate end) {
     return csvExportService.exportDatabaseKitsReport(buildDatabaseKitsReport(start, end)).toHttpEntity();
   }
 
-  @RequestMapping(value = "/report/hitsInKitsReport/download", method = RequestMethod.GET)
+  @GetMapping("/report/hitsInKitsReport/download")
   public HttpEntity<byte[]> downloadHitsInKitsReport(@RequestParam LocalDate start, @RequestParam LocalDate end) {
     return csvExportService.exportDatabaseHitKitsReport(buildHitsInKitsReport(start, end)).toHttpEntity();
   }

@@ -1,16 +1,16 @@
 package gov.idaho.isp.saktrack.service;
 
-import gov.idaho.isp.saktrack.ChainOfCustodyEvent;
-import gov.idaho.isp.saktrack.SexualAssaultKit;
-import gov.idaho.isp.saktrack.audit.KitAudit;
-import gov.idaho.isp.saktrack.audit.KitAuditRepository;
 import gov.idaho.isp.saktrack.config.MockObjUtils;
-import gov.idaho.isp.saktrack.jurisdiction.Jurisdiction;
-import gov.idaho.isp.saktrack.organization.Organization;
-import gov.idaho.isp.saktrack.organization.OrganizationType;
-import gov.idaho.isp.saktrack.persistence.SexualAssaultKitRepository;
-import gov.idaho.isp.saktrack.user.AdminUser;
-import gov.idaho.isp.saktrack.user.organization.LabUser;
+import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
+import gov.idaho.isp.saktrack.domain.audit.KitAudit;
+import gov.idaho.isp.saktrack.domain.audit.KitAuditRepository;
+import gov.idaho.isp.saktrack.domain.jurisdiction.Jurisdiction;
+import gov.idaho.isp.saktrack.domain.organization.Organization;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationType;
+import gov.idaho.isp.saktrack.domain.user.AdminUser;
+import gov.idaho.isp.saktrack.domain.user.organization.LabUser;
 import java.time.LocalDate;
 import org.junit.Assert;
 import org.junit.Test;
@@ -20,16 +20,12 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class AuditServiceTest {
-  private SexualAssaultKitRepository sakRepo = mock(SexualAssaultKitRepository.class);
-  private KitAuditRepository auditRepo = mock(KitAuditRepository.class);
-  private AuditService auditService;
+  private final SexualAssaultKitRepository sakRepo = mock(SexualAssaultKitRepository.class);
+  private final KitAuditRepository auditRepo = mock(KitAuditRepository.class);
+  private final AuditService auditService;
 
   public AuditServiceTest() {
-    AuditServiceImpl temp = new AuditServiceImpl();
-    temp.setPattern("MM/dd/yyyy");
-    temp.setSexualAssaultKitRepository(sakRepo);
-    temp.setKitAuditRepository(auditRepo);
-    auditService = temp;
+    auditService = new AuditServiceImpl(sakRepo, auditRepo, "MM/dd/yyyy");
   }
 
   @Test

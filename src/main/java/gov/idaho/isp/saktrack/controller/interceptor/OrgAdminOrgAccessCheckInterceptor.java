@@ -1,7 +1,7 @@
 package gov.idaho.isp.saktrack.controller.interceptor;
 
-import gov.idaho.isp.saktrack.user.organization.OrganizationUser;
-import gov.idaho.isp.saktrack.user.persistence.OrganizationUserRepository;
+import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUser;
+import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUserRepository;
 import java.util.Arrays;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -20,17 +20,17 @@ public class OrgAdminOrgAccessCheckInterceptor extends HandlerInterceptorAdapter
   }
 
   @Override
-  public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+  public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) throws Exception {
     if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
       final Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-      final Long orgId = getOrgIdFromUrl(request.getRequestURL().toString());
+      final Long orgId = getOrgIdFromUrl(req.getRequestURL().toString());
 
       if (userDetails != null && userDetails instanceof UserDetails && orgId != null) {
         UserDetails details = (UserDetails) userDetails;
         OrganizationUser user = organizationUserRepository.findByUsernameIgnoreCase(details.getUsername());
 
         if (user != null && !orgId.equals(user.getOrganization().getId())) {
-          response.sendRedirect(request.getContextPath() + "/" + user.getType().getLabel() + "/dashboard?errors=Access+denied.");
+          res.sendRedirect(req.getContextPath() + "/" + user.getType().getLabel() + "/dashboard?errors=Access+denied.");
           return false;
         }
 

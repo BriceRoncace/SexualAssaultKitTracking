@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="cjisTags" uri="http://isp.idaho.gov/jsp/cjisTags"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <t:page>
   <jsp:attribute name="body">
     <%@include file="../../includes/org-nav.jspf" %>
@@ -15,7 +15,7 @@
     </h2>
     
     <p>
-      Kit #${kit.serialNumber} sent from <c:out value="${kit.currentCustody.from}"/> on <cjisTags:fmtTemporal value="${kit.currentCustody.eventDate}" pattern="${dateFormat}" /> by ${kit.currentCustody.actor}<br/>
+      Kit #${kit.serialNumber} sent from <c:out value="${kit.currentCustody.from}"/> on ${dateFormatter.format(kit.currentCustody.eventDate)} by ${kit.currentCustody.actor}<br/>
     </p>
     
     <%@include file="includes/modals/receive-kits-modal.jspf" %>

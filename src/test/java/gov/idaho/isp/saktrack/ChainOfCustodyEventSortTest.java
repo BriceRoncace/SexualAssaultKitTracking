@@ -1,5 +1,6 @@
 package gov.idaho.isp.saktrack;
 
+import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;

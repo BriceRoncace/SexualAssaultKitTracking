@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="cjisTags" uri="http://isp.idaho.gov/jsp/cjisTags"%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <t:page>
   <jsp:attribute name="head">
     <link href="<c:url value="/assets/css/pagination.css"/>" rel="stylesheet" type="text/css" />
@@ -51,11 +51,11 @@
                 </div>
                 <div class="form-group col-xs-3">
                   <label class="control-label">Type</label>
-                  <cjisTags:select id="orgTypeSelect" from="${orgTypes}" name="type" cssClass="form-control" emptyOption="" optionValue="label" value="${criteria.type}"/>
+                  <t:select id="orgTypeSelect" from="${orgTypes}" name="type" cssClass="form-control" emptyOption="" optionValue="label" value="${criteria.type}"/>
                 </div>
                 <div class="form-group col-xs-3">
                   <label class="control-label">Jurisdiction</label>
-                  <cjisTags:select id="orgJurisdictionsSelect" from="${jurisdictions}" name="jurisdictionId" cssClass="form-control" emptyOption="" optionKey="id" optionValue="displayName" value="${criteria.jurisdictionId}"/>
+                  <t:select id="orgJurisdictionsSelect" from="${jurisdictions}" name="jurisdictionId" cssClass="form-control" emptyOption="" optionKey="id" optionValue="displayName" value="${criteria.jurisdictionId}"/>
                 </div>
                 <div class="col-xs-1 top25 leftNeg10">
                   <button class="btn btn-default" type="submit">Update</button>
@@ -105,9 +105,7 @@
 
           <c:if test="${page.size < page.totalElements}">
             <div class="col-sm-12 top5">
-              <div class="pull-right">
-                <cjisTags:pager resultsGroupSize="13" pageVarName="page" page="${page.number}" resultsPerPage="${page.size}" totalListSize="${page.totalElements}" showInfo="true"/>
-              </div>
+              <t:pager page="${page}" showInfo="true"/>
             </div>
           </c:if>
 

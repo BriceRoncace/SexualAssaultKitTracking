@@ -5,35 +5,35 @@
       <c:if test="${kit.medicalDetails.collectionDate != null}">
         <tr>
           <td>Collection Date</td>
-          <td><cjisTags:fmtTemporal value="${kit.medicalDetails.collectionDate}" pattern="${dateFormat}" /></td>
+          <td>${dateFormatter.format(kit.medicalDetails.collectionDate)}</td>
         </tr>
       </c:if>
         
       <c:if test="${kit.labDetails.dnaDatabaseEntryDate != null}">
         <tr>
           <td>DNA Database Entry Date</td>
-          <td><cjisTags:fmtTemporal value="${kit.labDetails.dnaDatabaseEntryDate}" pattern="${dateFormat}" /></td>
+          <td>${dateFormatter.format(kit.labDetails.dnaDatabaseEntryDate)}</td>
         </tr>
       </c:if>
 
       <c:if test="${kit.labDetails.dnaDatabaseHitDate != null}">
         <tr>
           <td>DNA Database Hit Date</td>
-          <td><cjisTags:fmtTemporal value="${kit.labDetails.dnaDatabaseHitDate}" pattern="${dateFormat}" /></td>
+          <td>${dateFormatter.format(kit.labDetails.dnaDatabaseHitDate)}</td>
         </tr>
       </c:if>
 
       <c:if test="${kit.labDetails.expungedDate != null}">
         <tr>
           <td>DNA Database Expunged Date</td>
-          <td><cjisTags:fmtTemporal value="${kit.labDetails.expungedDate}" pattern="${dateFormat}" /></td>
+          <td>${dateFormatter.format(kit.labDetails.expungedDate)}</td>
         </tr>
       </c:if>
 
       <c:if test="${kit.leDetails.plannedDestructionDate != null}">
         <tr>
           <td>Planned Destruction Date</td>
-          <td><cjisTags:fmtTemporal value="${kit.leDetails.plannedDestructionDate}" pattern="${dateFormat}" /></td>
+          <td>${dateFormatter.format(kit.leDetails.plannedDestructionDate)}</td>
         </tr>
       </c:if>  
     </table>

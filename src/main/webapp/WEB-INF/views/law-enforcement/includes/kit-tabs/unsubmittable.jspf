@@ -1,3 +1,6 @@
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <div class="row top5">
   <c:choose>
     <c:when test="${unsubmittableKits == null || unsubmittableKits.getTotalElements() < 1}">
@@ -26,7 +29,7 @@
                 ${kit.leDetails.caseNumber}
               </td>
               <td>
-                <cjisTags:fmtTemporal value="${kit.currentCustody.eventDate}" pattern="${dateFormat}" />
+                ${dateFormatter.format(kit.currentCustody.eventDate)}
               </td>
               <td>
                 ${kit.currentCustody.actor}
@@ -46,11 +49,7 @@
       </table>
                   
       <c:if test="${unsubmittableKits.size < unsubmittableKits.totalElements}">
-        <div class="col-sm-12">
-          <div class="pull-right">
-            <cjisTags:pager resultsGroupSize="5" pageVarName="unsubmittablePage" page="${unsubmittableKits.number}" resultsPerPage="${unsubmittableKits.size}" totalListSize="${unsubmittableKits.totalElements}" showInfo="true"/>
-          </div>
-        </div>
+        <t:pager page="${unsubmittableKits}" pageVarName="unsubmittablePage" showInfo="true"/>
       </c:if>
                   
     </c:otherwise>

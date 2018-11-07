@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="cjisTags" uri="http://isp.idaho.gov/jsp/cjisTags"%>
+
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -10,8 +10,9 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="<c:url value="/"/>">Sexual Assault Kit Tracking</a>
-      <cjisTags:message key="test.mode" var="testMode"/>
-      <c:if test="${testMode}"><img id="test-image" class="top5 right10" src="<c:url value='/assets/images/test-banner-small.png'/>" alt="TEST" height="35" width="43"/></c:if>
+      <c:if test="${activeProfile == 'dev'}">
+        <img id="test-image" class="top5 right10" src="<c:url value='/assets/images/dev-logo.png'/>" alt="dev mode" />
+      </c:if>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">

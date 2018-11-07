@@ -1,10 +1,10 @@
 package gov.idaho.isp.saktrack.util;
 
-import gov.idaho.isp.saktrack.ChainOfCustodyEvent;
-import gov.idaho.isp.saktrack.ChainOfCustodyEvent.EventType;
-import gov.idaho.isp.saktrack.SexualAssaultKit;
-import gov.idaho.isp.saktrack.dto.EventDetails;
-import gov.idaho.isp.saktrack.organization.Organization;
+import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent;
+import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent.EventType;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.dto.EventDetails;
+import gov.idaho.isp.saktrack.domain.organization.Organization;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;

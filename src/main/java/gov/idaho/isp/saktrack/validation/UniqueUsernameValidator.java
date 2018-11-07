@@ -1,23 +1,18 @@
 package gov.idaho.isp.saktrack.validation;
 
-import gov.idaho.isp.ldap.user.LdapUserDirectory;
-import gov.idaho.isp.saktrack.user.User;
-import gov.idaho.isp.saktrack.user.User.AuthMethod;
-import gov.idaho.isp.saktrack.user.persistence.AdminUserRepository;
-import gov.idaho.isp.saktrack.user.persistence.OrganizationUserRepository;
+import gov.idaho.isp.saktrack.domain.user.User;
+import gov.idaho.isp.saktrack.domain.user.AdminUserRepository;
+import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUserRepository;
 import gov.idaho.isp.saktrack.util.reflection.PropertyUtils;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 
 public class UniqueUsernameValidator implements ConstraintValidator<UniqueUsername, Object> {
   private OrganizationUserRepository organizationUserRepository;
   private AdminUserRepository adminUserRepository;
-  private LdapUserDirectory ldapUserDirectory;
   private String userProperty;
-  private Boolean ldapAuthEnabled;
 
   @Override
   public void initialize(UniqueUsername a) {
@@ -27,8 +22,8 @@ public class UniqueUsernameValidator implements ConstraintValidator<UniqueUserna
   @Override
   public boolean isValid(Object object, ConstraintValidatorContext cvc) {
     User user = getUser(object);
-    if (organizationUserRepository != null && adminUserRepository != null && ldapUserDirectory != null) {
-      if (isAlreadyAnOrgUser(user) || isAlreadyAnAdminUser(user) || (user.getAuthMethod() != AuthMethod.LDAP && isAlreadyAnLdapUser(user))) {
+    if (organizationUserRepository != null && adminUserRepository != null) {
+      if (isAlreadyAnOrgUser(user) || isAlreadyAnAdminUser(user)) {
         return false;
       }
     }
@@ -53,13 +48,6 @@ public class UniqueUsernameValidator implements ConstraintValidator<UniqueUserna
     return differentEntities(adminUserRepository.findByUsernameIgnoreCase(user.getUsername()), user);
   }
 
-  private boolean isAlreadyAnLdapUser(User user) {
-    if (Boolean.TRUE.equals(ldapAuthEnabled)) {
-      return ldapUserDirectory.loadByUsername(user.getUsername()) != null;
-    }
-    return false;
-  }
-
   private boolean differentEntities(User existingUser, User user) {
     return existingUser != null && !existingUser.getId().equals(user.getId());
   }
@@ -72,15 +60,5 @@ public class UniqueUsernameValidator implements ConstraintValidator<UniqueUserna
   @Autowired
   public void setAdminUserRepository(AdminUserRepository adminUserRepository) {
     this.adminUserRepository = adminUserRepository;
-  }
-
-  @Autowired
-  public void setLdapUserDirectory(LdapUserDirectory ldapUserDirectory) {
-    this.ldapUserDirectory = ldapUserDirectory;
-  }
-
-  @Value("${ldap.auth.enabled}")
-  public void setLdapAuthEnabled(Boolean ldapAuthEnabled) {
-    this.ldapAuthEnabled = ldapAuthEnabled;
   }
 }

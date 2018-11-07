@@ -1,10 +1,10 @@
 package gov.idaho.isp.saktrack.controller.reports;
 
-import gov.idaho.isp.saktrack.SexualAssaultKit;
-import gov.idaho.isp.saktrack.jurisdiction.JurisdictionRepository;
-import gov.idaho.isp.saktrack.organization.OrganizationRepository;
-import gov.idaho.isp.saktrack.persistence.SexualAssaultKitRepository;
-import gov.idaho.isp.saktrack.persistence.search.SexualAssaultKitSearchCriteria;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.jurisdiction.JurisdictionRepository;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationRepository;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
+import gov.idaho.isp.saktrack.domain.search.SexualAssaultKitSearchCriteria;
 import gov.idaho.isp.saktrack.report.CurrentAssignmentReport;
 import gov.idaho.isp.saktrack.service.csv.CsvExportService;
 import gov.idaho.isp.saktrack.sort.SortByAssignedAgencyName;
@@ -14,7 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class PotentialCocErrorsReportController {
@@ -30,7 +30,7 @@ public class PotentialCocErrorsReportController {
     this.csvExportService = csvExportService;
   }
 
-  @RequestMapping(value = "/report/cocErrors")
+  @GetMapping("/report/cocErrors")
   public String getReport(Model model) {
     model.addAttribute("report", buildReport());
     model.addAttribute("jurisdictions", jurisdictionRepository.findAll(new Sort("name")));
@@ -38,7 +38,7 @@ public class PotentialCocErrorsReportController {
     return "/admin/reports/coc-errors";
   }
 
-  @RequestMapping(value = "/report/cocErrors/download")
+  @GetMapping("/report/cocErrors/download")
   public HttpEntity<byte[]> downloadReport(SexualAssaultKitSearchCriteria criteria) {
     return csvExportService.exportKitsWithQuestionableEventsReport(buildReport()).toHttpEntity();
   }

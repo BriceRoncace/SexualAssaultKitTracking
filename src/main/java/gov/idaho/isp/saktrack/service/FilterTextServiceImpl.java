@@ -1,10 +1,10 @@
 package gov.idaho.isp.saktrack.service;
 
-import gov.idaho.isp.saktrack.jurisdiction.Jurisdiction;
-import gov.idaho.isp.saktrack.jurisdiction.JurisdictionRepository;
-import gov.idaho.isp.saktrack.organization.Organization;
-import gov.idaho.isp.saktrack.organization.OrganizationRepository;
-import gov.idaho.isp.saktrack.persistence.search.SexualAssaultKitSearchCriteria;
+import gov.idaho.isp.saktrack.domain.jurisdiction.Jurisdiction;
+import gov.idaho.isp.saktrack.domain.jurisdiction.JurisdictionRepository;
+import gov.idaho.isp.saktrack.domain.organization.Organization;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationRepository;
+import gov.idaho.isp.saktrack.domain.search.SexualAssaultKitSearchCriteria;
 import java.util.StringJoiner;
 import org.springframework.stereotype.Service;
 
@@ -30,22 +30,22 @@ public class FilterTextServiceImpl implements FilterTextService {
     }
 
     if (criteria.getJurisdictionId() != null) {
-      Jurisdiction j = jurisdictionRepository.findOne(criteria.getJurisdictionId());
+      Jurisdiction j = jurisdictionRepository.findById(criteria.getJurisdictionId()).orElse(null);
       sj.add("Jurisdiction is " + j.getDisplayName());
     }
 
     if (criteria.getRequestingLeAgencyId() != null) {
-      Organization org = organizationRepository.findOne(criteria.getRequestingLeAgencyId());
+      Organization org = organizationRepository.findById(criteria.getRequestingLeAgencyId()).orElse(null);
       sj.add("Requesting Agency is " + org.getName());
     }
 
     if (criteria.getCurrentJurisdictionId() != null) {
-      Jurisdiction j = jurisdictionRepository.findOne(criteria.getCurrentJurisdictionId());
+      Jurisdiction j = jurisdictionRepository.findById(criteria.getCurrentJurisdictionId()).orElse(null);
       sj.add("Jurisdiction is " + j.getDisplayName());
     }
 
     if (criteria.getCurrentAgencyId() != null) {
-      Organization org = organizationRepository.findOne(criteria.getCurrentAgencyId());
+      Organization org = organizationRepository.findById(criteria.getCurrentAgencyId()).orElse(null);
       sj.add("Organization is " + org.getName());
     }
 

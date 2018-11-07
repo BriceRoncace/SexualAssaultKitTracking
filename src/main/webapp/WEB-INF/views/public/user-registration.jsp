@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@ taglib prefix="cjisTags" uri="http://isp.idaho.gov/jsp/cjisTags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <t:page>
   <jsp:attribute name="body">
     <%@include file="includes/public-nav.jspf" %>
@@ -47,7 +47,7 @@
             <div class="col-sm-6">
               <div class="form-group">
                 <label class="control-label required">Organization</label>
-                <cjisTags:select from="${organizations}" name="orgId" optionKey="id" optionValue="name" value="${orgUser.organization.id}" emptyOption="" dataAttributes="data-required" cssClass="form-control"/>
+                <t:select from="${organizations}" name="orgId" optionKey="id" optionValue="name" value="${orgUser.organization.id}" emptyOption="" dataAttributes="data-required" cssClass="form-control"/>
               </div>
             </div>
             <div class="col-sm-6">

@@ -4,7 +4,7 @@
   <div class="col-sm-12">
     <h4 class="line-under">
       Prosecuting Attorney Review
-      <span class="pull-right small">Released for Review on <cjisTags:fmtTemporal value='${kit.legalDetails.releasedForReview}' pattern='${dateFormat}' /></span>
+      <span class="pull-right small">Released for Review on ${dateFormatter.format(kit.legalDetails.releasedForReview)}</span>
     </h4>
   </div>
 </div>
@@ -46,7 +46,7 @@
           <label> Review Not Finalized</label>
         </c:when>
         <c:otherwise>
-          <label> Review Finalized <cjisTags:fmtTemporal value='${kit.legalDetails.reviewFinalized}' pattern='${dateFormat}' /></label>
+          <label> Review Finalized ${dateFormatter.format(kit.legalDetails.reviewFinalized)}</label>
         </c:otherwise>
       </c:choose> 
     </div>

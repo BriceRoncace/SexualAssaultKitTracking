@@ -1,20 +1,20 @@
 package gov.idaho.isp.saktrack.controller;
 
-import gov.idaho.isp.saktrack.ChainOfCustodyEvent;
-import gov.idaho.isp.saktrack.LawEnforcementDetails.NonSubmissionReason;
-import gov.idaho.isp.saktrack.MedicalDetails;
-import gov.idaho.isp.saktrack.SexualAssaultKit;
-import gov.idaho.isp.saktrack.jurisdiction.JurisdictionRepository;
-import gov.idaho.isp.saktrack.organization.Organization;
-import gov.idaho.isp.saktrack.organization.OrganizationRepository;
-import gov.idaho.isp.saktrack.organization.OrganizationType;
-import gov.idaho.isp.saktrack.persistence.SexualAssaultKitRepository;
-import gov.idaho.isp.saktrack.persistence.search.SexualAssaultKitSearchCriteria;
-import gov.idaho.isp.saktrack.persistence.search.SexualAssaultKitSpec;
+import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent;
+import gov.idaho.isp.saktrack.domain.LawEnforcementDetails.NonSubmissionReason;
+import gov.idaho.isp.saktrack.domain.MedicalDetails;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
+import gov.idaho.isp.saktrack.domain.jurisdiction.JurisdictionRepository;
+import gov.idaho.isp.saktrack.domain.organization.Organization;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationRepository;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationType;
+import gov.idaho.isp.saktrack.domain.search.SexualAssaultKitSearchCriteria;
+import gov.idaho.isp.saktrack.domain.search.SexualAssaultKitSpec;
+import gov.idaho.isp.saktrack.domain.user.AdminUser;
+import gov.idaho.isp.saktrack.domain.user.User;
+import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUser;
 import gov.idaho.isp.saktrack.service.csv.CsvExportService;
-import gov.idaho.isp.saktrack.user.AdminUser;
-import gov.idaho.isp.saktrack.user.User;
-import gov.idaho.isp.saktrack.user.organization.OrganizationUser;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,9 +23,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class SearchController {
@@ -41,7 +40,7 @@ public class SearchController {
     this.csvExportService = csvExportService;
   }
 
-  @RequestMapping(value = "/admin/search", method = RequestMethod.GET)
+  @GetMapping("/admin/search")
   public String adminSearch(SexualAssaultKitSearchCriteria criteria, @PageableDefault(size=25, sort = "lastModified", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
     if (!criteria.isEmpty()) {
       Page<SexualAssaultKit> page = sexualAssaultKitRepository.findAll(new SexualAssaultKitSpec(criteria), pageable);
@@ -53,12 +52,12 @@ public class SearchController {
     return "/admin/search";
   }
 
-  @RequestMapping(value = "/admin/search/download", method = RequestMethod.GET)
+  @GetMapping("/admin/search/download")
   public HttpEntity<byte[]> adminSearchDownload(SexualAssaultKitSearchCriteria criteria) {
     return csvExportService.exportKitSearchResults(sexualAssaultKitRepository.findAll(new SexualAssaultKitSpec(criteria))).toHttpEntity();
   }
 
-  @RequestMapping(value = "/search", method = RequestMethod.GET)
+  @GetMapping("/search")
   public String search(@RequestAttribute User user, SexualAssaultKitSearchCriteria criteria, @PageableDefault(size=50, sort = "lastModified", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
     OrganizationUser orgUser;
     if (user instanceof AdminUser) {
@@ -80,7 +79,7 @@ public class SearchController {
     return "/org-users/organization-search";
   }
 
-  @RequestMapping(value = "/search/download", method = RequestMethod.GET)
+  @GetMapping("/search/download")
   public HttpEntity<byte[]> searchDownload(@RequestAttribute User user, SexualAssaultKitSearchCriteria criteria) {
     if (!(user instanceof AdminUser)) {
       OrganizationUser orgUser = (OrganizationUser) user;

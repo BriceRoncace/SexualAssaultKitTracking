@@ -230,3 +230,14 @@ address {
 .cursor-default-pointer {
   cursor: default;
 }
+
+.pager-arrow-disabled {
+  color: #ccc;
+  font-size: 1.2em; 
+  vertical-align: sub;
+}
+
+.pager-arrow {
+  font-size: 1.2em; 
+  vertical-align: sub;
+}

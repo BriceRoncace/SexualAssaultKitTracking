@@ -1,6 +1,6 @@
 package gov.idaho.isp.saktrack.report;
 
-import gov.idaho.isp.saktrack.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;

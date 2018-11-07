@@ -1,9 +1,9 @@
 package gov.idaho.isp.saktrack.controller;
 
-import gov.idaho.isp.saktrack.organization.Organization;
-import gov.idaho.isp.saktrack.user.User;
-import gov.idaho.isp.saktrack.user.UserUtils;
-import gov.idaho.isp.saktrack.user.persistence.OrganizationUserRepository;
+import gov.idaho.isp.saktrack.domain.organization.Organization;
+import gov.idaho.isp.saktrack.domain.user.User;
+import gov.idaho.isp.saktrack.util.UserUtils;
+import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUserRepository;
 
 public abstract class BaseOrganizationController extends BaseController {
   public final OrganizationUserRepository organizationUserRepository;

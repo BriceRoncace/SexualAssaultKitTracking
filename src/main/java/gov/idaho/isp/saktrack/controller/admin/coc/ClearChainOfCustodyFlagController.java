@@ -1,17 +1,16 @@
 package gov.idaho.isp.saktrack.controller.admin.coc;
 
-import gov.idaho.isp.saktrack.ChainOfCustodyEvent;
-import gov.idaho.isp.saktrack.SexualAssaultKit;
 import gov.idaho.isp.saktrack.controller.BaseController;
-import gov.idaho.isp.saktrack.persistence.SexualAssaultKitRepository;
+import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
+import gov.idaho.isp.saktrack.domain.user.User;
 import gov.idaho.isp.saktrack.service.AuditService;
-import gov.idaho.isp.saktrack.user.User;
 import gov.idaho.isp.saktrack.util.EventUtil;
 import java.util.Optional;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -24,9 +23,9 @@ public class ClearChainOfCustodyFlagController extends BaseController {
     this.auditService = auditService;
   }
 
-  @RequestMapping(value = "/admin/clearGrab", method = RequestMethod.POST)
+  @PostMapping("/admin/clearGrab")
   public String clearGrabbedOutOfOrderFlag(@RequestParam Long kitId, @RequestParam Long eventId, @RequestParam String reason, @RequestAttribute User user) {
-    SexualAssaultKit kit = sexualAssaultKitRepository.findOne(kitId);
+    SexualAssaultKit kit = sexualAssaultKitRepository.findById(kitId).orElse(null);
     Optional<ChainOfCustodyEvent> optEvent = kit.getChainOfCustody().stream().filter(c -> c.getId().equals(eventId)).findFirst();
     optEvent.ifPresent(event -> {
       event.setGrabbedOutOfOrder(false);

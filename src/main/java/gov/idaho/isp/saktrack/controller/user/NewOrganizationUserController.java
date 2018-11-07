@@ -1,11 +1,10 @@
 package gov.idaho.isp.saktrack.controller.user;
 
-import gov.idaho.isp.saktrack.organization.OrganizationRepository;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class NewOrganizationUserController {
@@ -15,9 +14,9 @@ public class NewOrganizationUserController {
     this.organizationRepository = organizationRepository;
   }
 
-  @RequestMapping(value = "/organization/{orgId}/user/new", method = RequestMethod.GET)
+  @GetMapping("/organization/{orgId}/user/new")
   public String newOrganizationUser(@PathVariable Long orgId, Model model) {
-    model.addAttribute("organization", organizationRepository.findOne(orgId));
+    model.addAttribute("organization", organizationRepository.findById(orgId).orElse(null));
     return "org-users/save-user";
   }
 }

@@ -1,8 +1,8 @@
 package gov.idaho.isp.saktrack.controller.advice;
 
 import gov.idaho.isp.saktrack.controller.advice.LoadEventDetailsAdvice.LoadEventDetails;
-import gov.idaho.isp.saktrack.dto.CreateKitEventDetails;
-import gov.idaho.isp.saktrack.dto.EventDetails;
+import gov.idaho.isp.saktrack.domain.dto.CreateKitEventDetails;
+import gov.idaho.isp.saktrack.domain.dto.EventDetails;
 import gov.idaho.isp.saktrack.service.RangeParser;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

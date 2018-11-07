@@ -1,7 +1,7 @@
 package gov.idaho.isp.saktrack.validation;
 
-import gov.idaho.isp.saktrack.ChainOfCustodyEvent;
-import gov.idaho.isp.saktrack.ChainOfCustodyEvent.EventType;
+import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent;
+import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent.EventType;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 

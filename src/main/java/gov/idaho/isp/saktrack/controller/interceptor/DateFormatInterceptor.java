@@ -1,6 +1,8 @@
 package gov.idaho.isp.saktrack.controller.interceptor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,16 +11,23 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 @Component
 public class DateFormatInterceptor extends HandlerInterceptorAdapter {
-  @Value(value = "${date.format}")
-  private String dateFormat;
-  @Value(value = "${date.time.format}")
-  private String dateTimeFormat;
+  private final String dateFormat;
+  private final String dateTimeFormat;
+
+  public DateFormatInterceptor(@Value("${date.format}") String dateFormat, @Value("${date.time.format}") String dateTimeFormat) {
+    this.dateFormat = dateFormat;
+    this.dateTimeFormat = dateTimeFormat;
+  }
 
   @Override
-  public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-    request.setAttribute("dateFormat", dateFormat);
-    request.setAttribute("dateTimeFormat", dateTimeFormat);
-    request.setAttribute("currentDate", LocalDate.now());
+  public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) throws Exception {
+    req.setAttribute("dateFormat", dateFormat);
+    req.setAttribute("dateFormatter", new NullSafeLocalDateFormatter(DateTimeFormatter.ofPattern(dateFormat)));
+
+    req.setAttribute("dateTimeFormat", dateTimeFormat);
+    req.setAttribute("dateTimeFormatter", new NullSafeLocalDateTimeFormatter(DateTimeFormatter.ofPattern(dateTimeFormat)));
+
+    req.setAttribute("currentDate", LocalDate.now());
     return true;
   }
 
@@ -28,5 +37,29 @@ public class DateFormatInterceptor extends HandlerInterceptorAdapter {
 
   public String getDateTimeFormat() {
     return dateTimeFormat;
+  }
+
+  public class NullSafeLocalDateFormatter {
+    private final DateTimeFormatter formatter;
+
+    public NullSafeLocalDateFormatter(DateTimeFormatter formatter) {
+      this.formatter = formatter;
+    }
+
+    public String format(LocalDate ld) {
+      return ld != null ? formatter.format(ld) : "";
+    }
+  }
+
+  public class NullSafeLocalDateTimeFormatter {
+    private final DateTimeFormatter formatter;
+
+    public NullSafeLocalDateTimeFormatter(DateTimeFormatter formatter) {
+      this.formatter = formatter;
+    }
+
+    public String format(LocalDateTime ldt) {
+      return ldt != null ? formatter.format(ldt) : "";
+    }
   }
 }

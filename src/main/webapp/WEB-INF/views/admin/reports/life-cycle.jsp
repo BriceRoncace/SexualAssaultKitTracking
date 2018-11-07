@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@ taglib prefix="cjisTags" uri="http://isp.idaho.gov/jsp/cjisTags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <t:page>
   <jsp:attribute name="body">
     <%@include file="../includes/admin-nav.jspf" %>
@@ -20,22 +20,22 @@
                 <span class="clickable label thin label-default" data-search-type="BETWEEN">Between</span>
                 <input type="hidden" name="collectedDate.searchType" value="${criteria.collectedDate.searchType == null ? 'ON' : criteria.collectedDate.searchType}"/>
                 <div class="input-group">
-                  <input type="text" class="form-control hasDatePicker" name="collectedDate.date1" value="<cjisTags:fmtTemporal value="${criteria.collectedDate.date1}" pattern="${dateFormat}"/>">
+                  <input type="text" class="form-control hasDatePicker" name="collectedDate.date1" value="${dateFormatter.format(criteria.collectedDate.date1)}">
                   <span class="input-group-addon invisible">-</span>
-                  <input type="text" class="form-control hasDatePicker invisible" name="collectedDate.date2" value="<cjisTags:fmtTemporal value="${criteria.collectedDate.date2}" pattern="${dateFormat}"/>">
+                  <input type="text" class="form-control hasDatePicker invisible" name="collectedDate.date2" value="${dateFormatter.format(criteria.collectedDate.date2)}">
                 </div>
               </div>
             </div>
             <div class="col-xs-4">
               <div class="form-group">
                 <label class="control-label">Jurisdiction</label>
-                <cjisTags:select name="jurisdictionId" from="${jurisdictions}" emptyOption="" cssClass="form-control" optionKey="id" optionValue="displayName" value="${criteria.jurisdictionId}"/>
+                <t:select name="jurisdictionId" from="${jurisdictions}" emptyOption="" cssClass="form-control" optionKey="id" optionValue="displayName" value="${criteria.jurisdictionId}"/>
               </div>
             </div>
             <div class="col-xs-4">
               <div class="form-group">
                 <label class="control-label">Requesting Agency</label>
-                <cjisTags:select name="requestingLeAgencyId" from="${leOrganizations}" emptyOption="" cssClass="form-control" optionKey="id" optionValue="name" value="${criteria.requestingLeAgencyId}"/>
+                <t:select name="requestingLeAgencyId" from="${leOrganizations}" emptyOption="" cssClass="form-control" optionKey="id" optionValue="name" value="${criteria.requestingLeAgencyId}"/>
               </div>
             </div>
           </div>

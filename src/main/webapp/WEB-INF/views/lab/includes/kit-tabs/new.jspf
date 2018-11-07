@@ -1,4 +1,4 @@
-<%@ taglib prefix="cjisTags" uri="http://isp.idaho.gov/jsp/cjisTags"%>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div class="row">
@@ -40,11 +40,11 @@
                 <a href="<c:url value="/lab/view"/>?id=${kit.id}">${kit.serialNumber}</a>
               </td>
               <td>
-                <cjisTags:fmtTemporal value="${kit.currentCustody.eventDate}" pattern="${dateFormat}" />
+                ${dateFormatter.format(kit.currentCustody.eventDate)}
                 <c:if test="${kit.currentCustody.eventType == 'RECEIVE'}"> (Received)</c:if>
               </td>
               <td>
-                <cjisTags:fmtTemporal value="${kit.expirationDate}" pattern="${dateFormat}" />
+                ${dateFormatter.format(kit.expirationDate)}
               </td>
               <td>
                 ${kit.currentCustody.actor}
@@ -65,11 +65,7 @@
         </tbody>
       </table>
       <c:if test="${newKits.size < newKits.totalElements}">
-        <div class="col-sm-12">
-          <div class="pull-right">
-            <cjisTags:pager resultsGroupSize="5" pageVarName="newPage" page="${newKits.number}" resultsPerPage="${newKits.size}" totalListSize="${newKits.totalElements}" showInfo="true"/>
-          </div>
-        </div>
+        <t:pager page="${newKits}" pageVarName="newPage" showInfo="true"/>
       </c:if>
     </c:otherwise>
   </c:choose>  

@@ -1,22 +1,21 @@
 package gov.idaho.isp.saktrack.controller.admin;
 
-import gov.idaho.isp.saktrack.LabDetails;
-import gov.idaho.isp.saktrack.MedicalDetails;
-import gov.idaho.isp.saktrack.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.LabDetails;
+import gov.idaho.isp.saktrack.domain.MedicalDetails;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
 import gov.idaho.isp.saktrack.controller.BaseController;
-import gov.idaho.isp.saktrack.organization.OrganizationRepository;
-import gov.idaho.isp.saktrack.persistence.SexualAssaultKitRepository;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationRepository;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
 import gov.idaho.isp.saktrack.service.AuditService;
-import gov.idaho.isp.saktrack.user.User;
+import gov.idaho.isp.saktrack.domain.user.User;
 import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -34,14 +33,14 @@ public class SaveKitController extends BaseController {
 
   @ModelAttribute
   public SexualAssaultKit prepareKit(@RequestParam Long id, @RequestParam Optional<Long> requestingLeAgencyId, @RequestParam Optional<Long> verifiedRequestingLeAgencyId) {
-    SexualAssaultKit kit = sexualAssaultKitRepository.findOne(id);
+    SexualAssaultKit kit = sexualAssaultKitRepository.findById(id).orElse(null);
 
     kit.getMedicalDetails().setRequestingLeAgency(null);
     requestingLeAgencyId.ifPresent(agencyId -> {
       if (kit.getMedicalDetails() == null) {
         kit.setMedicalDetails(new MedicalDetails());
       }
-      kit.getMedicalDetails().setRequestingLeAgency(organizationRepository.findOne(agencyId));
+      kit.getMedicalDetails().setRequestingLeAgency(organizationRepository.findById(agencyId).orElse(null));
     });
 
     kit.getLabDetails().setRequestingLeAgency(null);
@@ -49,13 +48,13 @@ public class SaveKitController extends BaseController {
       if (kit.getLabDetails() == null) {
         kit.setLabDetails(new LabDetails());
       }
-      kit.getLabDetails().setRequestingLeAgency(organizationRepository.findOne(agencyId));
+      kit.getLabDetails().setRequestingLeAgency(organizationRepository.findById(agencyId).orElse(null));
     });
 
     return kit;
   }
 
-  @RequestMapping(value = "/admin/saveDetails", method = RequestMethod.POST)
+  @PostMapping("/admin/saveDetails")
   public String saveDetails(@Valid SexualAssaultKit kit, BindingResult br, @RequestParam String reason, @RequestAttribute User user, Model model, RedirectAttributes ra) {
     if (br.hasErrors()) {
       model.addAttribute("kit", kit);

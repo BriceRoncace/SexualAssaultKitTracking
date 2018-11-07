@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="cjisTags" uri="http://isp.idaho.gov/jsp/cjisTags"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <t:page>
   <jsp:attribute name="body">
     <%@include file="../../includes/org-nav.jspf" %>
@@ -21,7 +21,7 @@
       <div class="row">
         <div class="form-group col-sm-3">
           <label class="control-label ">Expiration Date</label><br/>
-          <cjisTags:fmtTemporal value="${kit.expirationDate}" pattern="${dateFormat}" />
+          ${dateFormatter.format(kit.expirationDate)}
         </div>
       </div>
       <%@include file="../../includes/lab-details.jspf" %>

@@ -1,16 +1,16 @@
 package gov.idaho.isp.saktrack.controller.admin;
 
-import gov.idaho.isp.saktrack.jurisdiction.JurisdictionRepository;
-import gov.idaho.isp.saktrack.organization.OrganizationRepository;
-import gov.idaho.isp.saktrack.organization.OrganizationSearchCriteria;
-import gov.idaho.isp.saktrack.organization.OrganizationSpec;
-import gov.idaho.isp.saktrack.organization.OrganizationType;
-import gov.idaho.isp.saktrack.persistence.SexualAssaultKitRepository;
-import gov.idaho.isp.saktrack.user.AdminUser;
-import gov.idaho.isp.saktrack.user.User;
-import gov.idaho.isp.saktrack.user.UserUtils;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
+import gov.idaho.isp.saktrack.domain.jurisdiction.JurisdictionRepository;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationRepository;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationSearchCriteria;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationSpec;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationType;
+import gov.idaho.isp.saktrack.domain.user.AdminUser;
+import gov.idaho.isp.saktrack.domain.user.User;
 import gov.idaho.isp.saktrack.util.CookieUtils;
 import gov.idaho.isp.saktrack.util.PagingUtils;
+import gov.idaho.isp.saktrack.util.UserUtils;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Map;
@@ -23,10 +23,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -49,7 +48,7 @@ public class AdminDashboardController {
     return (AdminUser) user;
   }
 
-  @RequestMapping(value = "/admin/dashboard", method = RequestMethod.GET)
+  @GetMapping("/admin/dashboard")
   public String dashboard(@CookieValue Optional<String> adminDashboardOrgFilter,
                           @PageableDefault(size=15, sort = "name", direction = Sort.Direction.ASC) Pageable pageable,
                           OrganizationSearchCriteria criteria,

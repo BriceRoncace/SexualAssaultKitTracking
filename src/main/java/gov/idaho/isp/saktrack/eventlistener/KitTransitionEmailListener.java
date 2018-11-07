@@ -3,7 +3,7 @@ package gov.idaho.isp.saktrack.eventlistener;
 import gov.idaho.isp.saktrack.event.KitReleasedForReviewEvent;
 import gov.idaho.isp.saktrack.event.KitReviewEvent;
 import gov.idaho.isp.saktrack.event.KitSendEvent;
-import gov.idaho.isp.saktrack.service.EmailService;
+import gov.idaho.isp.saktrack.service.email.EmailService;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;

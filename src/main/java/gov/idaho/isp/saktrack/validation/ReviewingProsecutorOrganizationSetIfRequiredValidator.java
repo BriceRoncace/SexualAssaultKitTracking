@@ -1,6 +1,6 @@
 package gov.idaho.isp.saktrack.validation;
 
-import gov.idaho.isp.saktrack.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 

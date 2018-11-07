@@ -1,15 +1,15 @@
 package gov.idaho.isp.saktrack.controller.admin.coc;
 
-import gov.idaho.isp.saktrack.ChainOfCustodyEvent;
-import gov.idaho.isp.saktrack.ChainOfCustodyEvent.EventType;
-import gov.idaho.isp.saktrack.EventFlag;
-import gov.idaho.isp.saktrack.SexualAssaultKit;
 import gov.idaho.isp.saktrack.controller.BaseController;
-import gov.idaho.isp.saktrack.organization.OrganizationRepository;
-import gov.idaho.isp.saktrack.persistence.SexualAssaultKitRepository;
+import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent;
+import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent.EventType;
+import gov.idaho.isp.saktrack.domain.EventFlag;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationRepository;
+import gov.idaho.isp.saktrack.domain.user.User;
 import gov.idaho.isp.saktrack.service.AuditService;
 import gov.idaho.isp.saktrack.service.ValidationService;
-import gov.idaho.isp.saktrack.user.User;
 import gov.idaho.isp.saktrack.util.EventUtil;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -20,10 +20,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -43,29 +43,29 @@ public class NewChainOfCustodyController extends BaseController  {
 
   @ModelAttribute
   public void prepareKitAndEvent(@RequestParam Long kitId, @RequestParam Optional<Long> actorOrgId, @RequestParam Optional<Long> fromOrgId, @RequestParam Optional<Long> toOrgId, Model model) {
-    SexualAssaultKit kit = sexualAssaultKitRepository.findOne(kitId);
+    SexualAssaultKit kit = sexualAssaultKitRepository.findById(kitId).orElse(null);
     model.addAttribute("kit", kit);
 
     ChainOfCustodyEvent event = new ChainOfCustodyEvent();
     actorOrgId.ifPresent(id -> {
-      event.setActorOrganization(organizationRepository.findOne(id));
+      event.setActorOrganization(organizationRepository.findById(id).orElse(null));
     });
     fromOrgId.ifPresent(id -> {
-      event.setFrom(organizationRepository.findOne(id));
+      event.setFrom(organizationRepository.findById(id).orElse(null));
     });
     toOrgId.ifPresent(id -> {
-      event.setTo(organizationRepository.findOne(id));
+      event.setTo(organizationRepository.findById(id).orElse(null));
     });
     model.addAttribute("event", event);
   }
 
-  @RequestMapping(value = "/admin/enterEvent", method = RequestMethod.GET)
+  @GetMapping("/admin/enterEvent")
   public String enterChainOfCustodyEvent(@ModelAttribute("kit") SexualAssaultKit kit, @RequestParam EventType eventType, Model model) {
     setupModelForManageEventView(kit, eventType, model);
     return "/admin/manage-events";
   }
 
-  @RequestMapping(value = "/admin/newEvent", method = RequestMethod.POST)
+  @PostMapping("/admin/newEvent")
   public String newChainOfCustodyEvent(@ModelAttribute("kit") SexualAssaultKit kit, @ModelAttribute("event") ChainOfCustodyEvent event, BindingResult br, @RequestParam String reason, @RequestAttribute User user, Model model, RedirectAttributes ra) {
     setAdditionalEventDetails(event);
 

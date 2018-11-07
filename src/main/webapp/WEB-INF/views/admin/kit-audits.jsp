@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="cjisTags" uri="http://isp.idaho.gov/jsp/cjisTags"%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <t:page>
   <jsp:attribute name="body">
     <%@include file="includes/admin-nav.jspf" %>
@@ -14,7 +14,7 @@
       <c:forEach var="audit" items="${audits}">
         <li class="list-group-item font14">
           <h4 class="list-group-item-heading">
-            ${audit.displayName} - <cjisTags:fmtTemporal value="${audit.modified}" pattern="${dateTimeFormat}"/> 
+            ${audit.displayName} - ${dateTimeFormatter.format(audit.modified)}
           </h4>
             
           <ul>

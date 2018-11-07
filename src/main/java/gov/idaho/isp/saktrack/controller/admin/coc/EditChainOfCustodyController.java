@@ -1,14 +1,14 @@
 package gov.idaho.isp.saktrack.controller.admin.coc;
 
-import gov.idaho.isp.saktrack.ChainOfCustodyEvent;
-import gov.idaho.isp.saktrack.ChainOfCustodyEvent.EventType;
-import gov.idaho.isp.saktrack.EventFlag;
-import gov.idaho.isp.saktrack.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent;
+import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent.EventType;
+import gov.idaho.isp.saktrack.domain.EventFlag;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
 import gov.idaho.isp.saktrack.controller.BaseController;
-import gov.idaho.isp.saktrack.organization.OrganizationRepository;
-import gov.idaho.isp.saktrack.persistence.SexualAssaultKitRepository;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationRepository;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
 import gov.idaho.isp.saktrack.service.AuditService;
-import gov.idaho.isp.saktrack.user.User;
+import gov.idaho.isp.saktrack.domain.user.User;
 import gov.idaho.isp.saktrack.util.EventUtil;
 import java.util.Arrays;
 import java.util.Optional;
@@ -18,10 +18,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -39,7 +39,7 @@ public class EditChainOfCustodyController extends BaseController {
 
   @ModelAttribute
   public void prepareKitAndEvent(@RequestParam Long kitId, @RequestParam Long eventId, @RequestParam Optional<Long> actorOrgId, @RequestParam Optional<Long> fromOrgId, @RequestParam Optional<Long> toOrgId, Model model) {
-    SexualAssaultKit kit = sexualAssaultKitRepository.findOne(kitId);
+    SexualAssaultKit kit = sexualAssaultKitRepository.findById(kitId).orElse(null);
     model.addAttribute("kit", kit);
 
     ChainOfCustodyEvent event = loadEventOrNull(kit, eventId);
@@ -49,13 +49,13 @@ public class EditChainOfCustodyController extends BaseController {
     model.addAttribute("event", event);
   }
 
-  @RequestMapping(value = "/admin/editEvent", method = RequestMethod.GET)
+  @GetMapping("/admin/editEvent")
   public String editChainOfCustody(@ModelAttribute("kit") SexualAssaultKit kit, @ModelAttribute("event") ChainOfCustodyEvent event, Model model) {
     setupModelForManageEventView(kit, event.getEventType(), model);
     return "admin/manage-events";
   }
 
-  @RequestMapping(value = "/admin/updateEvent", method = RequestMethod.POST)
+  @PostMapping("/admin/updateEvent")
   public String updateChainOfCustody(@ModelAttribute("kit") SexualAssaultKit kit, @Valid @ModelAttribute("event") ChainOfCustodyEvent event, BindingResult br, @RequestParam String reason, @RequestAttribute User user, Model model, RedirectAttributes ra) {
     if (br.hasErrors()) {
       model.addAttribute("errors", getErrors(br));
@@ -70,7 +70,7 @@ public class EditChainOfCustodyController extends BaseController {
     return "redirect:/admin/editEvent?kitId=" + kit.getId() + "&eventId=" + event.getId();
   }
 
-  @RequestMapping(value = "/admin/removeEvent", method = RequestMethod.POST)
+  @PostMapping("/admin/removeEvent")
   public String removeChainOfCustody(@ModelAttribute("kit") SexualAssaultKit kit, @ModelAttribute("event") ChainOfCustodyEvent event, @RequestParam String reason, @RequestAttribute User user, RedirectAttributes ra) {
     kit.getChainOfCustody().remove(event);
     kit.setQuestionableEvents(EventUtil.hasMissingSendEvents(kit.getChainOfCustody()));
@@ -94,15 +94,15 @@ public class EditChainOfCustodyController extends BaseController {
 
   private void modifyEvent(ChainOfCustodyEvent event, Optional<Long> actorOrgId, Optional<Long> fromOrgId, Optional<Long> toOrgId) {
     actorOrgId.ifPresent(id -> {
-      event.setActorOrganization(organizationRepository.findOne(id));
+      event.setActorOrganization(organizationRepository.findById(id).orElse(null));
     });
 
     fromOrgId.ifPresent(id -> {
-      event.setFrom(organizationRepository.findOne(id));
+      event.setFrom(organizationRepository.findById(id).orElse(null));
     });
 
     toOrgId.ifPresent(id -> {
-      event.setTo(organizationRepository.findOne(id));
+      event.setTo(organizationRepository.findById(id).orElse(null));
     });
 
     if (EventType.SEND == event.getEventType()) {

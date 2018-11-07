@@ -1,7 +1,7 @@
 package gov.idaho.isp.saktrack.controller.admin;
 
-import gov.idaho.isp.saktrack.audit.KitAuditRepository;
-import gov.idaho.isp.saktrack.persistence.SexualAssaultKitRepository;
+import gov.idaho.isp.saktrack.domain.audit.KitAuditRepository;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +20,7 @@ public class ViewAuditController {
 
   @RequestMapping(value = "/admin/viewAudit", method = RequestMethod.GET)
   public String viewChainOfCustody(@RequestParam Long kitId, Model model) {
-    model.addAttribute("kit", sexualAssaultKitRepository.findOne(kitId));
+    model.addAttribute("kit", sexualAssaultKitRepository.findById(kitId).orElse(null));
     model.addAttribute("audits", kitAuditRepository.findByKitIdOrderByModifiedDesc(kitId));
     return "/admin/kit-audits";
   }

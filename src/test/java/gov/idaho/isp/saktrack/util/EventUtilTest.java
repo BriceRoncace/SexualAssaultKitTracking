@@ -1,16 +1,16 @@
 package gov.idaho.isp.saktrack.util;
 
-import gov.idaho.isp.saktrack.ChainOfCustodyEvent;
-import gov.idaho.isp.saktrack.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
 import gov.idaho.isp.saktrack.config.MockObjUtils;
-import gov.idaho.isp.saktrack.dto.EventDetails;
-import gov.idaho.isp.saktrack.jurisdiction.Jurisdiction;
-import gov.idaho.isp.saktrack.organization.Organization;
-import gov.idaho.isp.saktrack.organization.OrganizationType;
-import gov.idaho.isp.saktrack.user.organization.LabUser;
-import gov.idaho.isp.saktrack.user.organization.LawEnforcementUser;
-import gov.idaho.isp.saktrack.user.organization.MedicalUser;
-import gov.idaho.isp.saktrack.user.organization.OrganizationUser;
+import gov.idaho.isp.saktrack.domain.dto.EventDetails;
+import gov.idaho.isp.saktrack.domain.jurisdiction.Jurisdiction;
+import gov.idaho.isp.saktrack.domain.organization.Organization;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationType;
+import gov.idaho.isp.saktrack.domain.user.organization.LabUser;
+import gov.idaho.isp.saktrack.domain.user.organization.LawEnforcementUser;
+import gov.idaho.isp.saktrack.domain.user.organization.MedicalUser;
+import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUser;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;

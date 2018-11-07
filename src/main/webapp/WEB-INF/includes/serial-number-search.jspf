@@ -10,10 +10,12 @@
   </c:when>
   <c:otherwise>
     <form action="<c:url value='/timeline'/>" method="GET" class="navbar-search-form navbar-right navbar-form">
-      <div class="form-group">
+      <div class="input-group">
         <input type="text" name="serialNumber" class="form-control input-sm serial-number-search-input" data-focus placeholder="serial number" value="<c:out value='${serialNumber}'/>"/>
+        <span class="input-group-btn">
+          <button type="submit" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-search"></span></button>
+        </span>
       </div>
-      <button type="submit" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-search"></span></button>
     </form>
   </c:otherwise>
 </c:choose>

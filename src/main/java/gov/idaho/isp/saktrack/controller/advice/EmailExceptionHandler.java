@@ -1,8 +1,9 @@
 package gov.idaho.isp.saktrack.controller.advice;
 
-import gov.idaho.isp.mail.MailMessage;
-import gov.idaho.isp.mail.Mailer;
 import gov.idaho.isp.saktrack.exception.ErrorAware;
+import gov.idaho.isp.saktrack.mailer.MailMessage;
+import gov.idaho.isp.saktrack.mailer.Mailer;
+import gov.idaho.isp.saktrack.mailer.MimeType;
 import gov.idaho.isp.saktrack.util.beanvalidation.BeanValidationUtils;
 import gov.idaho.isp.saktrack.util.web.WebExceptionUtils;
 import java.util.Set;
@@ -75,11 +76,11 @@ public class EmailExceptionHandler {
 
   private void sendExceptionDetails(HttpServletRequest request, RuntimeException ex) {
     MailMessage message = new MailMessage();
-    message.setMimeType(MailMessage.MimeType.TEXT);
+    message.setMimeType(MimeType.TEXT);
     message.setFrom(errorEmailFrom);
     message.setTo(errorEmailTo);
     message.setSubject(errorEmailSubject);
-    message.setBody(WebExceptionUtils.getExceptionMessage(request, ex) + ex);
+    message.setText(WebExceptionUtils.getExceptionMessage(request, ex) + ex);
     try {
       mailer.send(message);
     }

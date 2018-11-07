@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@ taglib prefix="cjisTags" uri="http://isp.idaho.gov/jsp/cjisTags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <t:page>
   <jsp:attribute name="body">
     <%@include file="../includes/admin-nav.jspf" %>
@@ -15,13 +15,13 @@
             <div class="col-xs-4">
               <div class="form-group">
                 <label class="control-label">Start Date</label>
-                <input type="text" class="form-control hasDatePicker" name="start" value="<cjisTags:fmtTemporal value="${startDate}" pattern="${dateFormat}"/>">
+                <input type="text" class="form-control hasDatePicker" name="start" value="${dateFormatter.format(startDate)}">
               </div>
             </div>
             <div class="col-xs-4">
               <div class="form-group">
                 <label class="control-label">End Date</label>
-                <input type="text" class="form-control hasDatePicker" name="end" value="<cjisTags:fmtTemporal value="${endDate}" pattern="${dateFormat}"/>">
+                <input type="text" class="form-control hasDatePicker" name="end" value="${dateFormatter.format(endDate)}">
               </div>
             </div>
             <div class="col-xs-2 pull-right top20">
@@ -34,7 +34,7 @@
               
               
     <c:if test="${distributedKitsReport.kitSize > 0}">
-      <h2>Report for <cjisTags:fmtTemporal value="${startDate}" pattern="${dateFormat}"/> through <cjisTags:fmtTemporal value="${endDate}" pattern="${dateFormat}"/></h2>
+      <h2>Report for ${dateFormatter.format(startDate)} through ${dateFormatter.format(endDate)}</h2>
 
       
       <div class="panel panel-primary">
@@ -68,9 +68,9 @@
           <div class="well">
             
             <h4>
-              <a href="<c:url value="/report/distributedKitsReport/download"/>?start=<cjisTags:fmtTemporal value="${startDate}" pattern="${dateFormat}"/>&end=<cjisTags:fmtTemporal value="${endDate}" pattern="${dateFormat}"/>"><i class="fa fa-arrow-circle-o-down font18" title="download"></i></a>&nbsp;
+              <a href="<c:url value="/report/distributedKitsReport/download"/>?start=${dateFormatter.format(startDate)}&end=${dateFormatter.format(endDate)}"><i class="fa fa-arrow-circle-o-down font18" title="download"></i></a>&nbsp;
               <b>New Distributed Kits</b>
-              <span class="pull-right"><small>Date new kit sent from lab is between <cjisTags:fmtTemporal value="${startDate}" pattern="${dateFormat}"/> and <cjisTags:fmtTemporal value="${endDate}" pattern="${dateFormat}"/></small></span>
+              <span class="pull-right"><small>Date new kit sent from lab is between ${dateFormatter.format(startDate)} and ${dateFormatter.format(endDate)}</small></span>
             </h4>
             <c:forEach var="group" items="${distributedKitsReport.groups}">
               <table class="table">
@@ -93,7 +93,7 @@
                     <tr>
                       <td style="width: 5%;"></td>
                       <td style="width: 45%;"><a href="<c:url value="/admin/view?id=${row.id}"/>">${row.serialNumber}</a></td>
-                      <td style="width: 50%;"><cjisTags:fmtTemporal value="${row.expirationDate}" pattern="${dateFormat}"/></td>
+                      <td style="width: 50%;">${dateFormatter.format(row.expirationDate)}</td>
                     </tr>
                   </c:forEach>
                 </tbody>
@@ -105,8 +105,8 @@
             
           <div class="well">
             <h4>
-              <a href="<c:url value="/report/receivedCollectedKitsReport/download"/>?start=<cjisTags:fmtTemporal value="${startDate}" pattern="${dateFormat}"/>&end=<cjisTags:fmtTemporal value="${endDate}" pattern="${dateFormat}"/>"><i class="fa fa-arrow-circle-o-down font18" title="download"></i></a>&nbsp;
-              <b>Collected Kits received by Requesting Law Enf. Agency</b><span class="pull-right"><small>Date collected kit received from medical is between <cjisTags:fmtTemporal value="${startDate}" pattern="${dateFormat}"/> and <cjisTags:fmtTemporal value="${endDate}" pattern="${dateFormat}"/></small></span>
+              <a href="<c:url value="/report/receivedCollectedKitsReport/download"/>?start=${dateFormatter.format(startDate)}&end=${dateFormatter.format(endDate)}"><i class="fa fa-arrow-circle-o-down font18" title="download"></i></a>&nbsp;
+              <b>Collected Kits received by Requesting Law Enf. Agency</b><span class="pull-right"><small>Date collected kit received from medical is between ${dateFormatter.format(startDate)} and ${dateFormatter.format(endDate)}</small></span>
             </h4>
             <c:forEach var="group" items="${receivedFromMedicalReport.groups}">
               <table class="table">
@@ -130,7 +130,7 @@
                     <tr>
                       <td style="width: 5%;"></td>
                       <td style="width: 45%;"><a href="<c:url value="/admin/view?id=${row.id}"/>">${row.serialNumber}</a></td>
-                      <td style="width: 20%;"><cjisTags:fmtTemporal value="${row.collectionDate}" pattern="${dateFormat}"/></td>
+                      <td style="width: 20%;">${dateFormatter.format(row.collectionDate)}</td>
                       <td style="width: 30%;">${row.timeAtMedical}</td>
                     </tr>
                   </c:forEach>
@@ -144,8 +144,8 @@
             
           <div class="well">
             <h4>
-              <a href="<c:url value="/report/unsubmittableKitsReport/download"/>?start=<cjisTags:fmtTemporal value="${startDate}" pattern="${dateFormat}"/>&end=<cjisTags:fmtTemporal value="${endDate}" pattern="${dateFormat}"/>"><i class="fa fa-arrow-circle-o-down font18" title="download"></i></a>&nbsp;
-              <b>Kits NOT Submitted to Lab</b><span class="pull-right"><small>Date Attorney confirmed decision to NOT submit is between <cjisTags:fmtTemporal value="${startDate}" pattern="${dateFormat}"/> and <cjisTags:fmtTemporal value="${endDate}" pattern="${dateFormat}"/></small></span>
+              <a href="<c:url value="/report/unsubmittableKitsReport/download"/>?start=${dateFormatter.format(startDate)}&end=${dateFormatter.format(endDate)}"><i class="fa fa-arrow-circle-o-down font18" title="download"></i></a>&nbsp;
+              <b>Kits NOT Submitted to Lab</b><span class="pull-right"><small>Date Attorney confirmed decision to NOT submit is between ${dateFormatter.format(startDate)} and ${dateFormatter.format(endDate)}</small></span>
             </h4>
             <c:if test="${noEvidenceReport.kitSize < 1 && notACrimeReport.kitSize < 1 && noTestingReport.kitSize < 1}">There are no kits in this date range or all were submitted to the lab</c:if>
             
@@ -257,9 +257,9 @@
 
           <div class="well">
             <h4>
-              <a href="<c:url value="/report/submittedKitsReport/download"/>?start=<cjisTags:fmtTemporal value="${startDate}" pattern="${dateFormat}"/>&end=<cjisTags:fmtTemporal value="${endDate}" pattern="${dateFormat}"/>"><i class="fa fa-arrow-circle-o-down font18" title="download"></i></a>&nbsp;
+              <a href="<c:url value="/report/submittedKitsReport/download"/>?start=${dateFormatter.format(startDate)}&end=${dateFormatter.format(endDate)}"><i class="fa fa-arrow-circle-o-down font18" title="download"></i></a>&nbsp;
               <b>Kits Sent to Lab</b>
-              <span class="pull-right"><small>Date Law Enforcement sent kit to lab is between <cjisTags:fmtTemporal value="${startDate}" pattern="${dateFormat}"/> and <cjisTags:fmtTemporal value="${endDate}" pattern="${dateFormat}"/></small></span>
+              <span class="pull-right"><small>Date Law Enforcement sent kit to lab is between ${dateFormatter.format(startDate)} and ${dateFormatter.format(endDate)}</small></span>
             </h4>
             <c:forEach var="group" items="${submittedKitsReport.groups}">
               <table class="table">
@@ -284,7 +284,7 @@
                         <td style="width: 45%;"><a href="<c:url value="/admin/view?id=${row.id}"/>">${row.serialNumber}</a></td>
                         <td style="width: 50%;">
                           <c:forEach var="date" items="${row.labReceivedDates}" varStatus="s">
-                            <cjisTags:fmtTemporal value="${date}" pattern="${dateFormat}"/><c:if test="${!s.last}">,&nbsp;</c:if>
+                            ${dateFormatter.format(date)}<c:if test="${!s.last}">,&nbsp;</c:if>
                           </c:forEach>
                         </td>
                       </tr>
@@ -298,9 +298,9 @@
 
           <div class="well">
             <h4>
-              <a href="<c:url value="/report/databaseKitsReport/download"/>?start=<cjisTags:fmtTemporal value="${startDate}" pattern="${dateFormat}"/>&end=<cjisTags:fmtTemporal value="${endDate}" pattern="${dateFormat}"/>"><i class="fa fa-arrow-circle-o-down font18" title="download"></i></a>&nbsp;
+              <a href="<c:url value="/report/databaseKitsReport/download"/>?start=${dateFormatter.format(startDate)}&end=${dateFormatter.format(endDate)}"><i class="fa fa-arrow-circle-o-down font18" title="download"></i></a>&nbsp;
               <b>Profiles Entered into DNA Database</b>
-              <span class="pull-right"><small>Date profile entered into DNA Database is between <cjisTags:fmtTemporal value="${startDate}" pattern="${dateFormat}"/> and <cjisTags:fmtTemporal value="${endDate}" pattern="${dateFormat}"/></small></span>
+              <span class="pull-right"><small>Date profile entered into DNA Database is between ${dateFormatter.format(startDate)} and ${dateFormatter.format(endDate)}</small></span>
             </h4>
             <c:forEach var="group" items="${databaseKitsReport.groups}">
               <table class="table">
@@ -323,7 +323,7 @@
                       <tr>
                         <td style="width: 5%;"></td>
                         <td style="width: 45%;"><a href="<c:url value="/admin/view?id=${row.id}"/>">${row.serialNumber}</a></td>
-                        <td style="width: 50%;"><cjisTags:fmtTemporal value="${row.dnaDatabaseEntryDate}" pattern="${dateFormat}"/></td>
+                        <td style="width: 50%;">${dateFormatter.format(row.dnaDatabaseEntryDate)}</td>
                       </tr>
                     </c:forEach>
                 </tbody>
@@ -336,8 +336,8 @@
             
           <div class="well">
             <h4>
-              <a href="<c:url value="/report/hitsInKitsReport/download"/>?start=<cjisTags:fmtTemporal value="${startDate}" pattern="${dateFormat}"/>&end=<cjisTags:fmtTemporal value="${endDate}" pattern="${dateFormat}"/>"><i class="fa fa-arrow-circle-o-down font18" title="download"></i></a>&nbsp;
-              <b>DNA Database Hits</b><span class="pull-right"><small>Date DNA Database hit received is between <cjisTags:fmtTemporal value="${startDate}" pattern="${dateFormat}"/> and <cjisTags:fmtTemporal value="${endDate}" pattern="${dateFormat}"/></small></span>
+              <a href="<c:url value="/report/hitsInKitsReport/download"/>?start=${dateFormatter.format(startDate)}&end=${dateFormatter.format(endDate)}"><i class="fa fa-arrow-circle-o-down font18" title="download"></i></a>&nbsp;
+              <b>DNA Database Hits</b><span class="pull-right"><small>Date DNA Database hit received is between ${dateFormatter.format(startDate)} and ${dateFormatter.format(endDate)}</small></span>
             </h4>
             <c:forEach var="group" items="${hitsInKitsReport.groups}">
               <table class="table">
@@ -361,8 +361,8 @@
                       <tr>
                         <td style="width: 5%;"></td>
                         <td style="width: 45%;"><a href="<c:url value="/admin/view?id=${row.id}"/>">${row.serialNumber}</a></td>
-                        <td style="width: 25%;"><cjisTags:fmtTemporal value="${row.dnaDatabaseEntryDate}" pattern="${dateFormat}"/></td>
-                        <td style="width: 25%;"><cjisTags:fmtTemporal value="${row.dnaDatabaseHitDate}" pattern="${dateFormat}"/></td>
+                        <td style="width: 25%;">${dateFormatter.format(row.dnaDatabaseEntryDate)}</td>
+                        <td style="width: 25%;">${dateFormatter.format(row.dnaDatabaseHitDate)}</td>
                       </tr>
                     </c:forEach>
                 </tbody>

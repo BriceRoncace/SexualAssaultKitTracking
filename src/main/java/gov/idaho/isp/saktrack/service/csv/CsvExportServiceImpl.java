@@ -1,8 +1,8 @@
 package gov.idaho.isp.saktrack.service.csv;
 
-import gov.idaho.isp.saktrack.ChainOfCustodyEvent;
-import gov.idaho.isp.saktrack.SexualAssaultKit;
-import gov.idaho.isp.saktrack.organization.OrganizationType;
+import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationType;
 import gov.idaho.isp.saktrack.report.CurrentAssignmentReport;
 import gov.idaho.isp.saktrack.report.CurrentAssignmentReportGroup;
 import gov.idaho.isp.saktrack.report.CurrentAssignmentReportRow;
@@ -12,9 +12,9 @@ import gov.idaho.isp.saktrack.report.RequestingAgencyReportRow;
 import gov.idaho.isp.saktrack.report.StatutoryRequirementReport;
 import gov.idaho.isp.saktrack.report.StatutoryRequirementReportGroup;
 import gov.idaho.isp.saktrack.report.StatutoryRequirementReportRow;
-import gov.idaho.isp.saktrack.user.AbstractUser;
-import gov.idaho.isp.saktrack.user.organization.AbstractOrganizationUser;
-import gov.idaho.isp.saktrack.user.organization.LawEnforcementUser;
+import gov.idaho.isp.saktrack.domain.user.AbstractUser;
+import gov.idaho.isp.saktrack.domain.user.organization.AbstractOrganizationUser;
+import gov.idaho.isp.saktrack.domain.user.organization.LawEnforcementUser;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

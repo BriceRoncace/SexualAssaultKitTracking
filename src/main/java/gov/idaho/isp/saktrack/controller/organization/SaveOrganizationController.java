@@ -1,13 +1,13 @@
 package gov.idaho.isp.saktrack.controller.organization;
 
 import gov.idaho.isp.saktrack.controller.BaseController;
-import gov.idaho.isp.saktrack.jurisdiction.JurisdictionRepository;
-import gov.idaho.isp.saktrack.organization.Organization;
-import gov.idaho.isp.saktrack.organization.OrganizationRepository;
-import gov.idaho.isp.saktrack.organization.OrganizationType;
-import gov.idaho.isp.saktrack.user.User;
-import gov.idaho.isp.saktrack.user.organization.AbstractOrganizationUser;
-import gov.idaho.isp.saktrack.user.persistence.OrganizationUserRepository;
+import gov.idaho.isp.saktrack.domain.jurisdiction.JurisdictionRepository;
+import gov.idaho.isp.saktrack.domain.organization.Organization;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationRepository;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationType;
+import gov.idaho.isp.saktrack.domain.user.User;
+import gov.idaho.isp.saktrack.domain.user.organization.AbstractOrganizationUser;
+import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUserRepository;
 import gov.idaho.isp.saktrack.util.RoutingUtil;
 import java.util.Arrays;
 import java.util.Optional;
@@ -16,9 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -39,17 +38,17 @@ public class SaveOrganizationController extends BaseController {
     Organization org = new Organization();
 
     if (orgId.isPresent()) {
-      org = organizationRepository.findOne(orgId.get());
+      org = organizationRepository.findById(orgId.get()).orElse(null);
     }
 
     if (jurisdictionId.isPresent()) {
-      org.setJurisdiction(jurisdictionRepository.findOne(jurisdictionId.get()));
+      org.setJurisdiction(jurisdictionRepository.findById(jurisdictionId.get()).orElse(null));
     }
 
     return org;
   }
 
-  @RequestMapping(value = "/organization/save", method = RequestMethod.POST)
+  @PostMapping("/organization/save")
   public String saveOrganization(@Valid Organization organization, BindingResult br, Long jurisdictionId, Model model, RedirectAttributes ra, @RequestAttribute User user) {
     if (br.hasErrors()) {
       model.addAttribute("orgTypes", Arrays.asList(OrganizationType.values()));
@@ -64,9 +63,9 @@ public class SaveOrganizationController extends BaseController {
     return "redirect:/";
   }
 
-  @RequestMapping(value = "/organization/updatePasskey", method = RequestMethod.POST)
+  @PostMapping("/organization/updatePasskey")
   public String updatePasskey(@RequestParam Long orgId, @RequestParam String passkey, Model model, RedirectAttributes ra, @RequestAttribute User user) {
-    Organization organization = organizationRepository.findOne(orgId);
+    Organization organization = organizationRepository.findById(orgId).orElse(null);
     organization.setPasskey(passkey);
     organizationRepository.save(organization);
     updateCurrentUserPasskey(user, organization);

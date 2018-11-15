@@ -24,7 +24,7 @@ public class LoadJurisdictionController extends BaseController {
       model.addAttribute("jurisdiction", jurisdictionRepository.findById(id).orElse(null));
     }
 
-    model.addAttribute("jurisdictions", jurisdictionRepository.findAll(new Sort("name")));
+    model.addAttribute("jurisdictions", jurisdictionRepository.findAll(Sort.by("name")));
     model.addAttribute("jurisdictionTypes", Arrays.asList(Jurisdiction.Type.values()));
     return "admin/jurisdictions";
   }

@@ -33,7 +33,7 @@ public class PotentialCocErrorsReportController {
   @GetMapping("/report/cocErrors")
   public String getReport(Model model) {
     model.addAttribute("report", buildReport());
-    model.addAttribute("jurisdictions", jurisdictionRepository.findAll(new Sort("name")));
+    model.addAttribute("jurisdictions", jurisdictionRepository.findAll(Sort.by("name")));
     model.addAttribute("organizations", organizationRepository.findAll());
     return "/admin/reports/coc-errors";
   }

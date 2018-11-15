@@ -51,7 +51,7 @@ public class CollectedKitsNotReceivedReportController extends BaseController {
     }
 
     model.addAttribute("criteria", criteria);
-    model.addAttribute("jurisdictions", jurisdictionRepository.findAll(new Sort("name")));
+    model.addAttribute("jurisdictions", jurisdictionRepository.findAll(Sort.by("name")));
     model.addAttribute("leOrganizations", organizationRepository.findByTypeOrderByNameAsc(OrganizationType.LAW_ENFORCEMENT));
     model.addAttribute("filterText", filterTextService.buildReportFilterText(criteria));
     return "/admin/reports/collected-kits-not-received";

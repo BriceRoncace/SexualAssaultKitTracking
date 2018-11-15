@@ -16,7 +16,7 @@ public class ManageAdminUserController {
 
   @GetMapping("/adminUser")
   public String newAdminUser(Model model) {
-    model.addAttribute("adminUsers", adminUserRepository.findAll(new Sort("displayName")));
+    model.addAttribute("adminUsers", adminUserRepository.findAll(Sort.by("displayName")));
     return "admin/manage-admin";
   }
 }

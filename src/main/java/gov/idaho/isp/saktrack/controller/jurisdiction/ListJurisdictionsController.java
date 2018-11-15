@@ -19,7 +19,7 @@ public class ListJurisdictionsController extends BaseController {
 
   @GetMapping("/jurisdictions/list")
   public String listJurisdictions(Model model) {
-    model.addAttribute("jurisdictions", jurisdictionRepository.findAll(new Sort("name")));
+    model.addAttribute("jurisdictions", jurisdictionRepository.findAll(Sort.by("name")));
     model.addAttribute("jurisdictionTypes", Arrays.asList(Jurisdiction.Type.values()));
     return "admin/jurisdictions";
   }

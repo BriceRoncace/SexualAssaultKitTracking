@@ -23,7 +23,7 @@ public class SortWrapper {
     String prop = propAndDir[0];
     String dir = (propAndDir.length > 1) ? propAndDir[1] : "ASC";
 
-    return new Sort(Sort.Direction.valueOf(dir), prop);
+    return Sort.by(Sort.Direction.valueOf(dir), prop);
   }
 
   public Sort unwrap() {

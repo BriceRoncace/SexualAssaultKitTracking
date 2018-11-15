@@ -44,7 +44,7 @@ public class RemoveJurisdictionController extends BaseController {
   }
 
   private String setupModelForFailure(Model model, String reasonForFailure) {
-    model.addAttribute("jurisdictions", jurisdictionRepository.findAll(new Sort("name")));
+    model.addAttribute("jurisdictions", jurisdictionRepository.findAll(Sort.by("name")));
     model.addAttribute("jurisdictionTypes", Arrays.asList(Jurisdiction.Type.values()));
     model.addAttribute("errors", reasonForFailure);
     return "admin/jurisdictions";

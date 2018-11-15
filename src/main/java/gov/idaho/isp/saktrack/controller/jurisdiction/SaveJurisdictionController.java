@@ -33,7 +33,7 @@ public class SaveJurisdictionController extends BaseController {
   @PostMapping("/jurisdiction/save")
   public String saveJurisdiction(@Valid Jurisdiction jurisdiction, BindingResult br, Model model, RedirectAttributes ra, @RequestAttribute User user) {
     if (br.hasErrors()) {
-      model.addAttribute("jurisdictions", jurisdictionRepository.findAll(new Sort("name")));
+      model.addAttribute("jurisdictions", jurisdictionRepository.findAll(Sort.by("name")));
       model.addAttribute("jurisdictionTypes", Arrays.asList(Jurisdiction.Type.values()));
       model.addAttribute("errors", getErrors(br));
       return "admin/jurisdictions";

@@ -65,7 +65,7 @@ public class AdminDashboardController {
     model.addAttribute("criteria", criteria);
     model.addAttribute("kitsMissingEvents", sexualAssaultKitRepository.findByQuestionableEventsTrue());
     model.addAttribute("orgTypes", Arrays.asList(OrganizationType.values()));
-    model.addAttribute("jurisdictions", jurisdictionRepository.findAll(new Sort("name")));
+    model.addAttribute("jurisdictions", jurisdictionRepository.findAll(Sort.by("name")));
 
     res.addCookie(CookieUtils.createEncoded(ORG_FILTER_COOKIE_NAME, criteria.buildUrlParams(page)));
     return "admin/dashboard";

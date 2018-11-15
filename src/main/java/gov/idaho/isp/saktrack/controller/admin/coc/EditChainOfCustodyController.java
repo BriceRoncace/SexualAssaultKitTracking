@@ -83,7 +83,7 @@ public class EditChainOfCustodyController extends BaseController {
   private void setupModelForManageEventView(SexualAssaultKit kit, EventType eventType, Model model) {
     model.addAttribute("missingSendEvents", EventUtil.getMissingSendEvents(kit.getChainOfCustody()));
     model.addAttribute("eventType", eventType);
-    model.addAttribute("organizations", organizationRepository.findAll(new Sort("name")));
+    model.addAttribute("organizations", organizationRepository.findAll(Sort.by("name")));
     model.addAttribute("sendEventFlags", Arrays.asList(EventFlag.values()).stream().filter(ef -> Boolean.TRUE.equals(ef.isSendEvent())).collect(Collectors.toList()));
     model.addAttribute("receiveEventFlags", Arrays.asList(EventFlag.values()).stream().filter(ef -> Boolean.FALSE.equals(ef.isSendEvent())).collect(Collectors.toList()));
   }

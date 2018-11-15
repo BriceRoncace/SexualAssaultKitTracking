@@ -45,7 +45,7 @@ public class SearchController {
     Page<SexualAssaultKit> page = sexualAssaultKitRepository.findAll(new SexualAssaultKitSpec(criteria), pageable);
     model.addAttribute("criteria", criteria);
     model.addAttribute("page", page);
-    model.addAttribute("organizations", organizationRepository.findAll(new Sort("name")));
+    model.addAttribute("organizations", organizationRepository.findAll(Sort.by("name")));
     setCommonModelAttributes(model);
     return "/admin/search";
   }
@@ -93,7 +93,7 @@ public class SearchController {
     model.addAttribute("eventTypes", ChainOfCustodyEvent.EventType.values());
     model.addAttribute("victimTypes", MedicalDetails.VictimType.values());
     model.addAttribute("nonSubmissionReasons", NonSubmissionReason.values());
-    model.addAttribute("jurisdictions", jurisdictionRepository.findAll(new Sort("name")));
+    model.addAttribute("jurisdictions", jurisdictionRepository.findAll(Sort.by("name")));
   }
 
   private SexualAssaultKitSearchCriteria setCriteriaToFilterForAgencyAndOrJurisdiction(OrganizationUser user, SexualAssaultKitSearchCriteria criteria) {
@@ -112,6 +112,6 @@ public class SearchController {
     if (OrganizationType.LEGAL == user.getOrganization().getType()) {
       return organizationRepository.findByJurisdictionOrderByNameAsc(user.getOrganization().getJurisdiction());
     }
-    return organizationRepository.findAll(new Sort("name"));
+    return organizationRepository.findAll(Sort.by("name"));
   }
 }

@@ -111,7 +111,7 @@ public class CsvExportServiceTest {
   @Test
   public void convertUnreceivedCollectedKitsReport() {
     String expectedHeader = "Law Enforcement Agency,Serial Number,Collection Date,Last Modified By,Last Modified Date";
-    String expectedRow = "\"Name\",\"012345\",\"01/01/2017\",\"Modifier\",\"02/16/2017\"";
+    String expectedRow = "\"Name\",\"012345\",\"01/01/2017\",\"Modifier\",\"02/16/2017 1022\"";
     String expectedFileName = "unreceived-collected-kits.csv";
 
     String expectedContent = expectedHeader + NEWLINE + expectedRow;

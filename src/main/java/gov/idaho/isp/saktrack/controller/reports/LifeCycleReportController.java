@@ -1,10 +1,11 @@
 package gov.idaho.isp.saktrack.controller.reports;
 
+import gov.idaho.isp.saktrack.controller.BaseController;
 import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
 import gov.idaho.isp.saktrack.domain.jurisdiction.JurisdictionRepository;
 import gov.idaho.isp.saktrack.domain.organization.OrganizationRepository;
 import gov.idaho.isp.saktrack.domain.organization.OrganizationType;
-import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
 import gov.idaho.isp.saktrack.domain.search.SexualAssaultKitSearchCriteria;
 import gov.idaho.isp.saktrack.domain.search.SexualAssaultKitSpec;
 import gov.idaho.isp.saktrack.report.RequestingAgencyReport;
@@ -21,7 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class LifeCycleReportController {
+public class LifeCycleReportController extends BaseController {
   private final SexualAssaultKitRepository sexualAssaultKitRepository;
   private final OrganizationRepository organizationRepository;
   private final FilterTextService filterTextService;
@@ -39,11 +40,16 @@ public class LifeCycleReportController {
   @GetMapping("/report/lifeCycle")
   public String getReport(SexualAssaultKitSearchCriteria criteria, Optional<Boolean> forward, Model model) {
     if (!Boolean.TRUE.equals(forward.orElse(Boolean.FALSE))) {
-      model.addAttribute("report", buildReport(criteria));
+      if (criteria.isEmpty()) {
+        model.addAttribute("errors", getText("empty.criteria"));
+      }
+      else {
+        model.addAttribute("report", buildReport(criteria));
+      }
     }
 
     model.addAttribute("criteria", criteria);
-    model.addAttribute("jurisdictions", jurisdictionRepository.findAll(new Sort("name")));
+    model.addAttribute("jurisdictions", jurisdictionRepository.findAll(Sort.by("name")));
     model.addAttribute("leOrganizations", organizationRepository.findByTypeOrderByNameAsc(OrganizationType.LAW_ENFORCEMENT));
     model.addAttribute("filterText", filterTextService.buildReportFilterText(criteria));
     return "/admin/reports/life-cycle";

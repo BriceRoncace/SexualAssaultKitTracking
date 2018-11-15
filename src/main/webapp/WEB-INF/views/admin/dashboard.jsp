@@ -3,9 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <t:page>
-  <jsp:attribute name="head">
-    <link href="<c:url value="/assets/css/pagination.css"/>" rel="stylesheet" type="text/css" />
-  </jsp:attribute>
   <jsp:attribute name="body">
     <%@include file="includes/admin-nav.jspf" %>
     <%@include file="../../includes/messages.jspf" %>

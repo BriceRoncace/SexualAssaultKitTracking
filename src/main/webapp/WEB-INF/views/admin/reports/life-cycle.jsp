@@ -14,16 +14,7 @@
             <div class="col-xs-4">
               <div class="form-group">
                 <label class="control-label">Collected Date</label>
-                <span class="clickable label thin label-primary" data-search-type="ON">On</span>
-                <span class="clickable label thin label-default clickable" data-search-type="BEFORE">Before</span>
-                <span class="clickable label thin label-default" data-search-type="AFTER">After</span>
-                <span class="clickable label thin label-default" data-search-type="BETWEEN">Between</span>
-                <input type="hidden" name="collectedDate.searchType" value="${criteria.collectedDate.searchType == null ? 'ON' : criteria.collectedDate.searchType}"/>
-                <div class="input-group">
-                  <input type="text" class="form-control hasDatePicker" name="collectedDate.date1" value="${dateFormatter.format(criteria.collectedDate.date1)}">
-                  <span class="input-group-addon invisible">-</span>
-                  <input type="text" class="form-control hasDatePicker invisible" name="collectedDate.date2" value="${dateFormatter.format(criteria.collectedDate.date2)}">
-                </div>
+                <t:criteria-date name="collectedDate" value="${criteria.collectedDate}"/>
               </div>
             </div>
             <div class="col-xs-4">
@@ -51,8 +42,8 @@
               <div class="col-xs-12 small">* - Kit is currently at location.</div>
             </div>
             <div class="col-xs-3 hidden-print text-right">
-              <button data-action="<c:url value="/report/lifeCycle/download"/>" type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-down font18" title="download"></i> Export</button>
               <button data-action="<c:url value="/report/lifeCycle"/>" type="submit" class="btn btn-primary">Generate</button>
+              <button data-action="<c:url value="/report/lifeCycle/download"/>" type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-down font18" title="download"></i> Export</button>
             </div>
           </div>
               
@@ -108,7 +99,5 @@
     </div>
   </jsp:attribute>
   <jsp:attribute name="scripts">
-    <script src="<c:url value="../assets/js/saktrack-search.js"/>"></script>
-    <script src="<c:url value="../assets/js/report-scripts.js"/>"></script>
   </jsp:attribute>
 </t:page>

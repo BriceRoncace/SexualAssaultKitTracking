@@ -9,22 +9,21 @@
     <div class="panel panel-primary hidden-print">
       <div class="panel-heading"><h2 class="panel-title">Date Range Report</h2></div>
       <div class="panel-body">
-        <form action="<c:url value="/report/timeframe"/>" method="POST">
-          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <form action="<c:url value="/report/timeframe"/>" method="GET">
           <div class="row">
             <div class="col-xs-4">
               <div class="form-group">
                 <label class="control-label">Start Date</label>
-                <input type="text" class="form-control hasDatePicker" name="start" value="${dateFormatter.format(startDate)}">
+                <input type="text" class="form-control hasDatePicker" name="date1" value="${dateFormatter.format(startDate)}">
               </div>
             </div>
             <div class="col-xs-4">
               <div class="form-group">
                 <label class="control-label">End Date</label>
-                <input type="text" class="form-control hasDatePicker" name="end" value="${dateFormatter.format(endDate)}">
+                <input type="text" class="form-control hasDatePicker" name="date2" value="${dateFormatter.format(endDate)}">
               </div>
             </div>
-            <div class="col-xs-2 pull-right top20">
+            <div class="col-xs-4 text-center top25">
               <button type="submit" class="btn btn-primary">Generate</button>
             </div>
           </div>
@@ -379,11 +378,6 @@
         
   </jsp:attribute>
   <jsp:attribute name="scripts">
-    <script src="<c:url value="../assets/js/saktrack-search.js"/>"></script>
-    <script src="<c:url value="../assets/js/report-scripts.js"/>"></script>
-    
-    
-    
-    
+    <script src="<c:url value="../assets/js/report-scripts.js"/>"></script>    
   </jsp:attribute>
 </t:page>

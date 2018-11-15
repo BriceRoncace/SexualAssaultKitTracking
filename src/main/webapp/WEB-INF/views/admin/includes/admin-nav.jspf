@@ -22,11 +22,13 @@
           <a href="#" class="dropdown-toggle banner-button-sides" data-toggle="dropdown" role="button">Reports <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="<c:url value='/report/lifeCycle?forward=1'/>">Kit Life Cycle Report</a></li>
-            <li><a href="<c:url value='/report/timeframe'/>">Kit Statistics for Specified Time Frame</a></li>
+            <li><a href="<c:url value='/report/timeframe?forward=1'/>">Kit Statistics for Specified Time Frame</a></li>
             <li><a href="<c:url value='/report/collectedKitsNotReceived?forward=1'/>">Kit Collected but not Received Report</a></li>
             <li><a href="<c:url value='/report/unusedKits?forward=1'/>">Unused Kits Report</a></li>
             <li><a href="<c:url value='/report/exceedingStatutoryRequirements?forward=1'/>">Kits Exceeding Statutory Requirements</a></li>
             <li><a href="<c:url value='/report/cocErrors'/>">Kits with Questionable Events</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="<c:url value='/report/loginHistory'/>">User Login History</a></li>
           </ul>
         </li>
         <li class="dropdown">

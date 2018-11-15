@@ -1,7 +1,7 @@
 package gov.idaho.isp.saktrack.controller.lab;
 
 import gov.idaho.isp.saktrack.controller.BaseController;
-import gov.idaho.isp.saktrack.controller.advice.LoadEventDetailsAdvice.LoadEventDetails;
+import gov.idaho.isp.saktrack.controller.advice.LoadEventDetailsAdvice;
 import gov.idaho.isp.saktrack.domain.dto.EventDetails;
 import gov.idaho.isp.saktrack.domain.user.User;
 import gov.idaho.isp.saktrack.domain.user.organization.LabUser;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@LoadEventDetails
+@LoadEventDetailsAdvice.Apply
 public class LabReturnToLawEnforcementController extends BaseController {
 
   @ModelAttribute

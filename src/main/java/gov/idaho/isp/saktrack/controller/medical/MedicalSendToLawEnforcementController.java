@@ -1,7 +1,7 @@
 package gov.idaho.isp.saktrack.controller.medical;
 
 import gov.idaho.isp.saktrack.controller.BaseController;
-import gov.idaho.isp.saktrack.controller.advice.LoadEventDetailsAdvice.LoadEventDetails;
+import gov.idaho.isp.saktrack.controller.advice.LoadEventDetailsAdvice;
 import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
 import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
 import gov.idaho.isp.saktrack.domain.dto.EventDetails;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@LoadEventDetails
+@LoadEventDetailsAdvice.Apply
 public class MedicalSendToLawEnforcementController extends BaseController {
   private final SexualAssaultKitRepository sexualAssaultKitRepository;
   private final OrganizationRepository organizationRepository;

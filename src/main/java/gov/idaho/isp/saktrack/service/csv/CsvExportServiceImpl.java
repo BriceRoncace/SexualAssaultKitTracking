@@ -3,6 +3,10 @@ package gov.idaho.isp.saktrack.service.csv;
 import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent;
 import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
 import gov.idaho.isp.saktrack.domain.organization.OrganizationType;
+import gov.idaho.isp.saktrack.domain.user.AbstractUser;
+import gov.idaho.isp.saktrack.domain.user.UserLogin;
+import gov.idaho.isp.saktrack.domain.user.organization.AbstractOrganizationUser;
+import gov.idaho.isp.saktrack.domain.user.organization.LawEnforcementUser;
 import gov.idaho.isp.saktrack.report.CurrentAssignmentReport;
 import gov.idaho.isp.saktrack.report.CurrentAssignmentReportGroup;
 import gov.idaho.isp.saktrack.report.CurrentAssignmentReportRow;
@@ -12,9 +16,6 @@ import gov.idaho.isp.saktrack.report.RequestingAgencyReportRow;
 import gov.idaho.isp.saktrack.report.StatutoryRequirementReport;
 import gov.idaho.isp.saktrack.report.StatutoryRequirementReportGroup;
 import gov.idaho.isp.saktrack.report.StatutoryRequirementReportRow;
-import gov.idaho.isp.saktrack.domain.user.AbstractUser;
-import gov.idaho.isp.saktrack.domain.user.organization.AbstractOrganizationUser;
-import gov.idaho.isp.saktrack.domain.user.organization.LawEnforcementUser;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -37,7 +38,8 @@ public class CsvExportServiceImpl implements CsvExportService {
 
   private final Pattern SINGLEQUOTE = Pattern.compile(QUOTE);
 
-  private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+  private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+  private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HHmm");
 
 
   @Override
@@ -286,6 +288,26 @@ public class CsvExportServiceImpl implements CsvExportService {
   }
 
   @Override
+  public CsvDownloadable exportUserLoginList(List<UserLogin> userLogins) {
+    String header = "Username,Display Name,Email,User Type,Organization,Org Admin,User Agent,Login Time";
+
+    List<String> reportValues = userLogins.stream().map((u) -> {
+      StringJoiner row = new StringJoiner(COMMA);
+      row.add(cleanString(u.getUsername()));
+      row.add(cleanString(u.getDisplayName()));
+      row.add(cleanString(u.getEmail()));
+      row.add(cleanString(u.getUserType().getLabel()));
+      row.add(cleanString(u.getOrganization()));
+      row.add(cleanString(u.isOrganizationAdmin()));
+      row.add(cleanString(u.getUserAgent()));
+      row.add(cleanString(u.getLoginTime()));
+      return row.toString();
+    }).collect(Collectors.toList());
+
+    return new CsvDownloadable("userLogins.csv", convertToContent(header, reportValues));
+  }
+
+  @Override
   public CsvDownloadable exportKitSearchResults(List<SexualAssaultKit> kits) {
     String header = "Serial #,Current Organization,Repurposed,Collected,Analyzed,DNA Database Entry Date,DNA Database Hit Date,Expunged Date,Planned Destruction Date,Destruction Date,Last Modified,Last Modified By,Most Recent Event";
     String medicalHeader = ",Expiration Date,Requesting Law Enforcement Agency";
@@ -503,15 +525,15 @@ public class CsvExportServiceImpl implements CsvExportService {
   }
 
   private String cleanString(LocalDate localDate) {
-    return localDate != null ? cleanString(formatter.format(localDate)) : EMPTY_STR;
+    return localDate != null ? cleanString(dateFormatter.format(localDate)) : EMPTY_STR;
   }
 
   private String cleanString(LocalDateTime localDateTime) {
-    return localDateTime != null ? cleanString(formatter.format(localDateTime)) : EMPTY_STR;
+    return localDateTime != null ? cleanString(dateTimeFormatter.format(localDateTime)) : EMPTY_STR;
   }
 
   private String cleanString(List<LocalDate> localDates) {
-    return cleanString(localDates.stream().map(ld -> formatter.format(ld)).collect(Collectors.joining(COMMA + " ")));
+    return cleanString(localDates.stream().map(ld -> dateFormatter.format(ld)).collect(Collectors.joining(COMMA + " ")));
   }
 
   private String escapeQuotes(String str) {

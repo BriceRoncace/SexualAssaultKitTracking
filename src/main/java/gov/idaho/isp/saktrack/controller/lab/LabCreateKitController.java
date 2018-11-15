@@ -1,11 +1,11 @@
 package gov.idaho.isp.saktrack.controller.lab;
 
 import gov.idaho.isp.saktrack.controller.BaseController;
-import gov.idaho.isp.saktrack.controller.advice.LoadEventDetailsAdvice.LoadEventDetails;
+import gov.idaho.isp.saktrack.controller.advice.LoadEventDetailsAdvice;
 import gov.idaho.isp.saktrack.domain.dto.CreateKitEventDetails;
 import gov.idaho.isp.saktrack.domain.user.User;
-import gov.idaho.isp.saktrack.util.UserUtils;
 import gov.idaho.isp.saktrack.domain.user.organization.LabUser;
+import gov.idaho.isp.saktrack.util.UserUtils;
 import gov.idaho.isp.saktrack.validation.group.Batch;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@LoadEventDetails
+@LoadEventDetailsAdvice.Apply
 public class LabCreateKitController extends BaseController {
 
   @ModelAttribute

@@ -42,11 +42,9 @@ public class SearchController {
 
   @GetMapping("/admin/search")
   public String adminSearch(SexualAssaultKitSearchCriteria criteria, @PageableDefault(size=25, sort = "lastModified", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
-    if (!criteria.isEmpty()) {
-      Page<SexualAssaultKit> page = sexualAssaultKitRepository.findAll(new SexualAssaultKitSpec(criteria), pageable);
-      model.addAttribute("criteria", criteria);
-      model.addAttribute("page", page);
-    }
+    Page<SexualAssaultKit> page = sexualAssaultKitRepository.findAll(new SexualAssaultKitSpec(criteria), pageable);
+    model.addAttribute("criteria", criteria);
+    model.addAttribute("page", page);
     model.addAttribute("organizations", organizationRepository.findAll(new Sort("name")));
     setCommonModelAttributes(model);
     return "/admin/search";
@@ -67,12 +65,10 @@ public class SearchController {
       orgUser = (OrganizationUser) user;
     }
 
-    if (!criteria.isEmpty()) {
-      criteria = setCriteriaToFilterForAgencyAndOrJurisdiction(orgUser, criteria);
-      Page<SexualAssaultKit> page = sexualAssaultKitRepository.findAll(new SexualAssaultKitSpec(criteria), pageable);
-      model.addAttribute("criteria", criteria);
-      model.addAttribute("page", page);
-    }
+    criteria = setCriteriaToFilterForAgencyAndOrJurisdiction(orgUser, criteria);
+    Page<SexualAssaultKit> page = sexualAssaultKitRepository.findAll(new SexualAssaultKitSpec(criteria), pageable);
+    model.addAttribute("criteria", criteria);
+    model.addAttribute("page", page);
     model.addAttribute("userOrg", orgUser.getOrganization());
     model.addAttribute("organizations", createFilteredOrgsIfProsecutor(orgUser));
     setCommonModelAttributes(model);

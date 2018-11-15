@@ -1,4 +1,4 @@
-package gov.idaho.isp.saktrack.controller.advice;
+package gov.idaho.isp.saktrack.util.exception;
 
 import gov.idaho.isp.saktrack.exception.ErrorAware;
 import gov.idaho.isp.saktrack.mailer.MailMessage;
@@ -13,8 +13,8 @@ public class EmailExceptionHandler {
   public static final String OPTIONS_ATTR_NAME = "exceptionHandlingOptions";
 
   private String errorView = "error";
-  private String errorEmailFrom = null;
-  private String errorEmailTo = "cjisdevelopment@isp.idaho.gov";
+  private String errorEmailFrom;
+  private String errorEmailTo;
   private String errorEmailSubject = "Application Exception";
   private boolean sendEmail = true;
 

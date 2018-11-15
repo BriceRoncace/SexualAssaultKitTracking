@@ -2,10 +2,11 @@ package gov.idaho.isp.saktrack.service.csv;
 
 import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
 import gov.idaho.isp.saktrack.domain.organization.OrganizationType;
+import gov.idaho.isp.saktrack.domain.user.AbstractUser;
+import gov.idaho.isp.saktrack.domain.user.UserLogin;
 import gov.idaho.isp.saktrack.report.CurrentAssignmentReport;
 import gov.idaho.isp.saktrack.report.RequestingAgencyReport;
 import gov.idaho.isp.saktrack.report.StatutoryRequirementReport;
-import gov.idaho.isp.saktrack.domain.user.AbstractUser;
 import java.util.List;
 
 public interface CsvExportService {
@@ -24,4 +25,5 @@ public interface CsvExportService {
   CsvDownloadable exportKitSearchResults(List<SexualAssaultKit> kits, OrganizationType orgType);
 
   CsvDownloadable exportUserList(List<AbstractUser> users);
+  CsvDownloadable exportUserLoginList(List<UserLogin> userLogins);
 }

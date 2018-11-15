@@ -3,29 +3,26 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <t:page>
-  <jsp:attribute name="head">
-    <link href="<c:url value="/assets/css/pagination.css"/>" rel="stylesheet" type="text/css" />
-  </jsp:attribute>
   <jsp:attribute name="body">
     <%@include file="includes/admin-nav.jspf" %>
     <%@include file="../../includes/messages.jspf" %>
     <t:breadcrumb crumbActive="Search"/>
     <c:set var="searchRun" value="${page != null}"/>
-    <h2 class="line-under">Admin Advanced Search <span class="small"><small data-toggle-trigger class="clickable btn-link"><span data-toggleable class="${searchRun ? '' : 'hidden'}">show search</span><span data-toggleable class="${searchRun ? 'hidden' : ''}">hide search</span></small></span></h2>
+    <h2 class="line-under">Admin Advanced Search <span class="small"><small onclick="$('[data-toggleable]').toggleClass('hidden');" class="clickable btn-link"><span data-toggleable class="${searchRun ? '' : 'hidden'}">show search</span><span data-toggleable class="${searchRun ? 'hidden' : ''}">hide search</span></small></span></h2>
     
     <form id="search-form" data-toggleable class="${searchRun ? 'hidden' : ''}" method="get">
       
       <div class="row">
-        <div class="col-xs-2">
+        <div class="col-xs-6 col-sm-2 ">
           <div class="form-group">
             <label class="control-label">Serial Number</label>
             <input type="text" data-focus class="form-control" name="serialNumber" value="${criteria.serialNumber}"/>
           </div>
         </div>
-        <div class="col-xs-10">
+        <div class="col-xs-6 col-sm-10">
           <div class="form-group pull-right">
-            <button data-action="<c:url value="/admin/search/download"/>" type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-down font18" title="download"></i> Export</button>
             <button data-action="<c:url value="/admin/search"/>" type="submit" class="btn btn-primary">Search</button>
+            <button data-action="<c:url value="/admin/search/download"/>" type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-down font18" title="download"></i> Export</button>
           </div>
         </div>
       </div>
@@ -58,17 +55,7 @@
         <div class="col-xs-4">
           <div class="form-group">
             <label class="control-label">Event Date</label>
-            <span class="clickable label thin label-primary" data-search-type="ON">On</span>
-            <span class="clickable label thin label-default clickable" data-search-type="BEFORE">Before</span>
-            <span class="clickable label thin label-default" data-search-type="AFTER">After</span>
-            <span class="clickable label thin label-default" data-search-type="BETWEEN">Between</span>
-            <span class="clickable label thin label-default" data-search-type="NONE">None</span>
-            <input type="hidden" name="eventDate.searchType" value="${criteria.eventDate.searchType == null ? 'ON' : criteria.eventDate.searchType}"/>
-            <div class="input-group">
-              <input type="text" class="form-control hasDatePicker" name="eventDate.date1" value="${dateFormatter.format(criteria.eventDate.date1)}">
-              <span class="input-group-addon invisible">-</span>
-              <input type="text" class="form-control hasDatePicker invisible" name="eventDate.date2" value="${dateFormatter.format(criteria.eventDate.date2)}">
-            </div>
+            <t:criteria-date name="eventDate" value="${criteria.eventDate}" showNone="true"/>
           </div>
         </div>  
       </div>
@@ -89,17 +76,7 @@
         <div class="col-xs-4">
           <div class="form-group">
             <label class="control-label">Collected Date</label>
-            <span class="clickable label thin label-primary" data-search-type="ON">On</span>
-            <span class="clickable label thin label-default clickable" data-search-type="BEFORE">Before</span>
-            <span class="clickable label thin label-default" data-search-type="AFTER">After</span>
-            <span class="clickable label thin label-default" data-search-type="BETWEEN">Between</span>
-            <span class="clickable label thin label-default" data-search-type="NONE">None</span>
-            <input type="hidden" name="collectedDate.searchType" value="${criteria.collectedDate.searchType == null ? 'ON' : criteria.collectedDate.searchType}"/>
-            <div class="input-group">
-              <input type="text" class="form-control hasDatePicker" name="collectedDate.date1" value="${dateFormatter.format(criteria.collectedDate.date1)}">
-              <span class="input-group-addon invisible">-</span>
-              <input type="text" class="form-control hasDatePicker invisible" name="collectedDate.date2" value="${dateFormatter.format(criteria.collectedDate.date2)}">
-            </div>
+            <t:criteria-date name="collectedDate" value="${criteria.collectedDate}" showNone="true"/>
           </div>
         </div>  
         <div class="col-xs-4">
@@ -148,17 +125,7 @@
         <div class="col-xs-4">
           <div class="form-group">
             <label class="control-label">Crime Date</label>
-            <span class="clickable label thin label-primary" data-search-type="ON">On</span>
-            <span class="clickable label thin label-default clickable" data-search-type="BEFORE">Before</span>
-            <span class="clickable label thin label-default" data-search-type="AFTER">After</span>
-            <span class="clickable label thin label-default" data-search-type="BETWEEN">Between</span>
-            <span class="clickable label thin label-default" data-search-type="NONE">None</span>
-            <input type="hidden" name="crimeDate.searchType" value="${criteria.crimeDate.searchType == null ? 'ON' : criteria.crimeDate.searchType}"/>
-            <div class="input-group">
-              <input type="text" class="form-control hasDatePicker" name="crimeDate.date1" value="${dateFormatter.format(criteria.crimeDate.date1)}">
-              <span class="input-group-addon invisible">-</span>
-              <input type="text" class="form-control hasDatePicker invisible" name="crimeDate.date2" value="${dateFormatter.format(criteria.crimeDate.date2)}">
-            </div>
+            <t:criteria-date name="crimeDate" value="${criteria.crimeDate}" showNone="true"/>
           </div>
         </div>
       </div>
@@ -167,10 +134,16 @@
         <div class="col-xs-2">
           <div class="form-group">
             <label class="control-label">Meets Submission Criteria</label><br/>
-            <div class="btn-group btn-group-xs" role="group">
-              <button class="btn btn-default" type="button" data-btn-val="true">Yes</button>
-              <button class="btn btn-default" type="button" data-btn-val="false">No</button>
-              <input type="hidden" name="meetsSubmissionCriteria" value="${criteria.meetsSubmissionCriteria}">
+            <div class="btn-group btn-group-xs" data-toggle="buttons">
+              <label class="btn btn-custom ${empty criteria.meetsSubmissionCriteria ? 'active' : ''}">
+                <input type="radio" name="meetsSubmissionCriteria" value="" ${empty criteria.meetsSubmissionCriteria ? 'checked' : ''}/> Any
+              </label>
+              <label class="btn btn-custom ${criteria.meetsSubmissionCriteria == 'true' ? 'active' : ''}">
+                <input type="radio" name="meetsSubmissionCriteria" value="true" ${criteria.meetsSubmissionCriteria == 'true' ? 'checked' : ''}/> Yes
+              </label>
+              <label class="btn btn-custom ${criteria.meetsSubmissionCriteria == 'false' ? 'active' : ''}">
+                <input type="radio" name="meetsSubmissionCriteria" value="false" ${criteria.meetsSubmissionCriteria == 'false' ? 'checked' : ''}/> No
+              </label>
             </div>
           </div>
         </div>
@@ -183,10 +156,16 @@
         <div id="prosecutorAgrees" class="col-xs-3">
           <div class="form-group">
             <label class="control-label">Attorney Concurs with Non-Submission</label><br/>
-            <div class="btn-group btn-group-xs" role="group">
-              <button class="btn btn-default" type="button" data-btn-val="true">Yes</button>
-              <button class="btn btn-default" type="button" data-btn-val="false">No</button>
-              <input type="hidden" name="prosecutorAgrees" value="${criteria.prosecutorAgrees}">
+            <div class="btn-group btn-group-xs" data-toggle="buttons">
+              <label class="btn btn-custom ${empty criteria.prosecutorAgrees ? 'active' : ''}">
+                <input type="radio" name="prosecutorAgrees" value="" ${empty criteria.prosecutorAgrees ? 'checked' : ''}/> Any
+              </label>
+              <label class="btn btn-custom ${criteria.prosecutorAgrees == 'true' ? 'active' : ''}">
+                <input type="radio" name="prosecutorAgrees" value="true" ${criteria.prosecutorAgrees == 'true' ? 'checked' : ''}/> Yes
+              </label>
+              <label class="btn btn-custom ${criteria.prosecutorAgrees == 'false' ? 'active' : ''}">
+                <input type="radio" name="prosecutorAgrees" value="false" ${criteria.prosecutorAgrees == 'false' ? 'checked' : ''}/> No
+              </label>
             </div>
           </div>
         </div>
@@ -194,16 +173,7 @@
         <div class="col-xs-4">
           <div class="form-group">
             <label class="control-label">Planned Destruction Date</label>
-            <span class="clickable label thin label-primary" data-search-type="ON">On</span>
-            <span class="clickable label thin label-default clickable" data-search-type="BEFORE">Before</span>
-            <span class="clickable label thin label-default" data-search-type="AFTER">After</span>
-            <span class="clickable label thin label-default" data-search-type="BETWEEN">Between</span>
-            <input type="hidden" name="plannedDestructionDate.searchType" value="${criteria.plannedDestructionDate.searchType == null ? 'ON' : criteria.plannedDestructionDate.searchType}"/>
-            <div class="input-group">
-              <input type="text" class="form-control hasDatePicker" name="plannedDestructionDate.date1" value="${dateFormatter.format(criteria.plannedDestructionDate.date1)}">
-              <span class="input-group-addon invisible">-</span>
-              <input type="text" class="form-control hasDatePicker invisible" name="plannedDestructionDate.date2" value="${dateFormatter.format(criteria.plannedDestructionDate.date2)}">
-            </div>
+            <t:criteria-date name="plannedDestructionDate" value="${criteria.plannedDestructionDate}" showNone="true"/>
           </div>
         </div>       
       </div>      
@@ -224,17 +194,7 @@
         <div class="col-xs-4">
           <div class="form-group">
             <label class="control-label">Completed Date</label>
-            <span class="clickable label thin label-primary" data-search-type="ON">On</span>
-            <span class="clickable label thin label-default clickable" data-search-type="BEFORE">Before</span>
-            <span class="clickable label thin label-default" data-search-type="AFTER">After</span>
-            <span class="clickable label thin label-default" data-search-type="BETWEEN">Between</span>
-            <span class="clickable label thin label-default" data-search-type="NONE">None</span>
-            <input type="hidden" name="completedDate.searchType" value="${criteria.completedDate.searchType == null ? 'ON' : criteria.completedDate.searchType}"/>
-            <div class="input-group">
-              <input type="text" class="form-control hasDatePicker" name="completedDate.date1" value="${dateFormatter.format(criteria.completedDate.date1)}">
-              <span class="input-group-addon invisible">-</span>
-              <input type="text" class="form-control hasDatePicker invisible" name="completedDate.date2" value="${dateFormatter.format(criteria.completedDate.date2)}">
-            </div>
+            <t:criteria-date name="completedDate" value="${criteria.completedDate}" showNone="true"/>
           </div>
         </div>
       </div>           
@@ -243,44 +203,32 @@
         <div class="col-xs-2">
           <div class="form-group">
             <label class="control-label">DNA Database Entry</label><br/>
-            <div class="btn-group btn-group-xs" role="group">
-              <button class="btn btn-default" type="button" data-btn-val="YES">Yes</button>
-              <button class="btn btn-default" type="button" data-btn-val="NO">No</button>
-              <button class="btn btn-default" type="button" data-btn-val="NA">NA</button>
-              <input type="hidden" name="dnaDatabaseEntry" value="${criteria.dnaDatabaseEntry}">
+            <div class="btn-group btn-group-xs" data-toggle="buttons">
+              <label class="btn btn-custom ${empty criteria.dnaDatabaseEntry ? 'active' : ''}">
+                <input type="radio" name="dnaDatabaseEntry" value="" ${empty criteria.dnaDatabaseEntry ? 'checked' : ''}/> Any
+              </label>
+              <label class="btn btn-custom ${criteria.dnaDatabaseEntry == 'YES' ? 'active' : ''}">
+                <input type="radio" name="dnaDatabaseEntry" value="YES" ${criteria.dnaDatabaseEntry == 'YES' ? 'checked' : ''}/> Yes
+              </label>
+              <label class="btn btn-custom ${criteria.dnaDatabaseEntry == 'NO' ? 'active' : ''}">
+                <input type="radio" name="dnaDatabaseEntry" value="NO" ${criteria.dnaDatabaseEntry == 'NO' ? 'checked' : ''}/> No
+              </label>
+              <label class="btn btn-custom ${criteria.dnaDatabaseEntry == 'NA' ? 'active' : ''}">
+                <input type="radio" name="dnaDatabaseEntry" value="NA" ${criteria.dnaDatabaseEntry == 'NA' ? 'checked' : ''}/> NA
+              </label>
             </div>
           </div>  
         </div>
         <div class="col-xs-4">
           <div class="form-group">
             <label class="control-label">DNA Database Hit Date</label>
-            <span class="clickable label thin label-primary" data-search-type="ON">On</span>
-            <span class="clickable label thin label-default clickable" data-search-type="BEFORE">Before</span>
-            <span class="clickable label thin label-default" data-search-type="AFTER">After</span>
-            <span class="clickable label thin label-default" data-search-type="BETWEEN">Between</span>
-            <span class="clickable label thin label-default" data-search-type="NONE">None</span>
-            <input type="hidden" name="dnaDatabaseHitDate.searchType" value="${criteria.dnaDatabaseHitDate.searchType == null ? 'ON' : criteria.dnaDatabaseHitDate.searchType}"/>
-            <div class="input-group">
-              <input type="text" class="form-control hasDatePicker" name="dnaDatabaseHitDate.date1" value="${dateFormatter.format(criteria.dnaDatabaseHitDate.date1)}">
-              <span class="input-group-addon invisible">-</span>
-              <input type="text" class="form-control hasDatePicker invisible" name="dnaDatabaseHitDate.date2" value="${dateFormatter.format(criteria.dnaDatabaseHitDate.date2)}">
-            </div>
+            <t:criteria-date name="dnaDatabaseHitDate" value="${criteria.dnaDatabaseHitDate}" showNone="true"/>
           </div>
         </div>
         <div class="col-xs-4">
           <div class="form-group">
             <label class="control-label">Expunged Date</label>
-            <span class="clickable label thin label-primary" data-search-type="ON">On</span>
-            <span class="clickable label thin label-default clickable" data-search-type="BEFORE">Before</span>
-            <span class="clickable label thin label-default" data-search-type="AFTER">After</span>
-            <span class="clickable label thin label-default" data-search-type="BETWEEN">Between</span>
-            <span class="clickable label thin label-default" data-search-type="NONE">None</span>
-            <input type="hidden" name="expungedDate.searchType" value="${criteria.expungedDate.searchType == null ? 'ON' : criteria.expungedDate.searchType}"/>
-            <div class="input-group">
-              <input type="text" class="form-control hasDatePicker" name="expungedDate.date1" value="${dateFormatter.format(criteria.expungedDate.date1)}">
-              <span class="input-group-addon invisible">-</span>
-              <input type="text" class="form-control hasDatePicker invisible" name="expungedDate.date2" value="${dateFormatter.format(criteria.expungedDate.date2)}">
-            </div>
+            <t:criteria-date name="expungedDate" value="${criteria.expungedDate}" showNone="true"/>
           </div>
         </div>
       </div>      
@@ -288,18 +236,16 @@
       <div class="row">
         <div class="col-xs-12">
           <div class="form-group pull-right">
-            <button data-action="<c:url value="/admin/search/download"/>" type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-down font18" title="download"></i> Export</button>
             <button data-action="<c:url value="/admin/search"/>" type="submit" class="btn btn-primary">Search</button>
+            <button data-action="<c:url value="/admin/search/download"/>" type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-down font18" title="download"></i> Export</button>
           </div>
         </div>
       </div>
+      <hr/>
     </form>
-    <hr/>
+   
     <%@include file="../../includes/search-results.jspf" %>
   </jsp:attribute>
-  <jsp:attribute name="scripts">
-    <script type="text/javascript">
-      <%@include file="../../../assets/js/saktrack-search.js" %>
-    </script>
+  <jsp:attribute name="scripts">  
   </jsp:attribute>
 </t:page>

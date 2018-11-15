@@ -1,6 +1,8 @@
 package gov.idaho.isp.saktrack.domain.search;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Expression;
@@ -86,25 +88,51 @@ public class CriteriaDate {
   }
 
   public Predicate buildPredicate(CriteriaBuilder cb, Expression exp) {
+    Class<?> expType = exp.getJavaType();
+
     if (searchType == null) {
       throw new IllegalStateException("Cannot build predicate when CriteriaDate searchType is null");
     }
     if (searchType == SearchType.BETWEEN && date1 != null && date2 != null) {
+      if (isLocalDateTime(expType)) {
+        return cb.between(exp, atStartOfDay(date1), atEndOfDay(date2));
+      }
       return cb.between(exp, date1, date2);
     }
     if (searchType == SearchType.ON && date1 != null) {
+      if (isLocalDateTime(expType)) {
+        return cb.between(exp, atStartOfDay(date1), atEndOfDay(date1));
+      }
       return cb.equal(exp, date1);
     }
     if (searchType == SearchType.AFTER && date1 != null) {
-      return cb.greaterThanOrEqualTo(exp, date1);
+      if (isLocalDateTime(expType)) {
+        return cb.greaterThan(exp, atEndOfDay(date1));
+      }
+      return cb.greaterThan(exp, date1);
     }
     if (searchType == SearchType.BEFORE && date1 != null) {
-      return cb.lessThanOrEqualTo(exp, date1);
+      if (isLocalDateTime(expType)) {
+        return cb.lessThan(exp, atStartOfDay(date1));
+      }
+      return cb.lessThan(exp, date1);
     }
     if (searchType == SearchType.NONE) {
       return cb.isNull(exp);
     }
     return null;
+  }
+
+  private boolean isLocalDateTime(Class<?> cls) {
+    return LocalDateTime.class.equals(cls);
+  }
+
+  private LocalDateTime atStartOfDay(LocalDate ld) {
+    return ld.atStartOfDay();
+  }
+
+  private LocalDateTime atEndOfDay(LocalDate ld) {
+    return ld.atTime(LocalTime.MAX);
   }
 
   @Override

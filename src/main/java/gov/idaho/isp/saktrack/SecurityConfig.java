@@ -4,11 +4,14 @@ import gov.idaho.isp.saktrack.domain.user.AdminUser;
 import gov.idaho.isp.saktrack.domain.user.User;
 import gov.idaho.isp.saktrack.security.CustomDatabaseUserDetailsService;
 import gov.idaho.isp.saktrack.security.CustomInMemoryUserDetailsManager;
+import gov.idaho.isp.saktrack.security.CustomWebAuthenticationDetails;
 import java.util.Arrays;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,6 +20,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -49,7 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
       .antMatchers("/organization/new", "organization/save", "/organization/*/remove").hasAuthority("ADMIN")
       .antMatchers("/organization/**").hasAnyAuthority("ADMIN", "ORG_ADMIN")
       .anyRequest().hasAuthority("ADMIN")
-      .and().formLogin().loginPage("/login").permitAll().and().logout().permitAll();
+      .and().formLogin().loginPage("/login").authenticationDetailsSource(getAuthenticationDetailsSource()).permitAll()
+      .and().logout().permitAll();
 
     http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
   }
@@ -79,6 +84,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     provider.setUserDetailsService(customDatabaseUserDetailsService);
     provider.setPasswordEncoder(getPasswordEncoder());
     return provider;
+  }
+
+  private AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> getAuthenticationDetailsSource() {
+    return (HttpServletRequest req) -> new CustomWebAuthenticationDetails(req);
   }
 
   @Bean

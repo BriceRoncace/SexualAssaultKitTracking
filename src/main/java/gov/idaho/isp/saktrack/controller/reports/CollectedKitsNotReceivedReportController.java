@@ -1,5 +1,6 @@
 package gov.idaho.isp.saktrack.controller.reports;
 
+import gov.idaho.isp.saktrack.controller.BaseController;
 import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
 import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
 import gov.idaho.isp.saktrack.domain.jurisdiction.JurisdictionRepository;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class CollectedKitsNotReceivedReportController {
+public class CollectedKitsNotReceivedReportController extends BaseController {
   private final SexualAssaultKitRepository sexualAssaultKitRepository;
   private final OrganizationRepository organizationRepository;
   private final FilterTextService filterTextService;
@@ -41,7 +42,12 @@ public class CollectedKitsNotReceivedReportController {
   @GetMapping("/report/collectedKitsNotReceived")
   public String postReport(SexualAssaultKitSearchCriteria criteria, Optional<Boolean> forward, Model model) {
     if (!Boolean.TRUE.equals(forward.orElse(Boolean.FALSE))) {
-      model.addAttribute("report", buildReport(criteria));
+      if (criteria.isEmpty()) {
+        model.addAttribute("errors", getText("empty.criteria"));
+      }
+      else {
+        model.addAttribute("report", buildReport(criteria));
+      }
     }
 
     model.addAttribute("criteria", criteria);

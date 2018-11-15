@@ -1,6 +1,6 @@
 package gov.idaho.isp.saktrack.controller.advice;
 
-import gov.idaho.isp.saktrack.controller.advice.LoadEventDetailsAdvice.LoadEventDetails;
+import gov.idaho.isp.saktrack.controller.advice.LoadEventDetailsAdvice.Apply;
 import gov.idaho.isp.saktrack.domain.dto.CreateKitEventDetails;
 import gov.idaho.isp.saktrack.domain.dto.EventDetails;
 import gov.idaho.isp.saktrack.service.RangeParser;
@@ -13,13 +13,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-@ControllerAdvice(annotations = LoadEventDetails.class)
+@ControllerAdvice(annotations = Apply.class)
 public class LoadEventDetailsAdvice {
 
   @Target(ElementType.TYPE)
   @Retention(RetentionPolicy.RUNTIME)
   @Documented
-  public @interface LoadEventDetails {}
+  public @interface Apply {}
 
   private final RangeParser rangeParser;
 

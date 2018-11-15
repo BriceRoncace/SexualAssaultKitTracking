@@ -23,14 +23,14 @@
                 <t:select name="requestingLeAgencyId" from="${leOrganizations}" emptyOption="" cssClass="form-control" optionKey="id" optionValue="name" value="${criteria.requestingLeAgencyId}"/>
               </div>
             </div>
+            <div class="col-xs-4 top25 text-center ">
+              <button data-action="<c:url value="/report/collectedKitsNotReceived"/>" type="submit" class="btn btn-primary">Generate</button>
+              <button data-action="<c:url value="/report/collectedKitsNotReceived/download"/>" type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-down font18" title="download"></i> Export</button>
+            </div>  
           </div>
           <div class="row hidden-print">
             <div class="col-xs-9 top15">
               <small><a href="javascript://nop" id="show-all">show all</a> / <a href="javascript://nop" id="hide-all">hide all</a></small>
-            </div>
-            <div class="col-xs-3 text-right">
-              <button data-action="<c:url value="/report/collectedKitsNotReceived/download"/>" type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-down font18" title="download"></i> Export</button>
-              <button data-action="<c:url value="/report/collectedKitsNotReceived"/>" type="submit" class="btn btn-primary">Generate</button>
             </div>
           </div>
           <div class="row visible-print">
@@ -82,7 +82,6 @@
     </div>
   </jsp:attribute>
   <jsp:attribute name="scripts">
-    <script src="<c:url value="../assets/js/saktrack-search.js"/>"></script>
     <script src="<c:url value="../assets/js/report-scripts.js"/>"></script>
   </jsp:attribute>
 </t:page>

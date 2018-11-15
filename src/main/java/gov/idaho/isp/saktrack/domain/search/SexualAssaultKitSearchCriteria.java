@@ -6,6 +6,7 @@ import gov.idaho.isp.saktrack.domain.MedicalDetails.VictimType;
 import gov.idaho.isp.saktrack.domain.YesNoNa;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
@@ -306,7 +307,23 @@ public class SexualAssaultKitSearchCriteria {
       for (Field f : fields) {
         f.setAccessible(true);
         Object value = f.get(this);
-        if (value instanceof String && StringUtils.isNotBlank((String)value) || !(value instanceof String) && value != null) {
+
+        if (value instanceof String) {
+          if (StringUtils.isNotBlank((String)value)) {
+            return false;
+          }
+        }
+        else if (value instanceof CriteriaDate) {
+          if (((CriteriaDate)value).canBuildPredicate()) {
+            return false;
+          }
+        }
+        else if (value instanceof Collection) {
+          if (!((Collection)value).isEmpty()) {
+            return false;
+          }
+        }
+        else if (value != null) {
           return false;
         }
       }

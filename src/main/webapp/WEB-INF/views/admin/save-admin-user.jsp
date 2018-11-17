@@ -57,7 +57,7 @@
                 </div>
               </div>
               <div class="col-sm-6">
-                <c:if test="${adminUser.id == user.id}">
+                <c:if test="${user.id != null && adminUser.id == user.id}">
                   <div id="currentPassword" class="form-group">
                     <label class="control-label">Current Password</label>
                     <input type="password" class="form-control" name="passwordPair.oldPassword"/>

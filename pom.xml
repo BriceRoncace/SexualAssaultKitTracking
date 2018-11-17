@@ -81,18 +81,48 @@
       <version>1.6</version>
     </dependency>
     
-    <!-- database -->
-    <!--<dependency>
-      <groupId>org.mariadb.jdbc</groupId>
-      <artifactId>mariadb-java-client</artifactId>
-      <scope>runtime</scope>
-    </dependency>-->
-    
+    <!-- Database -->
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
       <scope>runtime</scope>
     </dependency>
+    
+    <!-- MariaDB -->
+    <!-- 
+      Setup application.properties like:
+      spring.jpa.database-platform=org.hibernate.dialect.MariaDB102Dialect
+      spring.datasource.url=jdbc:mariadb://localhost:3306/SexualAssaultKitTracking
+      spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
+      spring.datasource.username = database_user
+      spring.datasource.password = database_password
+      spring.jpa.generate-ddl = true
+    -->
+    <!--
+    <dependency>
+      <groupId>org.mariadb.jdbc</groupId>
+      <artifactId>mariadb-java-client</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    -->
+    
+    <!-- MySQL -->
+    <!--
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <scope>runtime</scope>
+    </dependency>  
+    -->
+    
+    <!-- MSSQL -->
+    <!--
+    <dependency>
+      <groupId>com.microsoft.sqlserver</groupId>
+      <artifactId>mssql-jdbc</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    -->
     
     <!-- test dependencies -->
     <dependency>

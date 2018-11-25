@@ -29,6 +29,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
+    // when not requiring h2 console access remove this line:
+    allowAdminAccessToH2Console(http);
+    
     http.authorizeRequests()
       .antMatchers("/").permitAll()
       .antMatchers("/**/js/**").permitAll()
@@ -57,13 +60,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
       .and().logout().permitAll();
 
     http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
-
-    // when not requiring h2 console access remove this line:
-    allowAdminAccessToH2Console(http);
   }
 
   private void allowAdminAccessToH2Console(HttpSecurity http) throws Exception {
     http.csrf().ignoringAntMatchers("/h2-console/**");
+    http.authorizeRequests().antMatchers("/seedDemoData").permitAll();
     http.headers().frameOptions().disable();
   }
 

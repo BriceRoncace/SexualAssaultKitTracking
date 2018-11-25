@@ -24,7 +24,7 @@
             <tbody>
               <c:forEach var="adminUser" items="${adminUsers}">
                 <tr class="${adminUser.enabled ? '' : 'disabled'}">
-                  <td class="clickable" data-href="<c:url value="/adminUser/save?userId=${user.id}"/>">${adminUser.displayName}<c:if test="${!adminUser.enabled}">&nbsp;&nbsp;<small><span class="glyphicon glyphicon-ban-circle hover-pointer med-blue-text" data-toggle="tooltip" title="User Disabled"></span></small></c:if></td>
+                  <td class="clickable" data-href="<c:url value="/adminUser/save?userId=${adminUser.id}"/>">${adminUser.displayName}<c:if test="${!adminUser.enabled}">&nbsp;&nbsp;<small><span class="glyphicon glyphicon-ban-circle hover-pointer med-blue-text" data-toggle="tooltip" title="User Disabled"></span></small></c:if></td>
                   <td class="width20"><a href="javascript://nop" data-remove-admin="${adminUser.id}"><span class="glyphicon glyphicon-trash"></span></a></td>
                 </tr>
               </c:forEach>

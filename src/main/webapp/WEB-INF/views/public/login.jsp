@@ -20,13 +20,13 @@
             Invalid username or password
           </c:otherwise>
         </c:choose>
-        
+
       </div>
     </c:if>
     <c:if test="${param.logout != null}">
       <div class="alert alert-success">You have been logged out.</div>
     </c:if>
-      
+
     <form action="<c:url value="/login"/>" method="post" class="form-horizontal">
       <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
       <div class="form-group form-group-sm">
@@ -49,8 +49,67 @@
           <small>If you do not already have an account but have the passkey for your organization, you may <a href="<c:url value="/register"/>">register here</a>.</small>
         </div>
       </div>
-    </form>
-      
+    </form>  
+
+    <c:if test="${activeProfile == 'dev'}">
+      <div class="alert alert-info alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div class="row">
+          <div class="col-sm-offset-2 col-sm-6 col-xs-12 bottom10">
+            <h4>Development Mode</h4> 
+            <a href="#" class="alert-link" onclick="$('#seedDemoData').submit();">Click here to seed the database with demo data.</a>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-offset-2 col-sm-6 col-xs-12">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Role</th>
+                  <th>Username</th>
+                  <th>Password</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Administrator (in memory)</td>
+                  <td>admin</td>
+                  <td>admin</td>
+                </tr>
+                <tr>
+                  <td>Administrator</td>
+                  <td>administrator</td>
+                  <td>P@ssword1</td>
+                </tr>
+                <tr>
+                  <td>Lab User</td>
+                  <td>lab</td>
+                  <td>P@ssword1</td>
+                </tr>
+                <tr>
+                  <td>Medical User</td>
+                  <td>medical</td>
+                  <td>P@ssword1</td>
+                </tr>
+                <tr>
+                  <td>Law Enforcement User</td>
+                  <td>law</td>
+                  <td>P@ssword1</td>
+                </tr>
+              </tbody>
+              <tfoot>
+              </tfoot>
+            </table>
+          </div>          
+        </div>
+        
+        <form id="seedDemoData" action="<c:url value="/seedDemoData"/>" method="POST">
+          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form>
+      </div>
+    </c:if>
+
     <div id="resetDialog" class="modal fade" tabindex="-1" role="dialog">
       <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
@@ -74,6 +133,6 @@
         </div>
       </div>
     </div>
-      
+
   </jsp:attribute>
 </t:page>

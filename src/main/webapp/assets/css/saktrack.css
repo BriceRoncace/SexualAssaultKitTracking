@@ -51,6 +51,10 @@
    width: auto !important;
 }
 
+.font-weight-bold {
+  font-weight: bold;
+}
+
 .exception-cause-title {
   display:block;
   margin-top:25px;

@@ -378,6 +378,6 @@
         
   </jsp:attribute>
   <jsp:attribute name="scripts">
-    <script src="<c:url value="../assets/js/report-scripts.js"/>"></script>    
+    <script src="<c:url value="/assets/js/report-scripts.js"/>"></script>    
   </jsp:attribute>
 </t:page>

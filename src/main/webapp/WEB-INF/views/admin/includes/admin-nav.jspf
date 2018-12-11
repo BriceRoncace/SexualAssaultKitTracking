@@ -45,7 +45,7 @@
           <a href="#" class="dropdown-toggle banner-button-sides" data-toggle="dropdown" role="button">Help <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li class="${pageContext.request.requestURI.endsWith("help.jsp") ? 'active' : ''}"><a href="<c:url value='/help'/>">Help</a></li>
-            <li class="${pageContext.request.requestURI.endsWith("about.jsp") ? 'active' : ''}"><a href="<c:url value='/systemInfo'/>">System Information</a></li>
+            <li class="${pageContext.request.requestURI.endsWith("system-info.jsp") ? 'active' : ''}"><a href="<c:url value='/systemInfo'/>">System Information</a></li>
           </ul>
         </li>
       </ul>

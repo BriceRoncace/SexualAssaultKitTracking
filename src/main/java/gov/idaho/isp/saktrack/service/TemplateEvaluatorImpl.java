@@ -1,8 +1,10 @@
 package gov.idaho.isp.saktrack.service;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.apache.commons.text.StringSubstitutor;
 import org.apache.commons.text.lookup.StringLookup;
 import org.springframework.stereotype.Service;
@@ -58,12 +60,8 @@ public class TemplateEvaluatorImpl implements TemplateEvaluator {
   }
 
   private String load(Template template) {
-    try {
-      return new String(Files.readAllBytes(Paths.get(this.getClass().getResource(template.getClasspathResourceName()).toURI())));
-    }
-    catch (Exception ex) {
-      throw new RuntimeException(String.format("Could not load template with classpath resource name %s", template != null ? template.getClasspathResourceName() : null), ex);
-    }
+    InputStream inputStream = getClass().getResourceAsStream(template.getClasspathResourceName());
+    return new BufferedReader(new InputStreamReader(inputStream)).lines().collect(Collectors.joining("\n"));
   }
 
   public void setVarPrefix(String varPrefix) {

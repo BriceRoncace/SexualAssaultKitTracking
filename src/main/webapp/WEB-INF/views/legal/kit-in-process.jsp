@@ -52,7 +52,7 @@
         <input type="text" class="form-control" name="leDetails.plannedDestructionDate" value="${dateFormatter.format(kit.leDetails.plannedDestructionDate)}" readonly/>
       </div>
       <div class="form-group col-sm-3">
-        <label class="control-label">Notify Victim Prior to Destruction <span class="glyphicon glyphicon-question-sign hover-pointer med-blue-text" data-toggle="tooltip" title="Law enforcement agency will check this box when the victim has requested notification from the law enforcement agency prior to kit destruction.  Per Idaho Statute, notification is required when this box is checked. When checked, an automated email will be sent 6 months prior to the planned destruction date to all law enforcment organization administrators with the requesting agency reminding them to notify the victim concerning the upcoming planned destruction."></span></label>
+        <label class="control-label">Notify Victim Prior to Destruction <span class="glyphicon glyphicon-question-sign hover-pointer med-blue-text" data-toggle="tooltip" title="Law enforcement agency will check this box when the victim has requested notification from the law enforcement agency prior to kit destruction.  When checked, an automated email will be sent 6 months prior to the planned destruction date to all law enforcment organization administrators with the requesting agency reminding them to notify the victim concerning the upcoming planned destruction."></span></label>
         <div class="checkbox">
           <label><t:checkbox id="destructionNotification" name="leDetails.plannedDestructionNotificationRequested" disabled="true" checked="${kit.leDetails.plannedDestructionNotificationRequested}"/></label>
         </div>

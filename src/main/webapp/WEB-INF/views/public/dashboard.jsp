@@ -18,7 +18,7 @@
         <p><a href="https://isp.idaho.gov/forensics/documents/centrallyStoredData/forms/Sexual%20Assault%20Victim%20Notification%20Form%20and%20Waiver.pdf">Sexual Assault Victim Notification Form and Waiver</a></p>
       </div>
       <div class="col-sm-3 pull-right">
-        <img class="resize" src="<c:url value="/assets/images/kit_277w.png"/>" alt="Idaho State Police Forensic Services"/>
+        <img class="resize" src="<c:url value="/assets/images/kit_277w.png"/>" alt="Forensic Services"/>
       </div>
     </div>
     <div class="col-sm-12">

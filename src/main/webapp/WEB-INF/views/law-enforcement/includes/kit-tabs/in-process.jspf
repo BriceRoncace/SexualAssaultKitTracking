@@ -24,10 +24,10 @@
           <c:forEach var="kit" items="${inProcessKits.content}">
             <c:choose>
               <c:when test="${kit.getTimeAtLe() > 30}">
-                <tr class="danger" data-toggle="tooltip" data-placement="top" title="Kit was received over 30 days ago and is in violation of Idaho code">
+                <tr class="danger" data-toggle="tooltip" data-placement="top" title="Kit was received over 30 days ago.">
               </c:when>
               <c:when test="${kit.getTimeAtLe() > 23}">
-                <tr class="warning" data-toggle="tooltip" data-placement="top" title="Kit was received over 23 days ago. At 30 days Idaho code will be violated">
+                <tr class="warning" data-toggle="tooltip" data-placement="top" title="Kit was received over 23 days ago.">
               </c:when>
               <c:otherwise>
                 <tr>

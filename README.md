@@ -158,6 +158,10 @@ spring.jpa.generate-ddl = true
 spring.jpa.show-sql = false
 ```
 
+### View Customizations
+
+There is only one view that explicitly mentions "Idaho" that will need to be modified to accomodate a different state.  That view is: **src/main/webapp/WEB-INF/views/public/dashboard.jsp**.  This page contains an image of the Idaho seal as well as verbiage concerning the legislation unique to the State of Idaho authorizing the tracking of sexual assault kits.  Modify this page as needed.
+
 
 ## Version 1.0 (August 2018)
 

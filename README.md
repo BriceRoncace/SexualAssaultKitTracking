@@ -78,7 +78,7 @@ WARNING: All illegal access operations will be denied in a future release
 4. Browse to http://localhost:8080/SexualAssaultKitTracking
 
 
-### Configuration
+### Build Profiles
 
 The application is Maven based.  By default the **dev** profile is active.  When you run Maven goals without a profile explicitly defined, **dev** will be used:
 
@@ -161,6 +161,15 @@ spring.jpa.show-sql = false
 ### View Customizations
 
 There is only one view that explicitly mentions "Idaho" that will need to be modified to accomodate a different state.  That view is: **src/main/webapp/WEB-INF/views/public/dashboard.jsp**.  This page contains an image of the Idaho seal as well as verbiage concerning the legislation unique to the State of Idaho authorizing the tracking of sexual assault kits.  Modify this page as needed.
+
+### A Note About Excel and Serial Number Formats
+
+When kit serial numbers are prefixed with leading zeros, the CSV export files produced by the application will show those leading zeros by default when the CSV file is opened in Excel.  To get around this issue, be sure to use the text import wizard and explicitly treat the serial number column a **text** column.
+
+Here's a quick example:
+![alt text](https://raw.githubusercontent.com/BriceRoncace/SexualAssaultKitTracking/master/src/main/resources/misc/excel-kit-serial-format-handling.gif)
+
+
 
 
 ## Version 1.0 (August 2018)

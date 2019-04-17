@@ -29,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuditServiceImpl implements AuditService {
   private final String CHANGED = "%1s was changed from \"%2s\" to \"%3s\".";
   private final String ADDED = "Event \"%s\" was added.";
-  private final String REMOVED = "Event \"$s\" was removed.";
+  private final String REMOVED = "Event \"%s\" was removed.";
   private final String MODIFIED = "Event \"%1s\" was change to \"%2s\".";
   private final String MOVED_UP = "Event \"%s\" moved up.";
   private final String MOVED_DOWN = "Event \"%s\" moved down.";

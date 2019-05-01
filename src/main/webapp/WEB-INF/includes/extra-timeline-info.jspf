@@ -9,14 +9,14 @@
         </tr>
       </c:if>
         
-      <c:if test="${kit.labDetails.dnaDatabaseEntryDate != null}">
+      <c:if test="${kit.labDetails.dnaDatabaseEntry == 'YES' &&  kit.labDetails.dnaDatabaseEntryDate != null}">
         <tr>
           <td>DNA Database Entry Date</td>
           <td>${dateFormatter.format(kit.labDetails.dnaDatabaseEntryDate)}</td>
         </tr>
       </c:if>
 
-      <c:if test="${kit.labDetails.dnaDatabaseHitDate != null}">
+      <c:if test="${kit.labDetails.dnaDatabaseEntry == 'YES' && kit.labDetails.dnaDatabaseHitDate != null}">
         <tr>
           <td>DNA Database Hit Date</td>
           <td>${dateFormatter.format(kit.labDetails.dnaDatabaseHitDate)}</td>

@@ -164,7 +164,7 @@ There is only one view that explicitly mentions "Idaho" that will need to be mod
 
 ### A Note About Excel and Serial Number Formats
 
-When kit serial numbers are prefixed with leading zeros, the CSV export files produced by the application will show those leading zeros by default when the CSV file is opened in Excel.  To get around this issue, be sure to use the text import wizard and explicitly treat the serial number column a **text** column.
+When kit serial numbers are prefixed with leading zeros, the CSV export files produced by the application will NOT display those leading zeros by default when the CSV file is opened in Excel.  To get around this issue, be sure to use the text import wizard and explicitly treat the serial number column a **text** column.
 
 Here's a quick example:
 ![alt text](https://raw.githubusercontent.com/BriceRoncace/SexualAssaultKitTracking/master/src/main/resources/misc/excel-kit-serial-format-handling.gif)

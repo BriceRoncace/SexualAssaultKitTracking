@@ -24,7 +24,7 @@ public class TemplateEvaluatorImpl implements TemplateEvaluator {
 
   @Override
   public String evaluate(String template, Map<String,String> parameters) {
-    StringSubstitutor sub = new StringSubstitutor(new DefaultingToEmptyStringLookup(parameters), varPrefix, varSuffix, StringSubstitutor.DEFAULT_ESCAPE);
+    StringSubstitutor sub = new StringSubstitutor(new DefaultingToEmptyStringLookup(parameters), varPrefix, varSuffix, escapeChar);
     template = resolveIncludes(template);
     return sub.replace(template);
   }

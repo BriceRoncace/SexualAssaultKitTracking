@@ -111,6 +111,9 @@
             
           </div>
           <div class="panel-footer text-right">
+            <c:if test="${user.admin && orgUser != null}">
+              <a href="<c:url value="/masqueradeAs"/>?userId=${orgUser.id}" class="btn btn-warning pull-left"><i class="glyphicon glyphicon-user"></i> Masquerade As</a>
+            </c:if>
             <a href="${cancelLink}" class="btn btn-default">Cancel</a>
             <button type="submit" class="btn btn-primary">${orgUser.verifiedDate != null || orgUser.id == null ? 'Save' : 'Verify'}</button>
           </div>

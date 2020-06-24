@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Idaho State Police.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -47,23 +47,23 @@ public class CustomDatabaseUserDetailsService implements UserDetailsService {
     return user.isAdmin() ? loadAdminUser((AdminUser) user) : loadOrganizationUser((OrganizationUser) user);
   }
 
-  private UserDetails loadAdminUser(AdminUser user) {
+  public static UserDetails loadAdminUser(AdminUser user) {
     user.setUserDetails(new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.isEnabled(), true, true, true, getAuthorities(user)));
     return user;
   }
 
-  private List<GrantedAuthority> getAuthorities(AdminUser user) {
+  private static List<GrantedAuthority> getAuthorities(AdminUser user) {
     List<GrantedAuthority> auths = new ArrayList<>();
     auths.add(new SimpleGrantedAuthority("ADMIN"));
     return auths;
   }
 
-  private UserDetails loadOrganizationUser(OrganizationUser user) {
+  public static UserDetails loadOrganizationUser(OrganizationUser user) {
     user.setUserDetails(new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.isActive(), true, true, user.isVerified(), getAuthorities(user)));
     return user;
   }
 
-  private List<GrantedAuthority> getAuthorities(OrganizationUser user) {
+  private static List<GrantedAuthority> getAuthorities(OrganizationUser user) {
     List<GrantedAuthority> auths = new ArrayList<>();
     auths.add(new SimpleGrantedAuthority(user.getType().toString()));
     if (Boolean.TRUE.equals(user.isOrganizationAdmin())) {

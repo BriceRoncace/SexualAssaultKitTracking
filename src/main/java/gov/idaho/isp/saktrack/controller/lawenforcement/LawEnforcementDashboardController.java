@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Idaho State Police.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -105,17 +105,30 @@ public class LawEnforcementDashboardController extends BaseOrganizationControlle
 
   public static class LeDashboardPageRequest {
     private static final int DEFAULT_PAGE_SIZE = 20;
+    private int size = DEFAULT_PAGE_SIZE;
 
     private int incomingPage;
     private SortWrapper incomingSort;
+
     private int inProcessPage;
     private SortWrapper inProcessSort;
+
     private int inLabPage;
     private SortWrapper inLabSort;
+
     private int analyzedPage;
     private SortWrapper analyzedSort;
+
     private int unsubmittablePage;
     private SortWrapper unsubmittableSort;
+
+    public int getSize() {
+      return size;
+    }
+
+    public void setSize(int size) {
+      this.size = size > 0 ? size : DEFAULT_PAGE_SIZE;
+    }
 
     public int getIncomingPage() {
       return incomingPage;
@@ -199,37 +212,37 @@ public class LawEnforcementDashboardController extends BaseOrganizationControlle
 
     public PageRequest getIncoming() {
       if (incomingSort != null) {
-        return PageRequest.of(incomingPage, DEFAULT_PAGE_SIZE, incomingSort.unwrap());
+        return PageRequest.of(incomingPage, size, incomingSort.unwrap());
       }
-      return PageRequest.of(incomingPage, DEFAULT_PAGE_SIZE);
+      return PageRequest.of(incomingPage, size);
     }
 
     public PageRequest getInProcess() {
       if (inProcessSort != null) {
-        return PageRequest.of(inProcessPage, DEFAULT_PAGE_SIZE, inProcessSort.unwrap());
+        return PageRequest.of(inProcessPage, size, inProcessSort.unwrap());
       }
-      return PageRequest.of(inProcessPage, DEFAULT_PAGE_SIZE);
+      return PageRequest.of(inProcessPage, size);
     }
 
     public PageRequest getInLab() {
       if (inLabSort != null) {
-        return PageRequest.of(inLabPage, DEFAULT_PAGE_SIZE, inLabSort.unwrap());
+        return PageRequest.of(inLabPage, size, inLabSort.unwrap());
       }
-      return PageRequest.of(inLabPage, DEFAULT_PAGE_SIZE);
+      return PageRequest.of(inLabPage, size);
     }
 
     public PageRequest getAnalyzed() {
       if (analyzedSort != null) {
-        return PageRequest.of(analyzedPage, DEFAULT_PAGE_SIZE, analyzedSort.unwrap());
+        return PageRequest.of(analyzedPage, size, analyzedSort.unwrap());
       }
-      return PageRequest.of(analyzedPage, DEFAULT_PAGE_SIZE);
+      return PageRequest.of(analyzedPage, size);
     }
 
     public PageRequest getUnsubmittable() {
       if (unsubmittableSort != null) {
-        return PageRequest.of(unsubmittablePage, DEFAULT_PAGE_SIZE, unsubmittableSort.unwrap());
+        return PageRequest.of(unsubmittablePage, size, unsubmittableSort.unwrap());
       }
-      return PageRequest.of(unsubmittablePage, DEFAULT_PAGE_SIZE);
+      return PageRequest.of(unsubmittablePage, size);
     }
 
     public String getAsUrlParams() {
@@ -243,7 +256,8 @@ public class LawEnforcementDashboardController extends BaseOrganizationControlle
         .append("&analyzedPage=").append(analyzedPage)
         .append("&analyzedSort=").append(PagingUtils.getSingleOrderBy(analyzedSort))
         .append("&unsubmittablePage=").append(unsubmittablePage)
-        .append("&unsubmittableSort=").append(PagingUtils.getSingleOrderBy(unsubmittableSort));
+        .append("&unsubmittableSort=").append(PagingUtils.getSingleOrderBy(unsubmittableSort))
+        .append("&size=").append(size);
       return sb.toString();
     }
   }

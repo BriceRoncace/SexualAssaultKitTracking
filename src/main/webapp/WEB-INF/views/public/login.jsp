@@ -72,29 +72,34 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr class="clickable" onclick="$('#username').val('admin'); $('#password').val('admin');">
                   <td>Administrator (in memory)</td>
                   <td>admin</td>
                   <td>admin</td>
                 </tr>
-                <tr>
+                <tr class="clickable" onclick="$('#username').val('administrator'); $('#password').val('P@ssword1');">
                   <td>Administrator</td>
                   <td>administrator</td>
                   <td>P@ssword1</td>
                 </tr>
-                <tr>
+                <tr class="clickable" onclick="$('#username').val('lab'); $('#password').val('P@ssword1');">
                   <td>Lab User</td>
                   <td>lab</td>
                   <td>P@ssword1</td>
                 </tr>
-                <tr>
+                <tr class="clickable" onclick="$('#username').val('medical'); $('#password').val('P@ssword1');">
                   <td>Medical User</td>
                   <td>medical</td>
                   <td>P@ssword1</td>
                 </tr>
-                <tr>
+                <tr class="clickable" onclick="$('#username').val('law'); $('#password').val('P@ssword1');">
                   <td>Law Enforcement User</td>
                   <td>law</td>
+                  <td>P@ssword1</td>
+                </tr>
+                <tr class="clickable" onclick="$('#username').val('legal'); $('#password').val('P@ssword1');">
+                  <td>Legal User</td>
+                  <td>legal</td>
                   <td>P@ssword1</td>
                 </tr>
               </tbody>

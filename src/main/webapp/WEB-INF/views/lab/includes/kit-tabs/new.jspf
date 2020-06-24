@@ -11,7 +11,11 @@
   </div>
 </div>
 
-<div class="row top5">
+<div class="row top15">
+  <c:if test="${newKits.size < newKits.totalElements}">
+    <t:pager page="${newKits}" pageVarName="newPage" showInfo="true" showSizeSelect="true"/>
+  </c:if>   
+  
   <c:choose>
     <c:when test="${newKits == null || newKits.getTotalElements() < 1}">
       <div class="col-xs-12 font12">
@@ -64,9 +68,9 @@
           </c:forEach>
         </tbody>
       </table>
-      <c:if test="${newKits.size < newKits.totalElements}">
-        <t:pager page="${newKits}" pageVarName="newPage" showInfo="true"/>
-      </c:if>
+      
+      <t:pager page="${newKits}" pageVarName="newPage" showInfo="true" showSizeSelect="true"/>
+      
     </c:otherwise>
   </c:choose>  
 </div>

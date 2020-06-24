@@ -9,7 +9,11 @@
   </div>
 </div>
     
-<div class="row top5">
+<div class="row top15">
+  <c:if test="${incomingKits.size < incomingKits.totalElements}">
+    <t:pager page="${incomingKits}" pageVarName="incomingPage" showInfo="true" showSizeSelect="true"/>
+  </c:if>
+  
   <c:choose>
     <c:when test="${incomingKits == null || !incomingKits.hasContent()}">
       <div class="col-xs-12 font12">
@@ -53,9 +57,7 @@
         </tbody>
       </table>
                   
-      <c:if test="${incomingKits.size < incomingKits.totalElements}">
-        <t:pager page="${incomingKits}" pageVarName="incomingPage" showInfo="true"/>
-      </c:if>
+      <t:pager page="${incomingKits}" pageVarName="incomingPage" showInfo="true" showSizeSelect="true"/>
                   
     </c:otherwise>
   </c:choose>  

@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Idaho State Police.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -82,11 +82,21 @@ public class MedicalDashboardController extends BaseOrganizationController {
 
   public static class MedDashboardPageRequest {
     private static final int DEFAULT_PAGE_SIZE = 20;
+    private int size = DEFAULT_PAGE_SIZE;
 
     private int incomingPage;
     private SortWrapper incomingSort;
+
     private int inProcessPage;
     private SortWrapper inProcessSort;
+
+    public int getSize() {
+      return size;
+    }
+
+    public void setSize(int size) {
+      this.size = size > 0 ? size : DEFAULT_PAGE_SIZE;
+    }
 
     public int getIncomingPage() {
       return incomingPage;
@@ -122,16 +132,16 @@ public class MedicalDashboardController extends BaseOrganizationController {
 
     public PageRequest getIncoming() {
       if (incomingSort != null) {
-        return PageRequest.of(incomingPage, DEFAULT_PAGE_SIZE, incomingSort.unwrap());
+        return PageRequest.of(incomingPage, size, incomingSort.unwrap());
       }
-      return PageRequest.of(incomingPage, DEFAULT_PAGE_SIZE);
+      return PageRequest.of(incomingPage, size);
     }
 
     public PageRequest getInProcess() {
       if (inProcessSort != null) {
-        return PageRequest.of(inProcessPage, DEFAULT_PAGE_SIZE, inProcessSort.unwrap());
+        return PageRequest.of(inProcessPage, size, inProcessSort.unwrap());
       }
-      return PageRequest.of(inProcessPage, DEFAULT_PAGE_SIZE);
+      return PageRequest.of(inProcessPage, size);
     }
 
     public String getAsUrlParams() {
@@ -139,7 +149,8 @@ public class MedicalDashboardController extends BaseOrganizationController {
       sb.append("?incomingPage=").append(incomingPage)
         .append("&incomingSort=").append(PagingUtils.getSingleOrderBy(incomingSort))
         .append("&inProcessPage=").append(inProcessPage)
-        .append("&inProcessSort=").append(PagingUtils.getSingleOrderBy(inProcessSort));
+        .append("&inProcessSort=").append(PagingUtils.getSingleOrderBy(inProcessSort))
+        .append("&size=").append(size);
       return sb.toString();
     }
   }

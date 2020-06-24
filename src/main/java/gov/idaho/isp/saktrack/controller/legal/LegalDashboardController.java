@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Idaho State Police.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -79,8 +79,17 @@ public class LegalDashboardController extends BaseOrganizationController {
 
   public static class LegalDashboardPageRequest {
     private static final int DEFAULT_PAGE_SIZE = 15;
+    private int size = DEFAULT_PAGE_SIZE;
     private int page;
     private SortWrapper sort;
+
+    public int getSize() {
+      return size;
+    }
+
+    public void setSize(int size) {
+      this.size = size > 0 ? size : DEFAULT_PAGE_SIZE;
+    }
 
     public int getPage() {
       return page;
@@ -100,15 +109,16 @@ public class LegalDashboardController extends BaseOrganizationController {
 
     public PageRequest getPageRequest() {
       if (sort != null) {
-        return PageRequest.of(page, DEFAULT_PAGE_SIZE, sort.unwrap());
+        return PageRequest.of(page, size, sort.unwrap());
       }
-      return PageRequest.of(page, DEFAULT_PAGE_SIZE);
+      return PageRequest.of(page, size);
     }
 
     public String getAsUrlParams() {
       StringBuilder sb = new StringBuilder();
       sb.append("?page=").append(page)
-        .append("&sort=").append(PagingUtils.getSingleOrderBy(sort));
+        .append("&sort=").append(PagingUtils.getSingleOrderBy(sort))
+        .append("&size=").append(size);
       return sb.toString();
     }
   }

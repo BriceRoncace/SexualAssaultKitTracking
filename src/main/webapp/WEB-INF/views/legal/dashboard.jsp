@@ -8,7 +8,11 @@
     <c:if test="${user.admin}"><t:breadcrumb crumbActive="${organization.name} Dashboard"/></c:if>
     <h2><c:out value="${organization.name}"/> Dashboard</h2>
     
-    <div class="row top5">
+    <div class="row top15">
+      <c:if test="${prosecutorKits.size < prosecutorKits.totalElements}">
+        <t:pager page="${prosecutorKits}" showInfo="true" showSizeSelect="true"/>
+      </c:if>
+      
       <div class="col-sm-12">
         <c:choose>
           <c:when test="${prosecutorKits == null || prosecutorKits.totalElements == 0}">
@@ -52,10 +56,8 @@
                 </c:forEach>
               </tbody>
             </table>
-            
-            <c:if test="${prosecutorKits.size < prosecutorKits.totalElements}">
-              <t:pager page="${prosecutorKits}" showInfo="true"/>
-           </c:if>
+             
+            <t:pager page="${prosecutorKits}" showInfo="true" showSizeSelect="true"/>
            
           </c:otherwise>
         </c:choose>

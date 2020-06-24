@@ -23,7 +23,7 @@
   <c:set var="sortParameterName" value="sort"/>
 </c:if>
 
-<c:set var="pagingUrl"><t:currenturl excludeParameterName="${sortParameterName}" /></c:set>
+<c:set var="pagingUrl"><t:currenturl excludeParameterNames="${sortParameterName}" /></c:set>
 <c:url context="/" var="searchUrl" value="${pagingUrl}">
   <c:param name="${sortParameterName}" value="${propertyName}${direction}"/>
 </c:url>

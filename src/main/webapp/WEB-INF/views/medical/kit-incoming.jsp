@@ -28,7 +28,7 @@
           $("#serialNumbersToReceive").val($(this).data("receive-kit")).prop("readonly", "true");
           var fromId = $(this).data("kit-from");
           
-          $.getJSON( "<c:url value="/organizations?type=LAB&type=MEDICAL&type=LAW_ENFORCEMENT"/>", function(orgs) {
+          $.getJSON("<c:url value="/organizations?type=LAB&type=MEDICAL&type=LAW_ENFORCEMENT"/>", function(orgs) {
             sakTrack.initOrganizationSelect(orgs, "#receiveFromSelect");
             $("#receiveFromSelect").val(fromId);
           });

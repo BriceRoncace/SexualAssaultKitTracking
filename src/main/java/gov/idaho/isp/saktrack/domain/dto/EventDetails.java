@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Idaho State Police.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -38,6 +38,10 @@ public class EventDetails {
 
   private List<String> serialNumberList = new ArrayList<>();
 
+  private boolean ignoreUnknownKits;
+
+  private List<String> unknownSerialNumberList = new ArrayList<>();
+
   @LocalDatePast
   private LocalDate eventDate;
 
@@ -68,7 +72,12 @@ public class EventDetails {
   }
 
   public String getSerialNumbersForMessage() {
-    return serialNumberList.toString().replaceAll("\\[|\\]", "");
+    List<String> serials = new ArrayList<>(serialNumberList);
+    if (ignoreUnknownKits) {
+      serials.removeAll(unknownSerialNumberList);
+    }
+
+    return serials.toString().replaceAll("\\[|\\]", "");
   }
 
   public List<String> getSerialNumberList() {
@@ -77,6 +86,22 @@ public class EventDetails {
 
   public void setSerialNumberList(List<String> serialNumberList) {
     this.serialNumberList = serialNumberList;
+  }
+
+  public boolean isIgnoreUnknownKits() {
+    return ignoreUnknownKits;
+  }
+
+  public void setIgnoreUnknownKits(boolean ignoreUnknownKits) {
+    this.ignoreUnknownKits = ignoreUnknownKits;
+  }
+
+  public List<String> getUnknownSerialNumberList() {
+    return unknownSerialNumberList;
+  }
+
+  public void setUnknownSerialNumberList(List<String> unknownSerialNumberList) {
+    this.unknownSerialNumberList = unknownSerialNumberList;
   }
 
   public LocalDate getEventDate() {
@@ -97,6 +122,6 @@ public class EventDetails {
 
   @Override
   public String toString() {
-    return "EventDetails{" + "orgId=" + orgId + ", serialNumbers=" + serialNumbers + ", serialNumberList=" + serialNumberList + ", eventDate=" + eventDate + ", notes=" + notes + '}';
+    return "EventDetails{" + "orgId=" + orgId + ", serialNumbers=" + serialNumbers + ", serialNumberList=" + serialNumberList + ", ignoreUnknownKits=" + ignoreUnknownKits + ", eventDate=" + eventDate + ", notes=" + notes + '}';
   }
 }

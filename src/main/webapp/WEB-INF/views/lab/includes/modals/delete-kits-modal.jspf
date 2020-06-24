@@ -7,19 +7,25 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">Delete Sexual Assault Kits</h4>
       </div>
-      
+
       <form id="deleteKitsForm" action="<c:url value="/lab/deleteKit"/>" method="POST">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <input type="hidden" name="orgId" value="${organization.id}"/>
         <div class="modal-body">
-          
+
           <div class="row">
             <div class="col-sm-12">
               <label class="required">Kit Serial Number(s)</label>
               <textarea data-required id="deleteSerialNumbers" name="serialNumbers" data-modal-focus data-modal-clear class="form-control"></textarea>
             </div>
+            <div class="col-sm-12">
+              <div class="checkbox bottom0">
+                <label class="bottom0">
+                  <input type="checkbox" name="ignoreUnknownKits"> Ignore unknown kits
+                </label>
+              </div>
+            </div>
           </div>
-          
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>

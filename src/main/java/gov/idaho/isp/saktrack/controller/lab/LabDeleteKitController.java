@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Idaho State Police.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,6 +21,7 @@ import gov.idaho.isp.saktrack.controller.advice.LoadEventDetailsAdvice;
 import gov.idaho.isp.saktrack.domain.dto.EventDetails;
 import gov.idaho.isp.saktrack.domain.user.User;
 import gov.idaho.isp.saktrack.domain.user.organization.LabUser;
+import gov.idaho.isp.saktrack.exception.SexualAssaultKitTrackingException;
 import gov.idaho.isp.saktrack.util.UserUtils;
 import gov.idaho.isp.saktrack.validation.group.Batch;
 import org.springframework.stereotype.Controller;
@@ -52,8 +53,8 @@ public class LabDeleteKitController extends BaseController {
       labUser.batchDelete(eventDetails);
       ra.addFlashAttribute("messages", getText("kits.transaction", eventDetails.getSerialNumbersForMessage(), "deleted"));
     }
-    catch (IllegalStateException ex) {
-      ra.addFlashAttribute("errors", ex.getMessage());
+    catch (SexualAssaultKitTrackingException ex) {
+      ra.addFlashAttribute("errors", ex.getErrors());
     }
     return "redirect:/lab/dashboard";
   }

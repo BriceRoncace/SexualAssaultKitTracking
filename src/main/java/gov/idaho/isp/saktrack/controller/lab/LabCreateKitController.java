@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Idaho State Police.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,6 +21,7 @@ import gov.idaho.isp.saktrack.controller.advice.LoadEventDetailsAdvice;
 import gov.idaho.isp.saktrack.domain.dto.CreateKitEventDetails;
 import gov.idaho.isp.saktrack.domain.user.User;
 import gov.idaho.isp.saktrack.domain.user.organization.LabUser;
+import gov.idaho.isp.saktrack.exception.SexualAssaultKitTrackingException;
 import gov.idaho.isp.saktrack.util.UserUtils;
 import gov.idaho.isp.saktrack.validation.group.Batch;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -54,8 +55,8 @@ public class LabCreateKitController extends BaseController {
       labUser.batchCreate(eventDetails);
       ra.addFlashAttribute("messages", getText("kits.transaction", eventDetails.getSerialNumbersForMessage(), "created"));
     }
-    catch (IllegalStateException ex) {
-      ra.addFlashAttribute("errors", ex.getMessage());
+    catch (SexualAssaultKitTrackingException ex) {
+      ra.addFlashAttribute("errors", ex.getErrors());
     }
     catch (DataIntegrityViolationException ex) {
       ra.addFlashAttribute("errors", getText("kit", eventDetails.getSerialNumbersForMessage(), "already exists"));

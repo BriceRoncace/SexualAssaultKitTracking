@@ -49,7 +49,13 @@
           <div class="row top10">
             <div class="col-sm-4">
               <label class="required">Kit Serial Number(s)</label>
-              <textarea rows="6" data-required id="serialNumbersToSend" data-modal-clear name="serialNumbers" class="form-control"></textarea>
+              <textarea rows="5" data-required id="serialNumbersToSend" data-modal-clear name="serialNumbers" class="form-control"></textarea>
+              
+              <div class="checkbox bottom0">
+                <label class="bottom0">
+                  <input type="checkbox" name="ignoreUnknownKits"> Ignore unknown kits
+                </label>
+              </div>
             </div>
             <div class="col-sm-8">
               <div class="row">
@@ -59,7 +65,7 @@
                 </div>
                 <div class="col-sm-12 top10">
                   <label>Notes</label>
-                  <textarea id="notes" name="notes" class="form-control"></textarea>
+                  <textarea id="notes" name="notes" rows="3" class="form-control"></textarea>
                 </div>
               </div>
             </div>

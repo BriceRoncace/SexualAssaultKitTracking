@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Idaho State Police.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,8 +20,12 @@ import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent;
 import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent.EventType;
 import gov.idaho.isp.saktrack.domain.EventFlag;
 import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
 import gov.idaho.isp.saktrack.domain.dto.CreateKitEventDetails;
 import gov.idaho.isp.saktrack.domain.dto.EventDetails;
+import gov.idaho.isp.saktrack.domain.organization.Organization;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationRepository;
+import gov.idaho.isp.saktrack.domain.organization.OrganizationType;
 import gov.idaho.isp.saktrack.event.KitCreateEvent;
 import gov.idaho.isp.saktrack.event.KitDestroyEvent;
 import gov.idaho.isp.saktrack.event.KitReceiveEvent;
@@ -30,10 +34,6 @@ import gov.idaho.isp.saktrack.event.KitRepurposeEvent;
 import gov.idaho.isp.saktrack.event.KitReviewEvent;
 import gov.idaho.isp.saktrack.event.KitSendEvent;
 import gov.idaho.isp.saktrack.exception.SexualAssaultKitTrackingException;
-import gov.idaho.isp.saktrack.domain.organization.Organization;
-import gov.idaho.isp.saktrack.domain.organization.OrganizationRepository;
-import gov.idaho.isp.saktrack.domain.organization.OrganizationType;
-import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -109,6 +109,9 @@ class UserKitServiceImpl implements UserKitService {
     eventDetails.getSerialNumberList().forEach(serialNumber -> {
       try {
         SexualAssaultKit kit = sexualAssaultKitRepository.findBySerialNumber(serialNumber);
+        if (handleUnknownKitIfNecessary(serialNumber, kit, eventDetails)) {
+          return;
+        }
         validationStrategy.validate(kit, serialNumber);
         kitsToDelete.add(kit);
       }
@@ -134,6 +137,9 @@ class UserKitServiceImpl implements UserKitService {
     eventDetails.getSerialNumberList().forEach(serialNumber -> {
       try {
         SexualAssaultKit kit = sexualAssaultKitRepository.findBySerialNumber(serialNumber);
+        if (handleUnknownKitIfNecessary(serialNumber, kit, eventDetails)) {
+          return;
+        }
         validationStrategy.validate(kit, serialNumber);
 
         ChainOfCustodyEvent event = new ChainOfCustodyEventBuilder()
@@ -173,6 +179,9 @@ class UserKitServiceImpl implements UserKitService {
     eventDetails.getSerialNumberList().forEach(serialNumber -> {
       try {
         SexualAssaultKit kit = sexualAssaultKitRepository.findBySerialNumber(serialNumber);
+        if (handleUnknownKitIfNecessary(serialNumber, kit, eventDetails)) {
+          return;
+        }
         validationStrategy.validate(kit, serialNumber);
 
         ChainOfCustodyEvent event = new ChainOfCustodyEventBuilder()
@@ -204,6 +213,14 @@ class UserKitServiceImpl implements UserKitService {
     }
     sexualAssaultKitRepository.saveAll(kits);
     applicationEventPublisher.publishEvent(new KitReceiveEvent(user, eventDetails));
+  }
+
+  private boolean handleUnknownKitIfNecessary(String serialNumber, SexualAssaultKit kit, EventDetails eventDetails) {
+    if (kit == null && eventDetails.isIgnoreUnknownKits()) {
+      eventDetails.getUnknownSerialNumberList().add(serialNumber);
+      return true;
+    }
+    return false;
   }
 
   @Override

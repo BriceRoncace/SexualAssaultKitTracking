@@ -47,7 +47,7 @@
         sakTrack.initTableCheckboxes();
         
         $("[data-receive-kit]").click(function() {
-          $("#kitToReceive").val($(this).data("receive-kit"));
+          $("#serialNumbersToReceive").val($(this).data("receive-kit")).prop("readonly", "true");
           $("#receiveFromSelect").data("default-val", $(this).data("kit-from"));
         });
         

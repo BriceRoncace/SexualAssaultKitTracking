@@ -5,14 +5,14 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">Receive Sexual Assault Kits</h4>
       </div>
-      <form action="<c:url value="/medical/receive"/>" method="POST">
+      <form action="<c:url value="/lab/receive"/>" method="POST">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <div class="modal-body">
           
           <div class="row">
             <div class="col-sm-12">
               <label class="required">From</label><br/>
-              <select data-modal-focus data-required id="receiveFromSelect" name="orgId" class="form-control"></select>
+              <select data-modal-focus data-required data-organizations-url="<c:url value='/organizations?type=LAW_ENFORCEMENT&type=MEDICAL&type=LAB'/>" id="receiveFromSelect" name="orgId" class="form-control"></select>
             </div>
           </div>
           

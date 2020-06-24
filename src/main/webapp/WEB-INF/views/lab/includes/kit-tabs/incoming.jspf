@@ -4,7 +4,7 @@
 <div class="row">
   <div class="col-xs-12">
     <div class="pull-right">
-      <button type="button" class="btn btn-xs btn-default" data-toggle="modal" data-target="#receiveAnyKitModal"><span class="glyphicon glyphicon-arrow-down"></span> Receive Kit</button>
+      <button type="button" class="btn btn-xs btn-default" data-toggle="modal" data-target="#receiveKitsModal"><span class="glyphicon glyphicon-arrow-down"></span> Receive Kits...</button>
     </div>
   </div>
 </div>
@@ -51,7 +51,7 @@
                   <a href="javascript://nop/" data-toggle="dropdown"><span class="font18 glyphicon glyphicon-option-horizontal"></span></a>
                   <ul class="dropdown-menu dropdown-menu-right">
                     <li><a href="<c:url value="/lab/view"/>?id=${kit.id}"><span class="glyphicon glyphicon-search"></span> View</a></li>
-                    <li><a href="javascript://nop/" data-toggle="modal" data-receive-kit="${kit.serialNumber}" data-kit-from="${kit.currentCustody.from.id}" data-target="#receiveKitModal"><span class="glyphicon glyphicon-arrow-down"></span> Receive Kit</a></li>
+                    <li><a href="javascript://nop/" data-toggle="modal" data-receive-kit="${kit.serialNumber}" data-kit-from="${kit.currentCustody.from.id}" data-target="#receiveKitsModal"><span class="glyphicon glyphicon-arrow-down"></span> Receive Kit</a></li>
                     <li><a href="<c:url value="/timeline"/>?serialNumber=${kit.serialNumber}"><i class="fa fa-clock-o font14" aria-hidden="true"></i> Kit Timeline</a></li>
                   </ul>
                 </div>
@@ -67,5 +67,4 @@
   </c:choose>  
 </div>
 
-<%@include file="../modals/receive-kit-modal.jspf" %>
-<%@include file="../modals/receive-any-kit-modal.jspf" %>
+<%@include file="../modals/receive-kits-modal.jspf" %>

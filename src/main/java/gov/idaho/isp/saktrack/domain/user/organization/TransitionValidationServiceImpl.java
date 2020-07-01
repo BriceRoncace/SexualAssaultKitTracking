@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Idaho State Police.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,9 +20,9 @@ import gov.idaho.isp.saktrack.domain.KitStatus;
 import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
 import gov.idaho.isp.saktrack.domain.dto.CreateKitEventDetails;
 import gov.idaho.isp.saktrack.domain.dto.EventDetails;
-import gov.idaho.isp.saktrack.exception.SexualAssaultKitTrackingException;
 import gov.idaho.isp.saktrack.domain.organization.Organization;
 import gov.idaho.isp.saktrack.domain.organization.OrganizationType;
+import gov.idaho.isp.saktrack.exception.SexualAssaultKitTrackingException;
 import gov.idaho.isp.saktrack.service.ValidationService;
 import gov.idaho.isp.saktrack.util.EventUtil;
 import gov.idaho.isp.saktrack.util.MilestoneUtils;

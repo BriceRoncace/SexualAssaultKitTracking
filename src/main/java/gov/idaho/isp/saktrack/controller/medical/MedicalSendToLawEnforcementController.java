@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Idaho State Police.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -76,7 +76,7 @@ public class MedicalSendToLawEnforcementController extends BaseController {
 
     try {
       sexualAssaultKitRepository.save(kit);
-      medicalUser.sendToLawEnforcement(details);
+      medicalUser.batchSendToLawEnforcement(details);
       ra.addFlashAttribute("messages", getText("kits.transaction", details.getSerialNumbersForMessage(), "sent"));
     }
     catch (SexualAssaultKitTrackingException ex) {

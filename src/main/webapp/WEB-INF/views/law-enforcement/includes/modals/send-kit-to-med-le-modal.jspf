@@ -30,14 +30,14 @@
           <div id="medical" class="row top10">
             <div class="col-sm-12">
               <label class="required">Medical Facility</label>
-              <select data-modal-focus data-required id="medicalOrgSelect" name="orgId" class="form-control" data-organizations-url="<c:url value='/organizations?type=MEDICAL'/>"></select>
+              <select data-modal-focus data-required data-organizations-url="<c:url value='/organizations?type=MEDICAL'/>" name="orgId" class="form-control" data-organizations-url="<c:url value='/organizations?type=MEDICAL'/>"></select>
             </div>
           </div>
           
           <div id="lawEnforcement" class="hidden row top10">
             <div class="col-sm-12">
               <label class="required">Law Enforcement Agency</label>
-              <select data-modal-focus data-required id="lawEnforcementOrgSelect" disabled="disabled" name="orgId" class="form-control" data-organizations-url="<c:url value='/organizations?type=LAW_ENFORCEMENT'/>"></select>
+              <select data-modal-focus data-required data-organizations-url="<c:url value='/organizations?type=LAW_ENFORCEMENT'/>" disabled="disabled" name="orgId" class="form-control" data-organizations-url="<c:url value='/organizations?type=LAW_ENFORCEMENT'/>"></select>
             </div>
           </div>  
             

@@ -26,12 +26,11 @@
       $(function() {
         $("[data-receive-kit]").click(function() {
           $("#serialNumbersToReceive").val($(this).data("receive-kit")).prop("readonly", "true");
-          var fromId = $(this).data("kit-from");
-          
-          $.getJSON("<c:url value="/organizations?type=LAB&type=MEDICAL&type=LAW_ENFORCEMENT"/>", function(orgs) {
-            sakTrack.initOrganizationSelect(orgs, "#receiveFromSelect");
-            $("#receiveFromSelect").val(fromId);
-          });
+          $("#receiveFromSelect").data("defaultVal", $(this).data("kit-from"));
+        });
+        
+        $(".modal").on('shown.bs.modal', function() {
+          sakTrack.initOrganizationSelects($(this));
         });
       });
     </script>

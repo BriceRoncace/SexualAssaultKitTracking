@@ -23,7 +23,7 @@ import gov.idaho.isp.saktrack.domain.user.User;
 import gov.idaho.isp.saktrack.domain.user.organization.LabUser;
 import gov.idaho.isp.saktrack.exception.SexualAssaultKitTrackingException;
 import gov.idaho.isp.saktrack.util.UserUtils;
-import gov.idaho.isp.saktrack.validation.group.Single;
+import gov.idaho.isp.saktrack.validation.group.Batch;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -43,14 +43,14 @@ public class LabReceiveKitController extends BaseController {
   }
 
   @PostMapping("/lab/receive")
-  public String receive(LabUser labUser, @Validated(Single.class) EventDetails details, BindingResult bindingResult, RedirectAttributes ra) {
+  public String receive(LabUser labUser, @Validated(Batch.class) EventDetails details, BindingResult bindingResult, RedirectAttributes ra) {
     if (bindingResult.hasErrors()) {
       ra.addFlashAttribute("errors", getErrors(bindingResult));
       return "redirect:/lab/dashboard";
     }
 
     try {
-      labUser.receive(details);
+      labUser.batchReceive(details);
       ra.addFlashAttribute("messages", getText("kits.transaction", details.getSerialNumbersForMessage(), "received"));
     }
     catch (SexualAssaultKitTrackingException ex) {

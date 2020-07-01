@@ -12,10 +12,10 @@
         <a class="btn btn-xs btn-default" href="<c:url value="/timeline"/>?serialNumber=${kit.serialNumber}"><i class="fa fa-clock-o font14" aria-hidden="true"></i> Kit Timeline</a>   
         <c:choose>
           <c:when test="${kit.status == 'UNUSED'}">
-            <button type="button" class="btn btn-xs btn-default" data-toggle="modal" data-target="#sendKitToMedLeModal"><span class="glyphicon glyphicon-arrow-up"></span> Send Kit...</button>
+            <button type="button" class="btn btn-xs btn-default" data-toggle="modal" data-target="#sendKitToMedLeModal"><span class="glyphicon glyphicon-share-alt"></span> Send Kit...</button>
           </c:when>
           <c:otherwise>
-            <button type="button" class="btn btn-xs btn-default" data-toggle="modal" data-target="#sendKitModal" <c:if test="${disableSendKitButton}">disabled</c:if>><span class="glyphicon glyphicon-arrow-up"></span> Send Kit...</button>
+            <button type="button" class="btn btn-xs btn-default" data-toggle="modal" data-target="#sendKitModal" <c:if test="${disableSendKitButton}">disabled</c:if>><span class="glyphicon glyphicon-share-alt"></span> Send Kit...</button>
           </c:otherwise>
         </c:choose>
         <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#destroyKitModal" <c:if test="${!kit.destroyable}">disabled</c:if>><span class="glyphicon glyphicon-fire"></span> Destroy Kit...</button>
@@ -47,7 +47,7 @@
     </form>
       
     <div class="well-sm light-grey-background top20">
-      <p><small><span class="glyphicon glyphicon-arrow-up red-text"></span> = Required to send the kit to a lab (or before prosecutorial review).</small></p>
+      <p><small><span class="glyphicon glyphicon-share-alt red-text"></span> = Required to send the kit to a lab (or before prosecutorial review).</small></p>
       <p><small><span class="glyphicon glyphicon-fire"></span>&nbsp;&nbsp;Before a kit may be destroyed it must either be analyzed at a lab or deemed to not meet submission requirements and be on or after the planned destruction date.</small></p>  
     </div>
         
@@ -62,31 +62,8 @@
       $(function() {
         $('[data-toggle="tooltip"]').tooltip();
         
-        $("#sendKitModal").on('shown.bs.modal', function() {
-          $.getJSON( "<c:url value="/organizations?type=LAB"/>", function(orgs) {
-            sakTrack.initOrganizationSelect(orgs, "#labOrganizationsSelect");
-          });
-          
-          $.getJSON( "<c:url value="/organizations?type=LAW_ENFORCEMENT"/>", function(orgs) {
-            sakTrack.initOrganizationSelect(orgs, "#lawEnforcementOrganizationsSelect");
-          });
-          
-          $.getJSON( "<c:url value="/organizations?type=MEDICAL"/>", function(orgs) {
-            sakTrack.initOrganizationSelect(orgs, "#medicalOrganizationsSelect");
-          });
-        });
-        
-        $("#sendKitToMedLeModal").on('shown.bs.modal', function() {
-          var $kitSerialsInput = $("#serialNumbersToSend");
-          if (!$kitSerialsInput.val()) {
-            $kitSerialsInput.val(sakTrack.getCheckedSerialNumbers("#newKitsTable"));
-          }
-          $.getJSON( "<c:url value="/organizations?type=MEDICAL"/>", function(orgs) {
-            sakTrack.initOrganizationSelect(orgs, "#medicalOrgSelect");
-          });
-          $.getJSON( "<c:url value="/organizations?type=LAW_ENFORCEMENT"/>", function(orgs) {
-            sakTrack.initOrganizationSelect(orgs, "#lawEnforcementOrgSelect");
-          });
+        $(".modal").on('shown.bs.modal', function() {
+          sakTrack.initOrganizationSelects($(this));
         });
       });
     </script>

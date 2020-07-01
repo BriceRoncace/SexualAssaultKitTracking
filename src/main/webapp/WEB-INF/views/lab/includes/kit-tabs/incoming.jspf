@@ -4,7 +4,7 @@
 <div class="row">
   <div class="col-xs-12">
     <div class="pull-right">
-      <button type="button" class="btn btn-xs btn-default" data-toggle="modal" data-target="#receiveKitsModal"><span class="glyphicon glyphicon-arrow-down"></span> Receive Kits...</button>
+      <button type="button" class="btn btn-xs btn-default" data-receive-kits data-toggle="modal" data-target="#receiveKitsModal"><span class="glyphicon glyphicon-arrow-down"></span> Receive Kits...</button>
     </div>
   </div>
 </div>
@@ -24,6 +24,7 @@
       <table id="incomingKitsTable" class="table table-striped">
         <thead>
           <tr>
+            <th class="noSort" style="width:25px;"><input type="checkbox" data-header-checkbox></th>
             <th><t:columnsort sort="${incomingKits.sort}" sortParameterName="incomingSort" propertyName="serialNumber" text="Serial #"/></th>
             <th><t:columnsort sort="${incomingKits.sort}" sortParameterName="incomingSort" propertyName="caseNumber" text="Lab Case #"/></th>
             <th><t:columnsort sort="${incomingKits.sort}" sortParameterName="incomingSort" propertyName="eventDate" text="Sent On"/></th>
@@ -34,6 +35,9 @@
         <tbody>
           <c:forEach var="kit" items="${incomingKits.content}">
             <tr>
+              <td>
+                <input type="checkbox" data-kit-serial="${kit.serialNumber}" data-kit-from="${kit.currentCustody.from.id}"/>
+              </td>
               <td>
                 <a href="<c:url value="/lab/view"/>?id=${kit.id}">${kit.serialNumber}</a>
               </td>

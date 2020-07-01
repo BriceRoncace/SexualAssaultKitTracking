@@ -37,7 +37,7 @@
           <div id="lawEnforcement" class="row top10 lab-hide med-hide">
             <div class="col-sm-12">
               <label class="required">Law Enforcement Agency</label>
-              <select data-modal-focus data-required id="lawEnforcementOrganizationsSelect" data-default-val="${kit.medicalDetails.requestingLeAgency.id}" name="orgId" class="form-control"></select>
+              <select data-modal-focus data-required data-organizations-url="<c:url value='/organizations?type=LAW_ENFORCEMENT'/>" data-default-val="${kit.medicalDetails.requestingLeAgency.id}" name="orgId" class="form-control"></select>
             </div>
           </div>  
             
@@ -45,7 +45,7 @@
             <div id="medical" class="hidden row top10 law-hide lab-hide">
               <div class="col-sm-12">
                 <label class="required">Medical Facility</label>
-                <select data-modal-focus data-required id="medicalOrganizationsSelect" disabled="disabled" name="orgId" class="form-control"></select>
+                <select data-modal-focus data-required data-organizations-url="<c:url value='/organizations?type=MEDICAL'/>" disabled="disabled" name="orgId" class="form-control"></select>
               </div>
             </div>
           </c:if>
@@ -53,7 +53,7 @@
           <div id="lab" class="hidden row top10 law-hide med-hide">
             <div class="col-sm-12">
               <label class="required">Lab</label>
-              <select data-modal-focus data-required id="labOrganizationsSelect" disabled="disabled" name="orgId" class="form-control"></select>
+              <select data-modal-focus data-required data-organizations-url="<c:url value='/organizations?type=LAB'/>" disabled="disabled" name="orgId" class="form-control"></select>
             </div>
           </div>  
           

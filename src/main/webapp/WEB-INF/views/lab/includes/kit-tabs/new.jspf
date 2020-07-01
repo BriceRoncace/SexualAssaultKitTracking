@@ -6,7 +6,7 @@
     <div class="pull-right">
       <button type="button" class="btn btn-xs btn-default" data-toggle="modal" data-target="#createKitsModal"><span class="glyphicon glyphicon-plus"></span> Create Kits...</button>&nbsp;
       <button type="button" class="btn btn-xs btn-default" data-toggle="modal" data-target="#deleteKitsModal"><span class="glyphicon glyphicon-minus"></span> Delete Kits...</button>&nbsp;
-      <c:if test="${newKits.totalElements > 0}"><button type="button" class="btn btn-xs btn-default" data-toggle="modal" data-seed-kit="" data-target="#sendKitsModal"><span class="glyphicon glyphicon-arrow-up"></span> Send Kits...</button></c:if>
+      <c:if test="${newKits.totalElements > 0}"><button type="button" class="btn btn-xs btn-default" data-send-kits="#newKitsTable" data-toggle="modal" data-seed-kit="" data-target="#sendKitsModal"><span class="glyphicon glyphicon-share-alt"></span> Send Kits...</button></c:if>
     </div>
   </div>
 </div>
@@ -59,7 +59,7 @@
                   <a href="javascript://nop/" data-toggle="dropdown"><span class="font18 glyphicon glyphicon-option-horizontal"></span></a>
                   <ul class="dropdown-menu dropdown-menu-right">
                     <li><a href="<c:url value="/lab/view"/>?id=${kit.id}"><span class="glyphicon glyphicon-search"></span> View</a></li>
-                    <li><a href="javascript://nop/" data-toggle="modal" data-seed-selector="#serialNumbersToSend" data-seed-kit="${kit.serialNumber}" data-target="#sendKitsModal"><span class="glyphicon glyphicon-arrow-up"></span> Send Kits</a></li>
+                    <li><a href="javascript://nop/" data-toggle="modal" data-seed-selector="#serialNumbersToSend" data-seed-kit="${kit.serialNumber}" data-target="#sendKitsModal"><span class="glyphicon glyphicon-share-alt"></span> Send Kit</a></li>
                     <li><a href="<c:url value="/timeline"/>?serialNumber=${kit.serialNumber}"><i class="fa fa-clock-o font14" aria-hidden="true"></i> Kit Timeline</a></li>
                   </ul>
                 </div>
@@ -77,4 +77,3 @@
 
 <%@include file="../modals/create-kits-modal.jspf" %>
 <%@include file="../modals/delete-kits-modal.jspf" %>
-<%@include file="../modals/send-unused-kits-modal.jspf" %>

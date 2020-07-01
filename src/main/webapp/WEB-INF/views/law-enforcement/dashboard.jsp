@@ -56,36 +56,26 @@
           $(selector).val(serialNumber);
         });
         
+        $("[data-send-kit]").click(function() {
+          $("#serialNumbersToSend").val($(this).data("send-kit"));
+        });
+        
+        $("[data-send-kits]").click(function() {
+          $("#serialNumbersToSend").val(sakTrack.getCheckedSerialNumbers("#inProcessKitsTable"));
+        });
+        
         $("[data-receive-kit]").click(function() {
-          $("#serialNumbersToReceive").val($(this).data("receive-kit")).prop("readonly", true);
-          var fromId = $(this).data("kit-from");
-          
-          $.getJSON( "<c:url value="/organizations?type=LAB&type=MEDICAL&type=LAW_ENFORCEMENT"/>", function(orgs) {
-            sakTrack.initOrganizationSelect(orgs, "#receiveFromSelect");
-            $("#receiveFromSelect").val(fromId);
-          });
+          $("#serialNumbersToReceive").val($(this).data("receive-kit"));
+          $("#receiveFromSelect").data("defaultVal", $(this).data("kit-from"));
         });
         
         $("[data-receive-kits]").click(function() {
-          var $kitSerialsInput = $("#serialNumbersToReceive").prop("readonly", false);
-          if (!$kitSerialsInput.val()) {
-            $kitSerialsInput.val(sakTrack.getCheckedSerialNumbers("#incomingKitsTable"));
-          }
-          
-          var fromId = sakTrack.getFirstCheckedFrom("#incomingKitsTable");
-          $.getJSON( "<c:url value="/organizations?type=LAB&type=MEDICAL&type=LAW_ENFORCEMENT"/>", function(orgs) {
-            sakTrack.initOrganizationSelect(orgs, "#receiveFromSelect");
-            $("#receiveFromSelect").val(fromId);
-          });
+          $("#serialNumbersToReceive").val(sakTrack.getCheckedSerialNumbers("#incomingKitsTable"));
+          $("#receiveFromSelect").data("defaultVal", sakTrack.getFirstCheckedFrom("#incomingKitsTable"));
         });
         
         $(".modal").on('shown.bs.modal', function() {
-          $(this).find("select[data-organizations-url]").each(function(i, select){
-            var $select = $(select);
-            $.getJSON($select.data('organizations-url'), function(orgs) {
-              sakTrack.initOrganizationSelect(orgs, $select);
-            });
-          });
+          sakTrack.initOrganizationSelects($(this));
         });
       });
     </script>

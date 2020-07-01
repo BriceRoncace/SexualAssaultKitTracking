@@ -12,7 +12,7 @@
           <div class="row">
             <div class="col-sm-12">
               <label class="required">From</label><br/>
-              <select data-modal-focus data-required id="receiveFromSelect" name="orgId" class="form-control"></select>
+              <select data-modal-focus data-required data-organizations-url="<c:url value='/organizations?type=LAW_ENFORCEMENT&type=MEDICAL&type=LAB'/>" id="receiveFromSelect" name="orgId" class="form-control"></select>
             </div>
           </div>
           

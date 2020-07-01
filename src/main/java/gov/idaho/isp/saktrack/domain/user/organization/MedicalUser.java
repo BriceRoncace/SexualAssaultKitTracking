@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Idaho State Police.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,9 +17,9 @@
 package gov.idaho.isp.saktrack.domain.user.organization;
 
 import gov.idaho.isp.saktrack.domain.dto.EventDetails;
-import gov.idaho.isp.saktrack.exception.IllegalTransferException;
 import gov.idaho.isp.saktrack.domain.organization.OrganizationType;
 import gov.idaho.isp.saktrack.domain.user.User;
+import gov.idaho.isp.saktrack.exception.IllegalTransferException;
 import java.io.Serializable;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -44,17 +44,11 @@ public class MedicalUser extends AbstractOrganizationUser implements Serializabl
     userKitService.receive(this, eventDetails);
   }
 
-  public void sendToLawEnforcement(EventDetails eventDetails) {
-    if (eventDetails.getSerialNumberList().size() > 1) {
-      throw new IllegalTransferException("Only one kit can be sent to Law Enforcement at a time.");
-    }
+  public void batchSendToLawEnforcement(EventDetails eventDetails) {
     userKitService.send(this, eventDetails, OrganizationType.LAW_ENFORCEMENT);
   }
 
-  public void sendToLab(EventDetails eventDetails) {
-    if (eventDetails.getSerialNumberList().size() > 1) {
-      throw new IllegalTransferException("Only one kit can be sent to a lab at a time.");
-    }
+  public void batchSendToLab(EventDetails eventDetails) {
     userKitService.send(this, eventDetails, OrganizationType.LAB);
   }
 

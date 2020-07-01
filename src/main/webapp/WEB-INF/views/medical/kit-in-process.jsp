@@ -10,7 +10,7 @@
     <h2 class="line-under">Sexual Assault Kit #${kit.serialNumber}
       <div class="pull-right">
         <a class="btn btn-xs btn-default" href="<c:url value="/timeline"/>?serialNumber=${kit.serialNumber}"><i class="fa fa-clock-o font14" aria-hidden="true"></i> Kit Timeline</a>
-        <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#sendKitModal"><span class="glyphicon glyphicon-arrow-up"></span> Send Kit...</button>
+        <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#sendKitModal"><span class="glyphicon glyphicon-share-alt"></span> Send Kit...</button>
         <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#repurposeKitModal"><span class="glyphicon glyphicon-transfer"></span> Repurpose Kit...</button>
       </div>
     </h2>
@@ -40,16 +40,6 @@
         $("#sendKitModal").on('shown.bs.modal', function() {
           copyMedicalDetailsToSendForm();
           
-          $.getJSON( "<c:url value="/organizations?type=LAW_ENFORCEMENT"/>", function(orgs) {
-            sakTrack.initOrganizationSelect(orgs, "#lawEnforcementOrganizationsSelect");
-          });
-          $.getJSON( "<c:url value="/organizations?type=MEDICAL"/>", function(orgs) {
-            sakTrack.initOrganizationSelect(orgs, "#medicalOrganizationsSelect");
-          });
-          $.getJSON( "<c:url value="/organizations?type=LAB"/>", function(orgs) {
-            sakTrack.initOrganizationSelect(orgs, "#labOrganizationsSelect");
-          });
-          
           function copyMedicalDetailsToSendForm() {
             var $sendForm = $("#medSendForm");
             var $inputs = $("#medDetailsForm").find("input[type='text'], input[type='radio']:checked, select");
@@ -59,6 +49,11 @@
             });
           }
         });
+        
+        $(".modal").on('shown.bs.modal', function() {
+          sakTrack.initOrganizationSelects($(this));
+        });
+        
       });
     </script>
   </jsp:attribute>

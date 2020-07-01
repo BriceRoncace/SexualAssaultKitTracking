@@ -1,13 +1,6 @@
 package gov.idaho.isp.saktrack.domain.user.organization;
 
-import gov.idaho.isp.saktrack.domain.user.organization.KitValidationStrategy;
-import gov.idaho.isp.saktrack.domain.user.organization.LawEnforcementUser;
-import gov.idaho.isp.saktrack.domain.user.organization.UserKitServiceImpl;
-import gov.idaho.isp.saktrack.domain.user.organization.MedicalUser;
-import gov.idaho.isp.saktrack.domain.user.organization.TransitionValidationService;
-import gov.idaho.isp.saktrack.domain.user.organization.LabUser;
-import gov.idaho.isp.saktrack.domain.user.organization.UserKitService;
-import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUser;
+import gov.idaho.isp.saktrack.config.MockObjUtils;
 import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent;
 import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent.EventType;
 import gov.idaho.isp.saktrack.domain.EventFlag;
@@ -15,13 +8,12 @@ import gov.idaho.isp.saktrack.domain.KitStatus;
 import gov.idaho.isp.saktrack.domain.LabDetails;
 import gov.idaho.isp.saktrack.domain.MedicalDetails;
 import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
-import gov.idaho.isp.saktrack.config.MockObjUtils;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
 import gov.idaho.isp.saktrack.domain.dto.EventDetails;
-import gov.idaho.isp.saktrack.exception.SexualAssaultKitTrackingException;
 import gov.idaho.isp.saktrack.domain.organization.Organization;
 import gov.idaho.isp.saktrack.domain.organization.OrganizationRepository;
 import gov.idaho.isp.saktrack.domain.organization.OrganizationType;
-import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
+import gov.idaho.isp.saktrack.exception.SexualAssaultKitTrackingException;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Optional;
@@ -133,7 +125,7 @@ public class UserKitServiceEventFlagTest {
 
     try {
       // act
-      medUser.sendToLawEnforcement(details);
+      medUser.batchSendToLawEnforcement(details);
       verify(kit).addChainOfCustodyEvent(argThat(coc -> coc.getEventFlag() == EventFlag.MEDICAL_SENT_TO_LE));
     }
     catch (SexualAssaultKitTrackingException ex) {
@@ -189,7 +181,7 @@ public class UserKitServiceEventFlagTest {
 
     try {
       // act
-      lawUser.sendToLab(details);
+      lawUser.batchSendToLab(details);
       verify(kit).addChainOfCustodyEvent(argThat(coc -> coc.getEventFlag() == EventFlag.LE_SENT_FOR_ANALYSIS));
     }
     catch (SexualAssaultKitTrackingException ex) {
@@ -217,7 +209,7 @@ public class UserKitServiceEventFlagTest {
 
     try {
       // act
-      lawUser.sendToLawEnforcement(details);
+      lawUser.batchSendToLawEnforcement(details);
       verify(kit).addChainOfCustodyEvent(argThat(coc -> coc.getEventFlag() == EventFlag.LE_SENT_FOR_ANALYSIS));
     }
     catch (SexualAssaultKitTrackingException ex) {
@@ -247,7 +239,7 @@ public class UserKitServiceEventFlagTest {
 
     try {
       // act
-      labUser.receive(details);
+      labUser.batchReceive(details);
       verify(kit).addChainOfCustodyEvent(argThat(coc -> coc.getEventFlag() == EventFlag.LAB_RECEIVED));
     }
     catch (SexualAssaultKitTrackingException ex) {

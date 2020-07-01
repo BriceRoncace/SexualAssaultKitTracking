@@ -1,16 +1,14 @@
 package gov.idaho.isp.saktrack.domain.user.organization;
 
-import gov.idaho.isp.saktrack.domain.user.organization.LabUser;
-import gov.idaho.isp.saktrack.domain.user.organization.UserKitService;
+import gov.idaho.isp.saktrack.config.MockObjUtils;
 import gov.idaho.isp.saktrack.domain.LabDetails;
 import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
-import gov.idaho.isp.saktrack.config.MockObjUtils;
 import gov.idaho.isp.saktrack.domain.dto.CreateKitEventDetails;
 import gov.idaho.isp.saktrack.domain.dto.EventDetails;
-import gov.idaho.isp.saktrack.exception.IllegalTransferException;
 import gov.idaho.isp.saktrack.domain.jurisdiction.Jurisdiction;
 import gov.idaho.isp.saktrack.domain.organization.Organization;
 import gov.idaho.isp.saktrack.domain.organization.OrganizationType;
+import gov.idaho.isp.saktrack.exception.IllegalTransferException;
 import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Test;
@@ -53,19 +51,11 @@ public class LabUserTest {
   public void receiveTest() {
     EventDetails details = MockObjUtils.createEventDetails();
 
-    user.receive(details);
+    user.batchReceive(details);
 
     verify(userKitService, times(1)).receive(labUserCaptor.capture(), eventDetailsCaptor.capture());
     Assert.assertEquals(user, labUserCaptor.getValue());
     Assert.assertEquals(details, eventDetailsCaptor.getValue());
-  }
-
-  @Test(expected = IllegalTransferException.class)
-  public void receiveValidationTest() {
-    EventDetails details = MockObjUtils.createEventDetails();
-    details.setSerialNumberList(Arrays.asList("1", "2"));
-
-    user.receive(details);
   }
 
   @Test

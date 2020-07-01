@@ -10,7 +10,7 @@
     <h2 class="line-under">Sexual Assault Kit #${kit.serialNumber}
       <div class="pull-right">
         <a class="btn btn-xs btn-default" href="<c:url value="/timeline"/>?serialNumber=${kit.serialNumber}"><i class="fa fa-clock-o font14" aria-hidden="true"></i> Kit Timeline</a>
-        <button type="button" class="btn btn-xs btn-default" data-toggle="modal" data-kit="${kit.serialNumber}" data-target="#sendKitsModal"><span class="glyphicon glyphicon-arrow-up"></span> Send Kit...</button>
+        <button type="button" class="btn btn-xs btn-default" data-toggle="modal" data-kit="${kit.serialNumber}" data-target="#sendKitsModal"><span class="glyphicon glyphicon-share-alt"></span> Send Kit...</button>
         <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#repurposeKitModal"><span class="glyphicon glyphicon-transfer"></span> Repurpose Kit...</button>
       </div>
     </h2>
@@ -30,7 +30,7 @@
       </div>
     </form>  
     
-    <%@include file="includes/modals/send-unused-kits-modal.jspf" %>
+    <%@include file="includes/modals/send-kits-modal.jspf" %>
     <%@include file="includes/modals/send-used-kit-modal.jspf" %>
     <%@include file="includes/modals/repurpose-kit-modal.jspf" %>
   </jsp:attribute>

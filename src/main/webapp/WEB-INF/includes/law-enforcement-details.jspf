@@ -2,19 +2,19 @@
 
 <div class="row">
   <div class="form-group col-sm-3">
-    <label class="control-label ">Case Number <small><span class="glyphicon glyphicon-arrow-up red-text"></span></small></label>
+    <label class="control-label ">Case Number <small><span class="glyphicon glyphicon-share-alt red-text"></span></small></label>
     <input type="text" class="form-control" name="leDetails.caseNumber" value="${kit.leDetails.caseNumber}" <c:if test="${kit.status == 'UNUSED'}">disabled</c:if>/>
   </div>
   <div class="form-group col-sm-3">
-    <label class="control-label ">Investigator <small><span class="glyphicon glyphicon-arrow-up red-text"></span></small></label>
+    <label class="control-label ">Investigator <small><span class="glyphicon glyphicon-share-alt red-text"></span></small></label>
     <input type="text" class="form-control" name="leDetails.investigator" value="${kit.leDetails.investigator}" <c:if test="${kit.status == 'UNUSED'}">disabled</c:if>/>
   </div>
   <div class="form-group col-sm-3">
-    <label class="control-label ">Crime <small><span class="glyphicon glyphicon-arrow-up red-text"></span></small></label>
+    <label class="control-label ">Crime <small><span class="glyphicon glyphicon-share-alt red-text"></span></small></label>
     <input type="text" class="form-control" name="leDetails.crime" value="${kit.leDetails.crime}" <c:if test="${kit.status == 'UNUSED'}">disabled</c:if>/>
   </div>
   <div class="form-group col-sm-3">
-    <label class="control-label ">Crime Date <small><span class="glyphicon glyphicon-arrow-up red-text"></span></small></label>
+    <label class="control-label ">Crime Date <small><span class="glyphicon glyphicon-share-alt red-text"></span></small></label>
     <input type="text" class="form-control hasDatePicker" name="leDetails.crimeDate" value="${dateFormatter.format(kit.leDetails.crimeDate)}" <c:if test="${kit.status == 'UNUSED'}">disabled</c:if>/>
   </div>
 </div>
@@ -41,7 +41,7 @@
 <div class="row">
   <div class="col-sm-3">
     <div class="form-group">
-      <label class="control-label ">Meets Submission Requirements <small><span class="glyphicon glyphicon-arrow-up red-text"></span></small></label>
+      <label class="control-label ">Meets Submission Requirements <small><span class="glyphicon glyphicon-share-alt red-text"></span></small></label>
       <div class="radio radio-primary">
         <label class="radio-inline">
           <input type="radio" name="leDetails.meetsSubmissionCriteria" data-hide="[data-no-submit]" value="true" ${kit.leDetails.meetsSubmissionCriteria == true ? 'checked' : ''} <c:if test="${kit.status == 'UNUSED'}">disabled</c:if>/> Yes
@@ -54,12 +54,12 @@
   </div>
   <c:if test="${kit.currentAssignment.statewide}">  
     <div class="form-group col-sm-3 <c:if test='${kit.leDetails.meetsSubmissionCriteria != false}'>hidden</c:if>" data-no-submit>
-      <label class="control-label">Reviewing Prosecutor <small><span class="glyphicon glyphicon-arrow-up red-text"></span></small></label>
+      <label class="control-label">Reviewing Prosecutor <small><span class="glyphicon glyphicon-share-alt red-text"></span></small></label>
       <t:select from="${prosecutors}" name="reviewingProsecutorOrgId" optionKey="id" optionValue="name" value="${kit.legalDetails.reviewingOrganization.id}" emptyOption="" cssClass="form-control"/>
     </div>
   </c:if>
   <div class="form-group col-sm-6 <c:if test='${kit.leDetails.meetsSubmissionCriteria != false}'>hidden</c:if>" data-no-submit>
-    <label class="control-label">Non-Submission Reason <small><span class="glyphicon glyphicon-arrow-up red-text"></span></small></label>
+    <label class="control-label">Non-Submission Reason <small><span class="glyphicon glyphicon-share-alt red-text"></span></small></label>
     <t:select from="${nonSubmissionReasons}" name="leDetails.nonSubmissionReason" optionValue="label" value="${kit.leDetails.nonSubmissionReason}" emptyOption="" cssClass="form-control"/>
   </div>
 </div>

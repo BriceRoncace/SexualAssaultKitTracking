@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Idaho State Police.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,11 +16,12 @@
 
 package gov.idaho.isp.saktrack.domain.user.organization;
 
+import gov.idaho.isp.saktrack.domain.KitStatus;
 import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
 import gov.idaho.isp.saktrack.domain.dto.EventDetails;
-import gov.idaho.isp.saktrack.exception.IllegalTransferException;
 import gov.idaho.isp.saktrack.domain.organization.OrganizationType;
 import gov.idaho.isp.saktrack.domain.user.User;
+import gov.idaho.isp.saktrack.exception.IllegalTransferException;
 import java.io.Serializable;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -59,27 +60,15 @@ public class LawEnforcementUser extends AbstractOrganizationUser implements Seri
     userKitService.releaseForProsecutorReview(this, kit);
   }
 
-  public void sendToLawEnforcement(EventDetails eventDetails) {
-    if (eventDetails.getSerialNumberList().size() > 1) {
-      throw new IllegalTransferException("Only one kit can be sent to Law Enforcement at a time.");
-    }
-
+  public void batchSendToLawEnforcement(EventDetails eventDetails) {
     userKitService.send(this, eventDetails, OrganizationType.LAW_ENFORCEMENT);
   }
 
-  public void sendToLab(EventDetails eventDetails) {
-    if (eventDetails.getSerialNumberList().size() > 1) {
-      throw new IllegalTransferException("Only one kit can be sent to the Lab at a time.");
-    }
-
+  public void batchSendToLab(EventDetails eventDetails) {
     userKitService.send(this, eventDetails, OrganizationType.LAB);
   }
 
-  public void sendToMedical(EventDetails eventDetails) {
-    if (eventDetails.getSerialNumberList().size() > 1) {
-      throw new IllegalTransferException("Only one kit can be sent to Medical at a time.");
-    }
-
+  public void batchSendToMedical(EventDetails eventDetails) {
     userKitService.send(this, eventDetails, OrganizationType.MEDICAL);
   }
 
@@ -95,6 +84,10 @@ public class LawEnforcementUser extends AbstractOrganizationUser implements Seri
       && kit.getMedicalDetails().getRequestingLeAgency() != null
       && kit.getMedicalDetails().getRequestingLeAgency().getId() != null
       && kit.getMedicalDetails().getRequestingLeAgency().getId().equals(this.getOrganization().getId());
+  }
+
+  public boolean isKitLabSubmittable(SexualAssaultKit kit) {
+    return KitStatus.READY_TO_SEND_FOR_ANALYSIS.equals(kit.getStatus()) || !isRequestingAgencyMyAgency(kit);
   }
 
   @Override

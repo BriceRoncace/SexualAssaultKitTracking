@@ -28,6 +28,8 @@
         <%@include file="includes/kit-tabs/in-process.jspf" %>
       </div>
     </div>
+      
+    <%@include file="includes/modals/send-kits-modal.jspf" %>
     
   </jsp:attribute>
   <jsp:attribute name="scripts">
@@ -47,24 +49,21 @@
         sakTrack.initTableCheckboxes();
         
         $("[data-receive-kit]").click(function() {
-          $("#serialNumbersToReceive").val($(this).data("receive-kit")).prop("readonly", "true");
+          $("#serialNumbersToReceive").val($(this).data("receive-kit"));
           $("#receiveFromSelect").data("default-val", $(this).data("kit-from"));
         });
         
-        $(".modal").on('shown.bs.modal', function() {
-          $(this).find("select[data-organizations-url]").each(function(i, select){
-            var $select = $(select);
-            $.getJSON($select.data('organizations-url'), function(orgs) {
-              sakTrack.initOrganizationSelect(orgs, $select);
-            });
-          });
+        $("[data-receive-kits]").click(function() {
+          $("#serialNumbersToReceive").val(sakTrack.getCheckedSerialNumbers("#incomingKitsTable"));
+          $("#receiveFromSelect").data("defaultVal", sakTrack.getFirstCheckedFrom("#incomingKitsTable"));
         });
         
-        $("#sendKitsModal").on('shown.bs.modal', function() {
-          var $kitSerialsInput = $("#serialNumbersToSend");
-          if (!$kitSerialsInput.val()) {
-            $kitSerialsInput.val(sakTrack.getCheckedSerialNumbers("#newKitsTable"));
-          }
+        $("[data-send-kit]").click(function() {
+          $("#serialNumbersToSend").val($(this).data("send-kit"));
+        });
+        
+        $("[data-send-kits]").click(function() {
+          $("#serialNumbersToSend").val(sakTrack.getCheckedSerialNumbers("#inProcessKitsTable"));
         });
         
         $("#deleteKitsModal").on('shown.bs.modal', function() {
@@ -90,6 +89,10 @@
         
         $("#confirmCreateKitBtn").click(function() {
           $("#createKitsForm").submit();
+        });
+        
+        $(".modal").on('shown.bs.modal', function() {
+          sakTrack.initOrganizationSelects($(this));
         });
       });
     </script>

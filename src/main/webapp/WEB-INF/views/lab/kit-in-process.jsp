@@ -10,7 +10,7 @@
     <h2 class="line-under">Sexual Assault Kit #${kit.serialNumber}
       <div class="pull-right">
         <a class="btn btn-xs btn-default" href="<c:url value="/timeline"/>?serialNumber=${kit.serialNumber}"><i class="fa fa-clock-o font14" aria-hidden="true"></i> Kit Timeline</a>
-        <button type="button" class="btn btn-xs btn-default" data-toggle="modal" data-send-kit="${kit.serialNumber}" data-kit-from="${kit.currentCustody.from.id}" data-target="#sendKitToLawModal"><span class="glyphicon glyphicon-arrow-up"></span> Send Kit...</button>
+        <button type="button" class="btn btn-xs btn-default" data-toggle="modal" data-send-kit="${kit.serialNumber}" data-kit-from="${kit.currentCustody.from.id}" data-target="#sendKitToLawModal"><span class="glyphicon glyphicon-share-alt"></span> Send Kit...</button>
         <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#repurposeKitModal"><span class="glyphicon glyphicon-transfer"></span> Repurpose Kit...</button>
       </div>
     </h2>

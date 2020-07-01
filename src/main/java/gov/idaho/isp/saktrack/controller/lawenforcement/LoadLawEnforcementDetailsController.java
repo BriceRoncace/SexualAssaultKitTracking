@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Idaho State Police.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,7 +16,6 @@
 
 package gov.idaho.isp.saktrack.controller.lawenforcement;
 
-import gov.idaho.isp.saktrack.domain.KitStatus;
 import gov.idaho.isp.saktrack.domain.LawEnforcementDetails.NonSubmissionReason;
 import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
 import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
@@ -54,7 +53,7 @@ public class LoadLawEnforcementDetailsController {
   private boolean shouldDisableSendButton(SexualAssaultKit kit, User user) {
     if (user.getType().equals(User.Type.LAW_ENFORCEMENT)) {
       LawEnforcementUser leUser = (LawEnforcementUser) user;
-      return leUser.isRequestingAgencyMyAgency(kit) && !KitStatus.READY_TO_SEND_FOR_ANALYSIS.equals(kit.getStatus());
+      return !leUser.isKitLabSubmittable(kit);
     }
     else {
       return user.isAdmin();

@@ -1,4 +1,15 @@
 var sakTrack = (function() {
+  
+  function initOrganizationSelects($el) {
+    $el.find("select[data-organizations-url]").each(function(i, select){
+      var $select = $(select);
+      $.getJSON($select.data('organizations-url'), function(orgs) {
+        initOrganizationSelect(orgs, $select);
+        $select.val($select.data("defaultVal"));
+      });
+    });
+  }
+  
   function initOrganizationSelect(organizations, selector) {
     var $select = $(selector).html("");
     $select.append($("<option></option>")); 
@@ -34,13 +45,12 @@ var sakTrack = (function() {
   }
   
   function getFirstCheckedFrom(selector) {
-    var $checkboxes = $(selector).find("input:checkbox[data-kit-from]"); 
-    if ($checkboxes.length > 0) {
-      return $($checkboxes[0]).data("kit-from");
-    }
+    var $checkboxes = $(selector).find("input:checkbox[data-kit-from]:checked"); 
+    return $checkboxes.length > 0 ? $($checkboxes[0]).data("kit-from") : "";
   }
   
   var publicApi = {};
+  publicApi.initOrganizationSelects = initOrganizationSelects;
   publicApi.initOrganizationSelect = initOrganizationSelect;
   publicApi.initTableCheckboxes = initTableCheckboxes;
   publicApi.getCheckedSerialNumbers = getCheckedSerialNumbers;

@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Idaho State Police.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -41,16 +41,6 @@ import javax.validation.constraints.NotNull;
   @NamedQuery(name = "Organization.findAssignableOrganizations", query = "from Organization where type != 'LEGAL' order by name")
 })
 public class Organization implements Serializable {
-  public Organization () {}
-
-  public Organization(Organization org) {
-    this.id = org.getId();
-    this.type = org.getType();
-    this.name = org.getName();
-    this.passkey = org.getPasskey();
-    this.enabled = org.getEnabled();
-    this.jurisdiction = org.getJurisdiction();
-  }
   @Id
   @GeneratedValue
   private Long id;
@@ -72,6 +62,17 @@ public class Organization implements Serializable {
   @ManyToOne
   @JoinColumn(name = "jurisdictionId")
   private Jurisdiction jurisdiction;
+
+  public Organization () {}
+
+  public Organization(Organization org) {
+    this.id = org.getId();
+    this.type = org.getType();
+    this.name = org.getName();
+    this.passkey = org.getPasskey();
+    this.enabled = org.getEnabled();
+    this.jurisdiction = org.getJurisdiction();
+  }
 
   public Long getId() {
     return id;

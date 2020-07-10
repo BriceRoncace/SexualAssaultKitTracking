@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Idaho State Police.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -48,8 +48,8 @@ public class Application extends SpringBootServletInitializer {
   }
 
   @Bean
-  public Formatter<LocalDate> getLocalDateFormatter(@Value("${date.format.print:MM/dd/yyyy}") String printFormat, @Value("${date.format.parse:MM/dd/yyyy}") String parseFormat) {
-    return new LocalDateFormatter(printFormat, Arrays.asList(parseFormat));
+  public Formatter<LocalDate> getLocalDateFormatter(@Value("${date.format.print:MM/dd/yyyy}") String printFormat, @Value("${date.format.parse:MM/dd/yyyy}") String parseFormats) {
+    return new LocalDateFormatter(printFormat, Arrays.asList(parseFormats.split(",")));
   }
 
   @Bean

@@ -45,7 +45,7 @@
 
         <c:when test="${coc.eventType == 'RECEIVE'}">
           <div class="coc-assignment-tile">
-            <strong>Received ${dateFormatter.format(coc.eventDate)}<br/>
+            <strong>Received ${dateFormatter.format(coc.eventDate)}</strong><br/>
             <c:choose>
               <c:when test="${coc.to.type == 'MEDICAL'}">
                 <i class="fa fa-hospital-o font24" aria-hidden="true"></i><br/>
@@ -57,7 +57,7 @@
                 <i class="fa fa-flask font24" aria-hidden="true"></i><br/>
               </c:when>
             </c:choose>
-              <c:out value="${coc.to.name}"/>
+            <c:out value="${coc.to.name}"/>
           </div>
         </c:when>  
 
@@ -68,7 +68,6 @@
             <c:out value="${coc.from.name}"/>
           </div>
         </c:when>
-
 
         <c:when test="${coc.eventType == 'REPURPOSE'}">
           <div class="coc-assignment-tile">

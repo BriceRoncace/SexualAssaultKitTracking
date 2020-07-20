@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Idaho State Police.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,10 +19,12 @@ package gov.idaho.isp.saktrack.eventlistener;
 import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent;
 import gov.idaho.isp.saktrack.domain.KitStatus;
 import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
-import gov.idaho.isp.saktrack.event.KitSendEvent;
+import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
 import gov.idaho.isp.saktrack.domain.organization.Organization;
 import gov.idaho.isp.saktrack.domain.organization.OrganizationType;
-import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
+import gov.idaho.isp.saktrack.event.KitSendEvent;
+import java.util.Collections;
+import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -37,13 +39,19 @@ public class KitSentToLabListener {
 
   @EventListener
   public void defaultLabRequestingLeAgencyToLeSender(KitSendEvent e) {
-    if (StringUtils.isNotBlank(e.getEventDetails().getSerialNumber())) {
-      SexualAssaultKit kit = sexualAssaultKitRepository.findBySerialNumber(e.getEventDetails().getSerialNumber());
-      if (kit != null && kitNeedingAnalysisWasSentToLabFromLe(kit) && !hasLabRequestingLeAgency(kit)) {
-        kit.getLabDetails().setRequestingLeAgency(kit.getCurrentCustody().getFrom());
-        sexualAssaultKitRepository.save(kit);
+    for (String serialNumber : getSerialNumbers(e)) {
+      if (StringUtils.isNotBlank(serialNumber)) {
+        SexualAssaultKit kit = sexualAssaultKitRepository.findBySerialNumber(serialNumber);
+        if (kit != null && kitNeedingAnalysisWasSentToLabFromLe(kit) && !hasLabRequestingLeAgency(kit)) {
+          kit.getLabDetails().setRequestingLeAgency(kit.getCurrentCustody().getFrom());
+          sexualAssaultKitRepository.save(kit);
+        }
       }
     }
+  }
+
+  private List<String> getSerialNumbers(KitSendEvent e) {
+    return e != null && e.getEventDetails() != null && e.getEventDetails().getSerialNumberList() != null ? e.getEventDetails().getSerialNumberList() : Collections.emptyList();
   }
 
   private boolean kitNeedingAnalysisWasSentToLabFromLe(SexualAssaultKit kit) {

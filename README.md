@@ -94,7 +94,7 @@ The application contains a **prod** profile but this profile must be explicitly 
 
 When the prod profile is used, the **/src/main/resources/application-prod.properties** will be referenced and will override any property found in the base properties file, **/src/main/resources/application.properties**.  In this way, for example, the application can be configured to, for example, disable the **mail.test.mode** property in production.
 
-Here's a snippet of the applicatn-prod.properties file:
+Here's a snippet of the application-prod.properties file:
 
 ```
 mail.test.mode = false

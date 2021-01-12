@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Idaho State Police.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,7 +16,6 @@
 
 package gov.idaho.isp.saktrack.service;
 
-import gov.idaho.isp.saktrack.exception.SexualAssaultKitTrackingException;
 import gov.idaho.isp.saktrack.domain.jurisdiction.Jurisdiction;
 import gov.idaho.isp.saktrack.domain.jurisdiction.JurisdictionRepository;
 import gov.idaho.isp.saktrack.domain.organization.Organization;
@@ -24,6 +23,7 @@ import gov.idaho.isp.saktrack.domain.organization.OrganizationRepository;
 import gov.idaho.isp.saktrack.domain.organization.OrganizationType;
 import gov.idaho.isp.saktrack.domain.user.organization.AbstractOrganizationUser;
 import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUserRepository;
+import gov.idaho.isp.saktrack.exception.SexualAssaultKitTrackingException;
 import gov.idaho.isp.saktrack.util.PasswordUtil;
 import gov.idaho.isp.saktrack.util.beanvalidation.BeanValidationUtils;
 import java.io.IOException;
@@ -72,9 +72,9 @@ public class CommonsDataMigrationImpl implements DataMigration {
       for (CSVRecord record : CSVParser.parse(new String(csvFile.getBytes(), StandardCharsets.UTF_8), CSVFormat.DEFAULT)) {
         try {
           Organization org = new Organization();
-          org.setName(getStringValue(record.get(1), "Name"));
-          org.setType(getOrganizationType(record.get(2)));
-          org.setJurisdiction(getJurisdiction(record.get(3)));
+          org.setName(getStringValue(record.get(0), "Name"));
+          org.setType(getOrganizationType(record.get(1)));
+          org.setJurisdiction(getJurisdiction(record.get(2)));
           org.setPasskey(PasswordUtil.generatePasskey());
           org.setEnabled(true);
           validateOrganization(org);

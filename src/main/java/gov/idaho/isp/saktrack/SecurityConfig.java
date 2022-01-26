@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Idaho State Police.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -43,11 +43,17 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+  @Autowired
+  private CustomDatabaseUserDetailsService customDatabaseUserDetailsService;
+
+  @Value("${spring.profiles.active}")
+  private String activeProfile;
+
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     // when not requiring h2 console access remove this line:
     allowAdminAccessToH2Console(http);
-    
+
     http.authorizeRequests()
       .antMatchers("/").permitAll()
       .antMatchers("/**/js/**").permitAll()
@@ -84,8 +90,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     http.headers().frameOptions().disable();
   }
 
-  @Autowired
-  public void configureGlobal(AuthenticationManagerBuilder auth, @Value("${spring.profiles.active}") String activeProfile, CustomDatabaseUserDetailsService customDatabaseUserDetailsService) throws Exception {
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     configureDbAuthentication(auth, customDatabaseUserDetailsService);
     if ("dev".equals(activeProfile)) {
       configureInMemoryAuthentication(auth);

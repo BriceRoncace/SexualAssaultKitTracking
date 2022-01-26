@@ -20,6 +20,7 @@ import gov.idaho.isp.saktrack.domain.user.AbstractUser;
 import gov.idaho.isp.saktrack.domain.user.AbstractUserRepository;
 import gov.idaho.isp.saktrack.domain.user.AdminUser;
 import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUser;
+import gov.idaho.isp.saktrack.service.LoginAttemptService;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
@@ -32,13 +33,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomDatabaseUserDetailsService implements UserDetailsService {
   private final AbstractUserRepository abstractUserRepository;
+  private final LoginAttemptService loginAttemptService;
 
-  public CustomDatabaseUserDetailsService(AbstractUserRepository abstractUserRepository) {
+  public CustomDatabaseUserDetailsService(AbstractUserRepository abstractUserRepository, LoginAttemptService loginAttemptService) {
     this.abstractUserRepository = abstractUserRepository;
+    this.loginAttemptService = loginAttemptService;
   }
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    loginAttemptService.assertHasNotExceededMaxLoginAttempts(username);
+    
     AbstractUser user = abstractUserRepository.findByUsernameIgnoreCase(username);
     if (user == null) {
       throw new UsernameNotFoundException("User not found with username [" + username + "]");

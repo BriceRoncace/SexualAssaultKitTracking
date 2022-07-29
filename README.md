@@ -1,5 +1,9 @@
 # Sexual Assault Kit Tracking
 
+## Version 2.1.0 (July 2022)
+
+Upgraded to Spring Boot 2.7.2
+
 ## Version 2.0 (December 2018)
 
 Version 2.0 of the application brings many improvements:

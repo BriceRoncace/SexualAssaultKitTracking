@@ -8,9 +8,9 @@ Upgraded to Spring Boot 2.7.2
 
 Version 2.0 of the application brings many improvements:
 
-* Uses Spring Boot 2.1.1 (JDK 11 compatable; targets 1.8 by default)
+* Uses Spring Boot 2.1.1 (JDK 11 compatible; targets 1.8 by default)
 * Authenticates all users from the database rather than using LDAP for admin users
-* Removes all local dependencies (i.e. all necessary dependencies are avaialble publicly on maven central)
+* Removes all local dependencies (i.e. all necessary dependencies are available publicly on maven central)
 * Allows for quick-start demo in development mode by running the application on an embedded tomcat 9 server using a file based H2 database (see the video below to see this in action).
 
 ### Quick Start

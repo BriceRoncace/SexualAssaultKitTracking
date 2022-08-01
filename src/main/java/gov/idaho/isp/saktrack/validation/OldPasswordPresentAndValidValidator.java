@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Idaho State Police.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,9 +16,9 @@
 
 package gov.idaho.isp.saktrack.validation;
 
-import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUser;
+import gov.idaho.isp.saktrack.domain.user.AbstractUser;
+import gov.idaho.isp.saktrack.domain.user.AbstractUserRepository;
 import gov.idaho.isp.saktrack.domain.user.password.dto.ChangePasswordRequest;
-import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUserRepository;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import org.apache.commons.lang3.StringUtils;
@@ -26,7 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class OldPasswordPresentAndValidValidator implements ConstraintValidator<OldPasswordPresentAndValid, ChangePasswordRequest> {
-  private OrganizationUserRepository organizationUserRepository;
+  private AbstractUserRepository abstractUserRepository;
   private PasswordEncoder passwordEncoder;
 
   @Override
@@ -35,7 +35,7 @@ public class OldPasswordPresentAndValidValidator implements ConstraintValidator<
 
   @Override
   public boolean isValid(ChangePasswordRequest req, ConstraintValidatorContext context) {
-    if (req == null || passwordEncoder == null || organizationUserRepository == null) {
+    if (req == null || passwordEncoder == null || abstractUserRepository == null) {
       return true;
     }
 
@@ -51,7 +51,7 @@ public class OldPasswordPresentAndValidValidator implements ConstraintValidator<
   }
 
   private String getCurrentPassword(ChangePasswordRequest req) {
-    OrganizationUser user = organizationUserRepository.findOneInNewTransaction(req.getUserId());
+    AbstractUser user = abstractUserRepository.findOneInNewTransaction(req.getUserId());
     return user.getPassword();
   }
 
@@ -73,8 +73,8 @@ public class OldPasswordPresentAndValidValidator implements ConstraintValidator<
   }
 
   @Autowired
-  public void setOrganizationUserRepository(OrganizationUserRepository organizationUserRepository) {
-    this.organizationUserRepository = organizationUserRepository;
+  public void setAbstractUserRepository(AbstractUserRepository abstractUserRepository) {
+    this.abstractUserRepository = abstractUserRepository;
   }
 
   @Autowired

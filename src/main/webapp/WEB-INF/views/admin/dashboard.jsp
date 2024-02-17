@@ -34,8 +34,8 @@
           <div class="panel-heading">
             Organizations
             <small class="pull-right">
-              <button id="filterOpen" class="btn btn-xs btn-info topNeg3 filter-open <c:if test="${!criteria.isEmpty()}">hidden</c:if>" data-show=".filter-closed" data-hide=".filter-open"><span class="glyphicon glyphicon-filter"></span> Filter <span class="glyphicon glyphicon-arrow-down"></span></button>
-              <button id="filterClose" class="btn btn-xs btn-info topNeg3 filter-closed <c:if test="${criteria.isEmpty()}">hidden</c:if>" data-show=".filter-open" data-hide=".filter-closed"><span class="glyphicon glyphicon-filter"></span> Filter <span class="glyphicon glyphicon-share-alt"></span></button>
+              <button id="filterOpen" class="btn btn-xs btn-info topNeg3 filter-open <c:if test="${!criteria.isEmpty()}">hidden</c:if>" data-show=".filter-closed" data-hide=".filter-open"><span class="glyphicon glyphicon-filter"></span> Filter <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+              <button id="filterClose" class="btn btn-xs btn-info topNeg3 filter-closed <c:if test="${criteria.isEmpty()}">hidden</c:if>" data-show=".filter-open" data-hide=".filter-closed"><span class="glyphicon glyphicon-filter"></span> Filter <i class="fa fa-chevron-down" aria-hidden="true"></i></button>
               <a class="btn btn-xs btn-info topNeg3" href="<c:url value="/organization/new"/>"><span class="glyphicon glyphicon-home"></span> New</a>
             </small>
           </div>

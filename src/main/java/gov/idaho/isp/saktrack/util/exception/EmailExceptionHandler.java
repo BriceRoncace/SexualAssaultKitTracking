@@ -22,8 +22,9 @@ import gov.idaho.isp.saktrack.mailer.Mailer;
 import gov.idaho.isp.saktrack.mailer.MimeType;
 import gov.idaho.isp.saktrack.util.beanvalidation.BeanValidationUtils;
 import gov.idaho.isp.saktrack.util.web.WebExceptionUtils;
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.util.Set;
-import javax.servlet.http.HttpServletRequest;
 
 public class EmailExceptionHandler {
   public static final String OPTIONS_ATTR_NAME = "exceptionHandlingOptions";

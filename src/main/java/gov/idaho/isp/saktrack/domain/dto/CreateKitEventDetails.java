@@ -17,7 +17,7 @@
 package gov.idaho.isp.saktrack.domain.dto;
 
 import java.time.LocalDate;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 public class CreateKitEventDetails extends EventDetails {
   @NotNull(message = "{expirationDate.null}")

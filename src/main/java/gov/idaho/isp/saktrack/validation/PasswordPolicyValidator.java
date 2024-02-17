@@ -16,8 +16,8 @@
 
 package gov.idaho.isp.saktrack.validation;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 import org.apache.commons.lang3.StringUtils;
 
 public class PasswordPolicyValidator implements ConstraintValidator<PasswordPolicy, String> {

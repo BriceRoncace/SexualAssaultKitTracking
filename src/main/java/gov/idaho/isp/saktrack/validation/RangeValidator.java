@@ -17,8 +17,8 @@
 package gov.idaho.isp.saktrack.validation;
 
 import gov.idaho.isp.saktrack.util.RangeParserUtil;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 public class RangeValidator implements ConstraintValidator<Range, String> {
 

@@ -33,17 +33,18 @@ import gov.idaho.isp.saktrack.domain.jurisdiction.Jurisdiction;
 import gov.idaho.isp.saktrack.domain.jurisdiction.Jurisdiction_;
 import gov.idaho.isp.saktrack.domain.organization.Organization;
 import gov.idaho.isp.saktrack.domain.organization.Organization_;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import javax.persistence.criteria.Subquery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.Subquery;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SexualAssaultKitSpec implements Specification<SexualAssaultKit> {
   private final SexualAssaultKitSearchCriteria criteria;
@@ -113,8 +114,8 @@ public class SexualAssaultKitSpec implements Specification<SexualAssaultKit> {
       }
 
       if (criteria.getEventOrganization() != null) {
-        eventPredicates.add(cb.or(cb.equal(events.get(ChainOfCustodyEvent_.from), criteria.getEventOrganization()),
-                             cb.equal(events.get(ChainOfCustodyEvent_.to), criteria.getEventOrganization())));
+        eventPredicates.add(cb.or(cb.equal(events.get(ChainOfCustodyEvent_.from).get(Organization_.id), criteria.getEventOrganization()),
+                                  cb.equal(events.get(ChainOfCustodyEvent_.to).get(Organization_.id), criteria.getEventOrganization())));
       }
 
       if (!criteria.getEventOrganizations().isEmpty()) {
@@ -270,7 +271,7 @@ public class SexualAssaultKitSpec implements Specification<SexualAssaultKit> {
     }
 
     if (criteria.getRequestingLeAgencyId() != null) {
-      medicalPredicates.add(cb.equal(medicalDetails.get(MedicalDetails_.requestingLeAgency), criteria.getRequestingLeAgencyId()));
+      medicalPredicates.add(cb.equal(medicalDetails.get(MedicalDetails_.requestingLeAgency).get(Organization_.id), criteria.getRequestingLeAgencyId()));
     }
 
     if (Boolean.TRUE.equals(criteria.getRequestingLeAgencyNotNull())) {

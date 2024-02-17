@@ -18,8 +18,8 @@ package gov.idaho.isp.saktrack.validation;
 
 import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent;
 import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent.EventType;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 public class ChainOfCustodyEventValidator implements ConstraintValidator<ChainOfCustodyEventValid, ChainOfCustodyEvent> {
   @Override

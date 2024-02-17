@@ -19,7 +19,7 @@ package gov.idaho.isp.saktrack.service;
 import gov.idaho.isp.saktrack.util.CacheMap;
 import gov.idaho.isp.saktrack.util.TimeValue;
 import java.util.Optional;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.event.AbstractAuthenticationEvent;
 import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;

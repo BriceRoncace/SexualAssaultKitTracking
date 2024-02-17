@@ -21,12 +21,13 @@ import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
 import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
 import gov.idaho.isp.saktrack.domain.organization.OrganizationRepository;
 import gov.idaho.isp.saktrack.domain.organization.OrganizationType;
-import java.util.Optional;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Optional;
 
 @Controller
 public class EditKitController {
@@ -50,6 +51,6 @@ public class EditKitController {
     model.addAttribute("medOrgs", organizationRepository.findByTypeOrderByNameAsc(OrganizationType.MEDICAL));
     model.addAttribute("nonSubmissionReasons", LawEnforcementDetails.NonSubmissionReason.values());
     model.addAttribute("prosecutors", organizationRepository.findByTypeOrderByNameAsc(OrganizationType.LEGAL));
-    return "/admin/edit-kit";
+    return "admin/edit-kit";
   }
 }

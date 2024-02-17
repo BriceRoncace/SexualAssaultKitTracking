@@ -75,7 +75,7 @@ public class EvidenceCollectionReport extends BaseController {
       }
     }
 
-    return "/admin/reports/timeframe";
+    return "admin/reports/timeframe";
   }
 
   @GetMapping("/report/distributedKitsReport/download")

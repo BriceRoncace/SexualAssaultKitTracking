@@ -16,23 +16,24 @@
 
 package gov.idaho.isp.saktrack.controller.interceptor;
 
-import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.FlashMap;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
+
+import java.util.Map;
 
 /**
  * Carries forward all flash attributes if the requested view is a redirect.
  * In this way, attributes are maintained across multiple redirects.
  */
 @Component
-public class FlashForwardInterceptor extends HandlerInterceptorAdapter {
+public class FlashForwardInterceptor implements HandlerInterceptor {
   @Override
   public void postHandle(HttpServletRequest req, HttpServletResponse res, Object handler, ModelAndView modelAndView) throws Exception {
     if (isRedirect(modelAndView)) {

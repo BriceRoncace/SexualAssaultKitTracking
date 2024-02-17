@@ -17,8 +17,8 @@
 package gov.idaho.isp.saktrack.validation;
 
 import java.time.LocalDate;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 public class LocalDatePastValidator implements ConstraintValidator<LocalDatePast, LocalDate> {
   @Override

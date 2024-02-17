@@ -36,8 +36,8 @@
           <ul class="dropdown-menu">
             <li class="${pageContext.request.requestURI.endsWith("manage-admin.jsp") ? 'active' : ''}"><a href="<c:url value='/adminUser'/>">Manage Admins</a></li>
             <li class="${pageContext.request.requestURI.endsWith("jurisdictions.jsp") ? 'active' : ''}"><a href="<c:url value='/jurisdictions/list'/>">Jurisdictions</a></li>
-            <li class="${pageContext.request.requestURI.endsWith("data-migration.jsp") ? 'active' : ''}"><a href="<c:url value='/dataMigration'/>">Data Migration</a></li>
-            <li><a href="<c:url value='/users/download'/>"><i class="fa fa-arrow-circle-o-down font18" title="download"></i> User Export</a></li>
+            <li class="${pageContext.request.requestURI.endsWith("data-import.jsp") ? 'active' : ''}"><a href="<c:url value='/dataImport'/>">Data Import</a></li>
+            <li><a href="<c:url value='/users/download'/>">User Export</a></li>
           </ul>
         </li>
         
@@ -50,8 +50,10 @@
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right" style="padding-right: 0; padding-left: 0;">
-        <li><a href="<c:url value='/logout'/>" class="banner-button-sides">Logout</a></li>
+        <li><a href="#" onclick="document.getElementById('logout-form').submit();" class="banner-button-sides">Logout</a></li>
       </ul>
+
+      <form id="logout-form" action="<c:url value="/logout"/>" method="POST"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></form>
       <%@include file="../../../includes/serial-number-search.jspf" %>
     </div>
   </div>

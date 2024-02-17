@@ -33,6 +33,6 @@ public class RegisterController {
   @RequestMapping(value = "/register", method = RequestMethod.GET)
   public String loadRegistrationPage(Model model) {
     model.addAttribute("organizations", organizationRepository.findByEnabledOrderByNameAsc(true));
-    return "/public/user-registration";
+    return "public/user-registration";
   }
 }

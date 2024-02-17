@@ -20,8 +20,8 @@ import gov.idaho.isp.saktrack.domain.user.User;
 import gov.idaho.isp.saktrack.domain.user.AdminUserRepository;
 import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUserRepository;
 import gov.idaho.isp.saktrack.util.reflection.PropertyUtils;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 

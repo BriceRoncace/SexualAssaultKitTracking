@@ -18,7 +18,7 @@ package gov.idaho.isp.saktrack.domain.user.dto;
 
 import gov.idaho.isp.saktrack.domain.user.AbstractUser;
 import gov.idaho.isp.saktrack.domain.user.password.dto.PasswordPair;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

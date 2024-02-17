@@ -20,19 +20,19 @@ import gov.idaho.isp.saktrack.domain.organization.Organization;
 import gov.idaho.isp.saktrack.domain.user.AbstractUser;
 import gov.idaho.isp.saktrack.validation.PropertiesEqual;
 import java.time.LocalDate;
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.Transient;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.Transient;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
-@NamedQuery(name = "AbstractOrganizationUser.findUnverifiedUserByOrganization", query = "from AbstractOrganizationUser where organization.id = ?1 and verifiedDate = null")
+@NamedQuery(name = "AbstractOrganizationUser.findUnverifiedUserByOrganization", query = "from AbstractOrganizationUser where organization.id = ?1 and verifiedDate is null")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @PropertiesEqual(propertyNameOne = "passkey", propertyNameTwo = "organization.passkey", message = "{passkey.not.valid}")
 public abstract class AbstractOrganizationUser extends AbstractUser implements OrganizationUser {

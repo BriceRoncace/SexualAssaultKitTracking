@@ -25,7 +25,7 @@ import gov.idaho.isp.saktrack.domain.SexualAssaultKitRepository;
 import gov.idaho.isp.saktrack.service.AuditService;
 import gov.idaho.isp.saktrack.domain.user.User;
 import java.util.Optional;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -75,7 +75,7 @@ public class SaveKitController extends BaseController {
     if (br.hasErrors()) {
       model.addAttribute("kit", kit);
       model.addAttribute("errors", getErrors(br));
-      return "/admin/edit-kit";
+      return "admin/edit-kit";
     }
 
     auditService.auditKit(kit, reason, user);

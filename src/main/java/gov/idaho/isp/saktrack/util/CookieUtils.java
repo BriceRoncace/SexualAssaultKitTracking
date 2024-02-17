@@ -20,7 +20,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import static java.nio.charset.StandardCharsets.UTF_8;
-import javax.servlet.http.Cookie;
+import jakarta.servlet.http.Cookie;
 
 public class CookieUtils {
 

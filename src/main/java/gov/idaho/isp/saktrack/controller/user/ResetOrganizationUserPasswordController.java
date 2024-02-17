@@ -44,7 +44,7 @@ public class ResetOrganizationUserPasswordController extends BaseController {
     }
 
     model.addAttribute("request", request);
-    return "/public/password-reset";
+    return "public/password-reset";
   }
 
   @PostMapping("/reset/password")
@@ -52,7 +52,7 @@ public class ResetOrganizationUserPasswordController extends BaseController {
     if (br.hasErrors()) {
       model.addAttribute("errors", getErrors(br));
       model.addAttribute("request", passwordPair.getRequest());
-      return "/public/password-reset";
+      return "public/password-reset";
     }
 
     if (passwordResetService.resetPassword(passwordPair)) {

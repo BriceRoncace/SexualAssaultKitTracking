@@ -17,7 +17,7 @@
 package gov.idaho.isp.saktrack.service;
 
 import java.util.function.Consumer;
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;

@@ -19,8 +19,8 @@ package gov.idaho.isp.saktrack.validation;
 import gov.idaho.isp.saktrack.domain.user.AbstractUser;
 import gov.idaho.isp.saktrack.domain.user.dto.UserForm;
 import gov.idaho.isp.saktrack.domain.user.password.dto.PasswordPair;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 import org.apache.commons.lang3.StringUtils;
 
 public class PasswordPresentIfRequiredValidator implements ConstraintValidator<PasswordPresentIfRequired, UserForm> {

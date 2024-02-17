@@ -46,6 +46,6 @@ public class ManageChainOfCustodyController extends BaseController {
   public String manageChainOfCustodyEvents(@ModelAttribute("kit") SexualAssaultKit kit, Model model) {
     model.addAttribute("organizations", organizationRepository.findAssignableOrganizations());
     model.addAttribute("missingSendEvents", EventUtil.getMissingSendEvents(kit.getChainOfCustody()));
-    return "/admin/manage-events";
+    return "admin/manage-events";
   }
 }

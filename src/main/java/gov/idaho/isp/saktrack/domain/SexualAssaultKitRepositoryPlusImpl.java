@@ -18,16 +18,17 @@ package gov.idaho.isp.saktrack.domain;
 
 import gov.idaho.isp.saktrack.domain.jurisdiction.Jurisdiction;
 import gov.idaho.isp.saktrack.service.SerialNumberFormatter;
-import java.util.List;
-import java.util.Optional;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+
+import java.util.List;
+import java.util.Optional;
 
 public class SexualAssaultKitRepositoryPlusImpl implements SexualAssaultKitRepositoryPlus {
 
@@ -55,7 +56,7 @@ public class SexualAssaultKitRepositoryPlusImpl implements SexualAssaultKitRepos
     + "where "
     + "sak.currentAssignment.id = ?1 "
     + "and c.eventType not in ('SEND', 'REPURPOSE') "
-    + "and medicalDetails.collectionDate = null "
+    + "and medicalDetails.collectionDate is null "
     + "and INDEX(c) = (select max(INDEX(c2)) from SexualAssaultKit sak2 join sak2.chainOfCustody c2 where sak2.id = sak.id) ";
 
   //Incoming -------------------------------------------------------------------------------------------------
@@ -84,7 +85,7 @@ public class SexualAssaultKitRepositoryPlusImpl implements SexualAssaultKitRepos
     + "where "
     + "sak.currentAssignment.id = ?1 "
     + "and c.eventType != 'SEND' "
-    + "and medicalDetails.collectionDate != null "
+    + "and medicalDetails.collectionDate is not null "
     + "and INDEX(c) = (select max(INDEX(c2)) from SexualAssaultKit sak2 join sak2.chainOfCustody c2 where sak2.id = sak.id) ";
 
   //In process medical
@@ -114,7 +115,7 @@ public class SexualAssaultKitRepositoryPlusImpl implements SexualAssaultKitRepos
     + "and INDEX(c) = (select max(INDEX(c2)) from SexualAssaultKit sak2 join sak2.chainOfCustody c2 where sak2.id = sak.id) "
     + "and sak.id not in "
     + "  (select sak2.id from SexualAssaultKit sak2 left join sak2.leDetails leDetails left join sak2.labDetails labDetails left join sak2.legalDetails legalDetails "
-    + "   where sak2.id = sak.id and labDetails.dateCompleted != null or (leDetails.meetsSubmissionCriteria = false and legalDetails.prosecutorAgrees = true)) ";
+    + "   where sak2.id = sak.id and labDetails.dateCompleted is not null or (leDetails.meetsSubmissionCriteria = false and legalDetails.prosecutorAgrees = true)) ";
 
   //At Lab -------------------------------------------------------------------------------------------------
   @Override
@@ -143,7 +144,7 @@ public class SexualAssaultKitRepositoryPlusImpl implements SexualAssaultKitRepos
     + "sak.currentAssignment.id = ?1 "
     + "and c.eventType = 'RECEIVE' "
     + "and INDEX(c) = (select max(INDEX(c2)) from SexualAssaultKit sak2 join sak2.chainOfCustody c2 where sak2.id = sak.id) "
-    + "and not (labDetails.dateCompleted = null) ";
+    + "and not (labDetails.dateCompleted is null) ";
 
   //Unsubmittable -------------------------------------------------------------------------------------------------
   @Override
@@ -159,7 +160,7 @@ public class SexualAssaultKitRepositoryPlusImpl implements SexualAssaultKitRepos
     + "sak.currentAssignment.id = ?1 "
     + "and c.eventType = 'RECEIVE' "
     + "and INDEX(c) = (select max(INDEX(c2)) from SexualAssaultKit sak2 join sak2.chainOfCustody c2 where sak2.id = sak.id) "
-    + "and labDetails.dateCompleted = null "
+    + "and labDetails.dateCompleted is null "
     + "and (leDetails.meetsSubmissionCriteria = false and legalDetails.prosecutorAgrees = true) ";
 
 
@@ -176,13 +177,10 @@ public class SexualAssaultKitRepositoryPlusImpl implements SexualAssaultKitRepos
     + "(legalDetails.reviewingOrganization.id = ?1 or (sak.currentAssignment.jurisdiction = ?2 and sak.currentAssignment.type = 'LAW_ENFORCEMENT')) "
     + "and leDetails.meetsSubmissionCriteria = false "
     + "and legalDetails.releasedForReview is not null "
-    + "and legalDetails.reviewFinalized = null ";
+    + "and legalDetails.reviewFinalized is null ";
 
   private String buildOrderByClause(Pageable pageable) {
     Sort sort = pageable.getSort();
-    if (sort == null) {
-      return "";
-    }
 
     Sort.Order serialNumberOrder = sort.getOrderFor("serialNumber");
     if (serialNumberOrder != null) {

@@ -16,21 +16,23 @@
 
 package gov.idaho.isp.saktrack.hibernate;
 
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.Map;
-import javax.sql.DataSource;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import static org.hibernate.cfg.AvailableSettings.DATASOURCE;
-import static org.hibernate.cfg.AvailableSettings.DIALECT;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
-import static org.hibernate.tool.schema.TargetType.DATABASE;
-import static org.hibernate.tool.schema.TargetType.STDOUT;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
+
+import javax.sql.DataSource;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.Map;
+
+import static org.hibernate.cfg.AvailableSettings.DATASOURCE;
+import static org.hibernate.cfg.AvailableSettings.DIALECT;
+import static org.hibernate.tool.schema.TargetType.DATABASE;
+import static org.hibernate.tool.schema.TargetType.STDOUT;
 
 public class HibernateExporter {
 

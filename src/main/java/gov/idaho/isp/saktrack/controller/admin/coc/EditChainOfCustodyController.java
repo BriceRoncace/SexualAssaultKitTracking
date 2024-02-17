@@ -29,7 +29,7 @@ import gov.idaho.isp.saktrack.util.EventUtil;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -76,7 +76,7 @@ public class EditChainOfCustodyController extends BaseController {
     if (br.hasErrors()) {
       model.addAttribute("errors", getErrors(br));
       setupModelForManageEventView(kit, event.getEventType(), model);
-      return "/admin/manage-events";
+      return "admin/manage-events";
     }
 
     kit.setQuestionableEvents(EventUtil.hasMissingSendEvents(kit.getChainOfCustody()));

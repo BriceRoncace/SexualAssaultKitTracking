@@ -1,6 +1,6 @@
 -- NOTE: All user passwords are P@ssword1
 
-alter sequence HIBERNATE_SEQUENCE restart with 5000;   
+alter sequence HIBERNATE_SEQUENCE restart with 5000;
 
 INSERT INTO PUBLIC.JURISDICTION(ID, NAME, TYPE) VALUES
 (5, 'Perelandra', 'COUNTY'),

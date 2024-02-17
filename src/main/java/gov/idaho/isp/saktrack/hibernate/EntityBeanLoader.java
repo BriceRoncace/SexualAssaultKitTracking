@@ -16,12 +16,12 @@
 
 package gov.idaho.isp.saktrack.hibernate;
 
-import java.io.Serializable;
-import java.lang.reflect.Field;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.stereotype.Component;
+
+import java.lang.reflect.Field;
 
 @Component
 public class EntityBeanLoader implements BeanFactoryAware {
@@ -37,7 +37,7 @@ public class EntityBeanLoader implements BeanFactoryAware {
     this.idFieldName = idFieldName;
   }
 
-  public Object loadEntityBean(String entityName, Serializable id) {
+  public Object loadEntityBean(String entityName, Object id) {
     String beanName = getBeanNameForEntity(entityName);
     if (isEntityBeanAvailable(beanName) && isEntityBeanAcceptable(beanName)) {
       Object bean = beanFactory.getBean(beanName);
@@ -86,7 +86,7 @@ public class EntityBeanLoader implements BeanFactoryAware {
     return str.substring(0,1).toLowerCase() + str.substring(1);
   }
 
-  protected void setId(Object object, Serializable id) {
+  protected void setId(Object object, Object id) {
     Class<?> cls = object.getClass();
     try {
       Field field = getDeclaredFieldInClassOrParent(cls, getIdFieldName());

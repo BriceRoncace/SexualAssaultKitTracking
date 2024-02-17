@@ -51,7 +51,7 @@ public class PotentialCocErrorsReportController {
     model.addAttribute("report", buildReport());
     model.addAttribute("jurisdictions", jurisdictionRepository.findAll(Sort.by("name")));
     model.addAttribute("organizations", organizationRepository.findAll());
-    return "/admin/reports/coc-errors";
+    return "admin/reports/coc-errors";
   }
 
   @GetMapping("/report/cocErrors/download")

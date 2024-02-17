@@ -16,16 +16,16 @@
 
 package gov.idaho.isp.saktrack.hibernate;
 
-import java.io.Serializable;
-import org.hibernate.EmptyInterceptor;
-import org.hibernate.EntityMode;
+import org.hibernate.CallbackException;
+import org.hibernate.Interceptor;
+import org.hibernate.metamodel.RepresentationMode;
 import org.springframework.stereotype.Component;
 
 /**
 * A hibernate interceptor that uses Spring to instantiate objects.
 */
 @Component
-public class SpringAwareHibernateInterceptor extends EmptyInterceptor {
+public class SpringAwareHibernateInterceptor implements Interceptor {
   private final EntityBeanLoader entityBeanLoader;
 
   public SpringAwareHibernateInterceptor(EntityBeanLoader entityBeanLoader) {
@@ -33,7 +33,7 @@ public class SpringAwareHibernateInterceptor extends EmptyInterceptor {
   }
 
   @Override
-  public Object instantiate(String entityName, EntityMode entityMode, Serializable id) {
+  public Object instantiate(String entityName, RepresentationMode mode, Object id) throws CallbackException {
     return entityBeanLoader.loadEntityBean(entityName, id);
   }
 }

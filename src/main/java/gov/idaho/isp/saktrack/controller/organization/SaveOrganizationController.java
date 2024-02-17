@@ -27,7 +27,7 @@ import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUserRepositor
 import gov.idaho.isp.saktrack.util.RoutingUtil;
 import java.util.Arrays;
 import java.util.Optional;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

@@ -20,8 +20,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 
 public class BeanValidationUtils {
 
@@ -29,8 +29,8 @@ public class BeanValidationUtils {
     Set<ConstraintViolation<?>> violations = new HashSet<>();
     Throwable cause = ex.getCause();
     while (cause != null) {
-      if (cause instanceof javax.validation.ConstraintViolationException) {
-        ConstraintViolationException constraintViolationEx = (javax.validation.ConstraintViolationException) cause;
+      if (cause instanceof jakarta.validation.ConstraintViolationException) {
+        ConstraintViolationException constraintViolationEx = (jakarta.validation.ConstraintViolationException) cause;
         violations.addAll(constraintViolationEx.getConstraintViolations());
       }
       cause = cause.getCause();

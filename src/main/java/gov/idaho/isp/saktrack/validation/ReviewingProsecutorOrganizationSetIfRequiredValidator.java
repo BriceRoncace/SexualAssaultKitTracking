@@ -17,8 +17,8 @@
 package gov.idaho.isp.saktrack.validation;
 
 import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 public class ReviewingProsecutorOrganizationSetIfRequiredValidator implements ConstraintValidator<ReviewingProsecutorOrganizationSetIfRequired, SexualAssaultKit> {
   @Override

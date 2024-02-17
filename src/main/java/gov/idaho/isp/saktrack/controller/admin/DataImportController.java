@@ -18,8 +18,7 @@ package gov.idaho.isp.saktrack.controller.admin;
 
 import gov.idaho.isp.saktrack.domain.jurisdiction.JurisdictionRepository;
 import gov.idaho.isp.saktrack.exception.SexualAssaultKitTrackingException;
-import gov.idaho.isp.saktrack.service.DataMigration;
-import java.util.function.Function;
+import gov.idaho.isp.saktrack.service.DataImporter;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,30 +27,32 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.function.Function;
+
 @Controller
 public class DataImportController {
-  private final DataMigration dataMigration;
+  private final DataImporter dataImporter;
   private final JurisdictionRepository jurisdictionRepository;
 
-  public DataImportController(DataMigration dataMigration, JurisdictionRepository jurisdictionRepository) {
-    this.dataMigration = dataMigration;
+  public DataImportController(DataImporter dataImporter, JurisdictionRepository jurisdictionRepository) {
+    this.dataImporter = dataImporter;
     this.jurisdictionRepository = jurisdictionRepository;
   }
 
-  @GetMapping("/dataMigration")
+  @GetMapping("/dataImport")
   public String dataMigration(Model model) {
     model.addAttribute("jurisdictions", jurisdictionRepository.findAll(Sort.by("name")));
-    return "admin/data-migration";
+    return "admin/data-import";
   }
 
   @PostMapping("/orgImport")
   public String orgImport(MultipartFile file, RedirectAttributes ra) {
-    return processFile(file, ra, f -> dataMigration.importNewOrganizations(f));
+    return processFile(file, ra, dataImporter::importNewOrganizations);
   }
 
   @PostMapping("/userImport")
   public String userImport(MultipartFile file, RedirectAttributes ra) {
-    return processFile(file, ra, f -> dataMigration.importNewOrganizationUsers(f));
+    return processFile(file, ra, dataImporter::importNewOrganizationUsers);
   }
 
   private String processFile(MultipartFile file, RedirectAttributes ra, Function<MultipartFile, Integer> function) {
@@ -64,6 +65,6 @@ public class DataImportController {
         ra.addFlashAttribute("errors", ex.getErrors());
       }
     }
-    return "redirect:/dataMigration";
+    return "redirect:/dataImport";
   }
 }

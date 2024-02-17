@@ -38,6 +38,6 @@ public class ViewAuditController {
   public String viewChainOfCustody(@RequestParam Long kitId, Model model) {
     model.addAttribute("kit", sexualAssaultKitRepository.findById(kitId).orElse(null));
     model.addAttribute("audits", kitAuditRepository.findByKitIdOrderByModifiedDesc(kitId));
-    return "/admin/kit-audits";
+    return "admin/kit-audits";
   }
 }

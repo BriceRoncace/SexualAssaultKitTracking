@@ -16,14 +16,14 @@
 
 package gov.idaho.isp.saktrack.controller.interceptor;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 @Component
-public class ActiveProfileInterceptor extends HandlerInterceptorAdapter {
+public class ActiveProfileInterceptor implements HandlerInterceptor {
   private final String activeProfile;
 
   public ActiveProfileInterceptor(@Value("${spring.profiles.active}") String activeProfile) {

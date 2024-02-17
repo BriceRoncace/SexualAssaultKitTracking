@@ -3,7 +3,7 @@
 <%@attribute name="excludeParameterNames" required="false" type="java.lang.String" %>
 
 <c:set var="paramValueFound" value="false"/>
-<c:url value="${requestScope['javax.servlet.forward.servlet_path']}">
+<c:url value="${requestScope['jakarta.servlet.forward.servlet_path']}">
   <c:forEach var="entry" items="${paramValues}">
     <c:set var="exclude" value="false"/>
     <c:forTokens items="${excludeParameterNames}" delims=", " var="excludedParameterName">

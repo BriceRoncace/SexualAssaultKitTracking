@@ -22,7 +22,7 @@ import gov.idaho.isp.saktrack.domain.jurisdiction.JurisdictionRepository;
 import gov.idaho.isp.saktrack.domain.user.User;
 import java.util.Arrays;
 import java.util.Optional;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

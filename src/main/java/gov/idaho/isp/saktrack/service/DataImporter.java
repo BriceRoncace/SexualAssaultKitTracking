@@ -14,28 +14,12 @@
  * limitations under the License.
  */
 
-package gov.idaho.isp.saktrack.domain.user.dto;
+package gov.idaho.isp.saktrack.service;
 
-import gov.idaho.isp.saktrack.domain.user.AbstractUser;
-import gov.idaho.isp.saktrack.domain.user.AdminUser;
-import gov.idaho.isp.saktrack.validation.PasswordPresentIfRequired;
-import jakarta.validation.Valid;
+import gov.idaho.isp.saktrack.exception.SexualAssaultKitTrackingException;
+import org.springframework.web.multipart.MultipartFile;
 
-@PasswordPresentIfRequired
-public class AdminUserForm extends UserForm {
-  @Valid
-  private AdminUser adminUser;
-
-  public AdminUser getAdminUser() {
-    return adminUser;
-  }
-
-  public void setAdminUser(AdminUser adminUser) {
-    this.adminUser = adminUser;
-  }
-
-  @Override
-  public AbstractUser getAbstractUser() {
-    return adminUser;
-  }
+public interface DataImporter {
+  Integer importNewOrganizations(MultipartFile csvFile) throws SexualAssaultKitTrackingException;
+  Integer importNewOrganizationUsers(MultipartFile csvFile) throws SexualAssaultKitTrackingException;
 }

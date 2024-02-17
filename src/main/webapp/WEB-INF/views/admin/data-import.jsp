@@ -5,7 +5,7 @@
   <jsp:attribute name="body">
     <%@include file="includes/admin-nav.jspf" %>
     <%@include file="../../includes/messages.jspf" %>
-    <h2>Data Migration</h2>
+    <h2>Data Import</h2>
 
     <div class="row">
       

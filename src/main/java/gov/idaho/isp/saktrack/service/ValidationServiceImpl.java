@@ -25,8 +25,8 @@ import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
 import gov.idaho.isp.saktrack.exception.NullSexualAssaultKitException;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
 import org.springframework.stereotype.Service;
 
 @Service

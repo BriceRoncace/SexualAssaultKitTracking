@@ -16,7 +16,6 @@
 
 package gov.idaho.isp.saktrack.controller;
 
-import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
@@ -27,6 +26,8 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.sql.DataSource;
 
 @Controller
 @Profile("dev")
@@ -49,6 +50,7 @@ public class SeedDemoDataController {
         ra.addFlashAttribute("messages", "Demo data imported into the H2 database.");
       }
       catch (RuntimeException ex) {
+        System.out.println(ex);
         ra.addFlashAttribute("errors", "Demo data failed to import (or has already been imported).");
       }
     }

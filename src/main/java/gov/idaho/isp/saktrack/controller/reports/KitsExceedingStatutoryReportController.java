@@ -68,7 +68,7 @@ public class KitsExceedingStatutoryReportController extends BaseController {
     model.addAttribute("jurisdictions", jurisdictionRepository.findAll(Sort.by("name")));
     model.addAttribute("leOrganizations", organizationRepository.findByTypeOrderByNameAsc(OrganizationType.LAW_ENFORCEMENT));
     model.addAttribute("filterText", filterTextService.buildReportFilterText(criteria));
-    return "/admin/reports/exceeding-statutory-requirements";
+    return "admin/reports/exceeding-statutory-requirements";
   }
 
   @GetMapping("/report/exceedingStatutoryRequirements/download")

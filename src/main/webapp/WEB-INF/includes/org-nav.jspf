@@ -29,8 +29,9 @@
         <li class="${pageContext.request.requestURI.endsWith("help.jsp") ? 'active' : ''}"><a href="<c:url value='/help'/>">Help</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="<c:url value="/logout"/>">Logout</a></li>
+        <li><a href="#" onclick="document.getElementById('logout-form').submit();">Logout</a></li>
       </ul>
+      <form id="logout-form" action="<c:url value="/logout"/>" method="POST"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></form>
       <%@include file="serial-number-search.jspf" %>
     </div>
   </div>

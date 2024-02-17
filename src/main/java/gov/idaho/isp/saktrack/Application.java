@@ -20,10 +20,7 @@ import gov.idaho.isp.saktrack.formatter.LocalDateFormatter;
 import gov.idaho.isp.saktrack.hibernate.SpringAwareHibernateInterceptor;
 import gov.idaho.isp.saktrack.mailer.Mailer;
 import gov.idaho.isp.saktrack.mailer.SpringMailer;
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Map;
-import javax.validation.Validator;
+import jakarta.validation.Validator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -35,6 +32,10 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Map;
 
 @SpringBootApplication
 @EnableAsync
@@ -64,7 +65,7 @@ public class Application extends SpringBootServletInitializer {
   }
 
   @Component
-  class MyHibernateInterceptorCustomizer implements HibernatePropertiesCustomizer {
+  static class MyHibernateInterceptorCustomizer implements HibernatePropertiesCustomizer {
     private final SpringAwareHibernateInterceptor springAwareHibernateInterceptor;
 
     public MyHibernateInterceptorCustomizer(SpringAwareHibernateInterceptor springAwareHibernateInterceptor) {

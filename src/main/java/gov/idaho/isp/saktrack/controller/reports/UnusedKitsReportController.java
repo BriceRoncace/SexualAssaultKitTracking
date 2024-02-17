@@ -67,7 +67,7 @@ public class UnusedKitsReportController extends BaseController {
     model.addAttribute("jurisdictions", jurisdictionRepository.findAll(Sort.by("name")));
     model.addAttribute("organizations", organizationRepository.findAll(Sort.by("name")));
     model.addAttribute("filterText", filterTextService.buildReportFilterText(criteria));
-    return "/admin/reports/unused-kits";
+    return "admin/reports/unused-kits";
   }
 
   @GetMapping("/report/unusedKits/download")

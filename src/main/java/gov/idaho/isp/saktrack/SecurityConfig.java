@@ -19,20 +19,21 @@ import gov.idaho.isp.saktrack.domain.user.AdminUser;
 import gov.idaho.isp.saktrack.domain.user.User;
 import gov.idaho.isp.saktrack.security.CustomInMemoryUserDetailsManager;
 import gov.idaho.isp.saktrack.security.CustomWebAuthenticationDetails;
-import java.util.Arrays;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -43,56 +44,57 @@ public class SecurityConfig {
     // when not requiring h2 console access remove this line:
     allowAdminAccessToH2Console(http);
 
-    http.authorizeRequests()
-      .antMatchers("/").permitAll()
-      .antMatchers("/**/js/**").permitAll()
-      .antMatchers("/**/css/**").permitAll()
-      .antMatchers("/**/fonts/**").permitAll()
-      .antMatchers("/**/images/**").permitAll()
-      .antMatchers("/**/favicon.ico").permitAll()
-      .antMatchers("/logout").permitAll()
-      .antMatchers("/timeline").permitAll()
-      .antMatchers("/register").permitAll()
-      .antMatchers("/reset/**").permitAll()
-      .antMatchers("/unsubscribe/**").permitAll()
-      .antMatchers("/passkey").authenticated()
-      .antMatchers("/manageAccount/**").authenticated()
-      .antMatchers("/organizations").hasAnyAuthority("ADMIN", "MEDICAL", "LAW_ENFORCEMENT", "LAB")
-      .antMatchers("/help/**").hasAnyAuthority("ADMIN", "MEDICAL", "LAW_ENFORCEMENT", "LAB", "LEGAL")
-      .antMatchers("/search/**").hasAnyAuthority("ADMIN", "MEDICAL", "LAW_ENFORCEMENT", "LAB", "LEGAL")
-      .antMatchers("/lab/**").hasAnyAuthority("ADMIN", "LAB")
-      .antMatchers("/medical/**").hasAnyAuthority("ADMIN", "MEDICAL")
-      .antMatchers("/law-enforcement/**").hasAnyAuthority("ADMIN", "LAW_ENFORCEMENT")
-      .antMatchers("/legal/**").hasAnyAuthority("ADMIN", "LEGAL")
-      .antMatchers("/organization/new", "organization/save", "/organization/*/remove").hasAuthority("ADMIN")
-      .antMatchers("/organization/**").hasAnyAuthority("ADMIN", "ORG_ADMIN")
+    http.authorizeHttpRequests(a -> a
+      .requestMatchers("/").permitAll()
+      .requestMatchers("/WEB-INF/**", "/error").permitAll()
+      .requestMatchers("/*/js/**").permitAll()
+      .requestMatchers("/*/css/**").permitAll()
+      .requestMatchers("/*/fonts/**").permitAll()
+      .requestMatchers("/*/images/**").permitAll()
+      .requestMatchers("/**favicon.ico").permitAll()
+      .requestMatchers("/logout").permitAll()
+      .requestMatchers("/timeline").permitAll()
+      .requestMatchers("/register").permitAll()
+      .requestMatchers("/reset/**").permitAll()
+      .requestMatchers("/unsubscribe/**").permitAll()
+      .requestMatchers("/passkey").authenticated()
+      .requestMatchers("/manageAccount/**").authenticated()
+      .requestMatchers("/organizations").hasAnyAuthority("ADMIN", "MEDICAL", "LAW_ENFORCEMENT", "LAB")
+      .requestMatchers("/help/**").hasAnyAuthority("ADMIN", "MEDICAL", "LAW_ENFORCEMENT", "LAB", "LEGAL")
+      .requestMatchers("/search/**").hasAnyAuthority("ADMIN", "MEDICAL", "LAW_ENFORCEMENT", "LAB", "LEGAL")
+      .requestMatchers("/lab/**").hasAnyAuthority("ADMIN", "LAB")
+      .requestMatchers("/medical/**").hasAnyAuthority("ADMIN", "MEDICAL")
+      .requestMatchers("/law-enforcement/**").hasAnyAuthority("ADMIN", "LAW_ENFORCEMENT")
+      .requestMatchers("/legal/**").hasAnyAuthority("ADMIN", "LEGAL")
+      .requestMatchers("/organization/new", "organization/save", "/organization/*/remove").hasAuthority("ADMIN")
+      .requestMatchers("/organization/**").hasAnyAuthority("ADMIN", "ORG_ADMIN")
       .anyRequest().hasAuthority("ADMIN")
-      .and().formLogin().loginPage("/login").authenticationDetailsSource(getAuthenticationDetailsSource()).permitAll()
-      .and().logout().permitAll();
+    );
+
+    http.formLogin(form -> form.loginPage("/login").authenticationDetailsSource(getAuthenticationDetailsSource()).permitAll());
+    http.logout(logout -> logout.logoutUrl("/logout").permitAll());
 
     if ("dev".equals(activeProfile)) {
       http.userDetailsService(buildInMemoryAuthUserDetailsManager());
     }
-
-    http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
     return http.build();
   }
 
   private void allowAdminAccessToH2Console(HttpSecurity http) throws Exception {
-    http.csrf().ignoringAntMatchers("/h2-console/**");
-    http.authorizeRequests().antMatchers("/seedDemoData").permitAll();
-    http.headers().frameOptions().disable();
+    http.csrf(c ->  c.ignoringRequestMatchers("/h2-console/**"));
+    http.authorizeHttpRequests(a -> a.requestMatchers("/seedDemoData").permitAll());
+    http.headers(c -> c.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
   }
 
   public CustomInMemoryUserDetailsManager buildInMemoryAuthUserDetailsManager() {
     AdminUser adminUser = new AdminUser();
     adminUser.setDisplayName("Administrator (in memory)");
-    adminUser.setUserDetails(new org.springframework.security.core.userdetails.User("admin", getPasswordEncoder().encode("admin"), Arrays.asList(new SimpleGrantedAuthority(User.Type.ADMIN.toString()))));
+    adminUser.setUserDetails(new org.springframework.security.core.userdetails.User("admin", getPasswordEncoder().encode("admin"), List.of(new SimpleGrantedAuthority(User.Type.ADMIN.toString()))));
     return new CustomInMemoryUserDetailsManager(adminUser);
   }
 
   private AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> getAuthenticationDetailsSource() {
-    return (HttpServletRequest req) -> new CustomWebAuthenticationDetails(req);
+    return CustomWebAuthenticationDetails::new;
   }
 
   @Bean

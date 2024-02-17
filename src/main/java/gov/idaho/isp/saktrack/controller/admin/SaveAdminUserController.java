@@ -22,7 +22,7 @@ import gov.idaho.isp.saktrack.domain.user.User;
 import gov.idaho.isp.saktrack.domain.user.dto.AdminUserForm;
 import gov.idaho.isp.saktrack.service.UserFormFactory;
 import java.util.Optional;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,7 +54,7 @@ public class SaveAdminUserController extends BaseController {
   @GetMapping("/adminUser/save")
   public String toAdminUserForm(@Valid AdminUserForm adminUserForm, BindingResult br, Model model, RedirectAttributes ra, @RequestAttribute User user) {
     model.addAttribute("adminUser", adminUserForm.getAdminUser());
-    return "/admin/save-admin-user";
+    return "admin/save-admin-user";
   }
 
   @PostMapping("/adminUser/save")
@@ -62,7 +62,7 @@ public class SaveAdminUserController extends BaseController {
     if (br.hasErrors()) {
       model.addAttribute("errors", getErrors(br));
       model.addAttribute("adminUser", adminUserForm.getAdminUser());
-      return "/admin/save-admin-user";
+      return "admin/save-admin-user";
     }
 
     adminUserForm.encodePasswordIfNecessary(passwordEncoder);

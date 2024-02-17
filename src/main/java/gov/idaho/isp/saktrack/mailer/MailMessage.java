@@ -16,6 +16,9 @@
 
 package gov.idaho.isp.saktrack.mailer;
 
+import jakarta.activation.DataSource;
+import jakarta.mail.util.ByteArrayDataSource;
+
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -26,8 +29,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import javax.activation.DataSource;
-import javax.mail.util.ByteArrayDataSource;
 
 public class MailMessage implements org.springframework.mail.MailMessage {
   private String from;

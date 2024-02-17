@@ -18,8 +18,8 @@ package gov.idaho.isp.saktrack.validation;
 
 import gov.idaho.isp.saktrack.domain.organization.Organization;
 import gov.idaho.isp.saktrack.domain.organization.OrganizationRepository;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class OrganizationEnabledValidator implements ConstraintValidator<OrganizationEnabled, Long> {

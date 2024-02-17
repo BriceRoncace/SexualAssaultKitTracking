@@ -18,7 +18,7 @@ package gov.idaho.isp.saktrack.domain.user.password.dto;
 
 import gov.idaho.isp.saktrack.validation.PasswordPolicy;
 import gov.idaho.isp.saktrack.validation.PropertiesEqual;
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 @PropertiesEqual(propertyNameOne = "passwordOne", propertyNameTwo = "passwordTwo", message = "{passwords.do.not.match}")
 public class ResetPasswordPair implements PasswordPair {

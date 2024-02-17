@@ -78,7 +78,7 @@ public class NewChainOfCustodyController extends BaseController  {
   @GetMapping("/admin/enterEvent")
   public String enterChainOfCustodyEvent(@ModelAttribute("kit") SexualAssaultKit kit, @RequestParam EventType eventType, Model model) {
     setupModelForManageEventView(kit, eventType, model);
-    return "/admin/manage-events";
+    return "admin/manage-events";
   }
 
   @PostMapping("/admin/newEvent")
@@ -89,7 +89,7 @@ public class NewChainOfCustodyController extends BaseController  {
     if (!errors.isEmpty()) {
       model.addAttribute("errors", errors);
       setupModelForManageEventView(kit, event.getEventType(), model);
-      return "/admin/manage-events";
+      return "admin/manage-events";
     }
 
     kit.addChainOfCustodyEvent(event);

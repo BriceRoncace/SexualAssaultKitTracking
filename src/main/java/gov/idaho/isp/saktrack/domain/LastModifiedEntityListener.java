@@ -18,8 +18,8 @@ package gov.idaho.isp.saktrack.domain;
 
 import gov.idaho.isp.saktrack.domain.SexualAssaultKit;
 import java.time.LocalDateTime;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 public class LastModifiedEntityListener {

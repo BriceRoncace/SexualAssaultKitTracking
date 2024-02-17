@@ -57,7 +57,7 @@
                   <td><c:out value="${row.name}"/></td>
                   <td><a href="<c:url value="/admin/view?id=${row.id}"/>">${row.serialNumber}</a></td>
                   <td>${row.lastModifiedBy}</td>
-                  <td>${dateFormatter.format(row.lastModified)}</td>
+                  <td>${dateTimeFormatter.format(row.lastModified)}</td>
                 </tr>
               </c:forEach>
                 <tr class="groupTotal" data-clickable="${group.groupId}">

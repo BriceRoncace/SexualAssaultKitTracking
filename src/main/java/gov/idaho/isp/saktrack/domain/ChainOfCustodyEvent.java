@@ -20,21 +20,21 @@ import gov.idaho.isp.saktrack.domain.organization.Organization;
 import gov.idaho.isp.saktrack.util.DateFormatter;
 import gov.idaho.isp.saktrack.validation.ChainOfCustodyEventValid;
 import gov.idaho.isp.saktrack.validation.LocalDatePast;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @EntityListeners(LastModifiedEntityListener.class)
@@ -83,15 +83,15 @@ public class ChainOfCustodyEvent implements SexualAssaultKitAware, Serializable 
   private String actor;
 
   @NotNull(message = "{event.actor.organization.null}")
-  @OneToOne
+  @ManyToOne
   @JoinColumn(name = "actorOrganizationId")
   private Organization actorOrganization;
 
-  @OneToOne
+  @ManyToOne
   @JoinColumn(name = "fromOrganizationId")
   private Organization from;
 
-  @OneToOne
+  @ManyToOne
   @JoinColumn(name = "toOrganizationId")
   private Organization to;
 

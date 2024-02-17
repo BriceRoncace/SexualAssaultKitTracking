@@ -18,17 +18,18 @@ package gov.idaho.isp.saktrack.controller.interceptor;
 
 import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUser;
 import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUserRepository;
-import java.util.Arrays;
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.HandlerInterceptor;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Component
-public class OrgAdminOrgAccessCheckInterceptor extends HandlerInterceptorAdapter {
+public class OrgAdminOrgAccessCheckInterceptor implements HandlerInterceptor {
   private final OrganizationUserRepository organizationUserRepository;
 
   public OrgAdminOrgAccessCheckInterceptor(OrganizationUserRepository organizationUserRepository) {

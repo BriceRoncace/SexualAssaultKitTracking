@@ -18,8 +18,8 @@ package gov.idaho.isp.saktrack.validation;
 
 import gov.idaho.isp.saktrack.util.reflection.PropertyUtils;
 import java.util.Objects;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 public class PropertiesEqualValidator implements ConstraintValidator<PropertiesEqual, Object> {
   private String propertyNameOne;

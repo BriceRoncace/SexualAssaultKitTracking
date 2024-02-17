@@ -5,18 +5,16 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.7.2</version>
+    <version>3.2.1</version>
   </parent>
 
   <groupId>gov.idaho.isp</groupId>
   <artifactId>SexualAssaultKitTracking</artifactId>
-  <version>2.1.0</version>
+  <version>3.0.0</version>
   <packaging>war</packaging>
   
-  <name>SexualAssaultKitTracking</name>
-
   <properties>
-    <java.version>8</java.version>
+    <java.version>21</java.version>
   </properties>
     
   <dependencies>
@@ -53,18 +51,41 @@
     </dependency>
     
     <dependency>
-      <groupId>org.hibernate</groupId>
+      <groupId>org.hibernate.orm</groupId>
       <artifactId>hibernate-jpamodelgen</artifactId>
     </dependency>
-    
+
+    <dependency>
+      <groupId>org.hibernate.orm</groupId>
+      <artifactId>hibernate-ant</artifactId>
+    </dependency>
+
+    <!-- A future version of Hibernate may allow us to remove these; needed b/c Hibernate only includes these as runtime (not compile) dependencies -->
+    <dependency>
+      <groupId>io.smallrye</groupId>
+      <artifactId>jandex</artifactId>
+      <version>3.1.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate.common</groupId>
+      <artifactId>hibernate-commons-annotations</artifactId>
+      <version>6.0.6.Final</version>
+    </dependency>
+    <!-- -->
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-mail</artifactId>
     </dependency>
-    
+
     <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>jstl</artifactId>
+      <groupId>jakarta.servlet.jsp.jstl</groupId>
+      <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.glassfish.web</groupId>
+      <artifactId>jakarta.servlet.jsp.jstl</artifactId>
     </dependency>
     
     <dependency>
@@ -75,13 +96,13 @@
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-text</artifactId>
-      <version>1.9</version>
+      <version>1.11.0</version>
     </dependency>
 
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-csv</artifactId>
-      <version>1.9.0</version>
+      <version>1.10.0</version>
     </dependency>
     
     <!-- Database -->
@@ -93,13 +114,15 @@
     
     <!-- MariaDB -->
     <!-- 
-      Setup application.properties like:
-      spring.jpa.database-platform=org.hibernate.dialect.MariaDB102Dialect
-      spring.datasource.url=jdbc:mariadb://localhost:3306/SexualAssaultKitTracking
-      spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
+      Add database configuration in application.properties like:
+      spring.jpa.properties.hibernate.id.db_structure_naming_strategy = single
+      spring.jpa.database-platform = org.hibernate.dialect.MariaDB102Dialect
+      spring.datasource.url = jdbc:mariadb://localhost:3306/SexualAssaultKitTracking
+      spring.datasource.driver-class-name = org.mariadb.jdbc.Driver
       spring.datasource.username = database_user
       spring.datasource.password = database_password
       spring.jpa.generate-ddl = true
+      #spring.jpa.show-sql = false
     -->
     <!--
     <dependency>

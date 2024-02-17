@@ -68,7 +68,7 @@ public class LifeCycleReportController extends BaseController {
     model.addAttribute("jurisdictions", jurisdictionRepository.findAll(Sort.by("name")));
     model.addAttribute("leOrganizations", organizationRepository.findByTypeOrderByNameAsc(OrganizationType.LAW_ENFORCEMENT));
     model.addAttribute("filterText", filterTextService.buildReportFilterText(criteria));
-    return "/admin/reports/life-cycle";
+    return "admin/reports/life-cycle";
   }
 
   @GetMapping("/report/lifeCycle/download")

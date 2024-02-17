@@ -23,7 +23,7 @@ import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUserRepositor
 import gov.idaho.isp.saktrack.service.email.EmailService;
 import gov.idaho.isp.saktrack.service.UserFormFactory;
 import java.util.Optional;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,7 +60,7 @@ public class RegisterOrganizationUserController extends BaseController {
       model.addAttribute("errors", getErrors(br));
       model.addAttribute("organizations", organizationRepository.findByEnabledOrderByNameAsc(true));
       model.addAttribute("orgUser", orgUserForm.getOrgUser());
-      return "/public/user-registration";
+      return "public/user-registration";
     }
 
     orgUserForm.encodePasswordIfNecessary(passwordEncoder);

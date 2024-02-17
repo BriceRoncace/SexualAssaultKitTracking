@@ -23,7 +23,7 @@ import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUserRepositor
 import gov.idaho.isp.saktrack.service.UserFormFactory;
 import gov.idaho.isp.saktrack.util.RoutingUtil;
 import java.util.Optional;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

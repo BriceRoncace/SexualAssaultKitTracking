@@ -27,7 +27,7 @@ public enum EmailTemplate implements Template {
   NEW_USER_REGISTRATION("New User Registration", "/email/new-user-registration.html"),
   ATTORNEY_NOTIFICATION("Sexual Assault Kit from %1s (case #%2s) needs review", "/email/attorney-review-needed.html"),
   ATTORNEY_REVIEW_COMPLETE("Sexual Assault Kit %1s (case #%2s) has been reviewed", "/email/attorney-review-complete.html"),
-  LAW_ENFORCEMENT_INCOMING_KIT("Sexual Assault Kit has been marked as sent", "/email/incoming-kit-notification.html");
+  LAW_ENFORCEMENT_INCOMING_KIT("Sexual Assault Kit to Receive", "/email/incoming-kit-notification.html");
 
   private final String subject;
   private final String classpathResource;

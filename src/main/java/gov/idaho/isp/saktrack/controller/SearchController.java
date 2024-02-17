@@ -31,7 +31,6 @@ import gov.idaho.isp.saktrack.domain.user.AdminUser;
 import gov.idaho.isp.saktrack.domain.user.User;
 import gov.idaho.isp.saktrack.domain.user.organization.OrganizationUser;
 import gov.idaho.isp.saktrack.service.csv.CsvExportService;
-import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -41,6 +40,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
+
+import java.util.List;
 
 @Controller
 public class SearchController {
@@ -63,7 +64,7 @@ public class SearchController {
     model.addAttribute("page", page);
     model.addAttribute("organizations", organizationRepository.findAll(Sort.by("name")));
     setCommonModelAttributes(model);
-    return "/admin/search";
+    return "admin/search";
   }
 
   @GetMapping("/admin/search/download")
@@ -88,7 +89,7 @@ public class SearchController {
     model.addAttribute("userOrg", orgUser.getOrganization());
     model.addAttribute("organizations", createFilteredOrgsIfProsecutor(orgUser));
     setCommonModelAttributes(model);
-    return "/org-users/organization-search";
+    return "org-users/organization-search";
   }
 
   @GetMapping("/search/download")

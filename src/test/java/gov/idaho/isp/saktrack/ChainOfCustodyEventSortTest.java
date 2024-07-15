@@ -1,13 +1,14 @@
 package gov.idaho.isp.saktrack;
 
 import gov.idaho.isp.saktrack.domain.ChainOfCustodyEvent;
+import org.junit.Assert;
+import org.junit.Test;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Assert;
-import org.junit.Test;
 
 public class ChainOfCustodyEventSortTest {
   @Test
@@ -22,8 +23,8 @@ public class ChainOfCustodyEventSortTest {
     list.add(buildEvent(6L, LocalDate.of(2016, Month.SEPTEMBER, 20)));
     list.add(buildEvent(7L, LocalDate.of(2016, Month.SEPTEMBER, 20)));
 
-    Assert.assertEquals(new Long(1), list.get(0).getId());
-    Assert.assertEquals(new Long(7), list.get(6).getId());
+    Assert.assertEquals(Long.valueOf(1), list.get(0).getId());
+    Assert.assertEquals(Long.valueOf(7), list.get(6).getId());
   }
 
   private ChainOfCustodyEvent buildEvent(Long id, LocalDate eventDate) {

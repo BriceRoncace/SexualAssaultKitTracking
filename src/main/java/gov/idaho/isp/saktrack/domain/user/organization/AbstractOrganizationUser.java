@@ -19,7 +19,6 @@ package gov.idaho.isp.saktrack.domain.user.organization;
 import gov.idaho.isp.saktrack.domain.organization.Organization;
 import gov.idaho.isp.saktrack.domain.user.AbstractUser;
 import gov.idaho.isp.saktrack.validation.PropertiesEqual;
-import java.time.LocalDate;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
@@ -30,6 +29,8 @@ import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.time.LocalDate;
 
 @Entity
 @NamedQuery(name = "AbstractOrganizationUser.findUnverifiedUserByOrganization", query = "from AbstractOrganizationUser where organization.id = ?1 and verifiedDate is null")

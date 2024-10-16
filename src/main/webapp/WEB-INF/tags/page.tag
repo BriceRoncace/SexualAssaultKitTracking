@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- current page: ${pageContext.request.requestURI} -->
+    <%-- current page: ${pageContext.request.requestURI} --%>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,11 +27,10 @@
     <div class="container">
       <jsp:invoke fragment="body" />
     </div>
-    
+
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="<c:url value="/assets/js/bootstrap-datetimepicker.min.js"/>" ></script>
     <script src="<c:url value="/assets/js/jquery.confirmation.js"/>"></script>
-    <script src="<c:url value="/assets/js/jquery.tablesorter.min.js"/>"></script>
     <script src="<c:url value="/assets/js/jquery.validate.js"/>"></script>
     <script src="<c:url value="/assets/js/jquery.dynamic-action.js"/>"></script>
     <script type="text/javascript">
@@ -41,62 +40,58 @@
         $(document).on('click', '[data-href]', goToLink);
         $(document).on('click', '[data-show]', show);
         $(document).on('click', '[data-hide]', hide);
-        
+
         $("form").validate().dynamicAction();
-        
-        $(".modal").on('shown.bs.modal', function() {
-          $("[data-modal-focus]", this).focus();
-        }).on('hidden.bs.modal', function() {
-          $("[data-modal-clear]", this).val("");
-        });
-        
+
+        initModalEventActions();
         initDateTimePickers();
         initFocus();
 
-        function initFocus() {
-          $("[data-focus]").focus();
-          focusIfEmpty($("[data-focus-if-empty]"));
-          
-          function focusIfEmpty($el) {
-            if ($el.val() === '') {
-              $el.focus();
-            }
-          }
+        function initModalEventActions() {
+          $(".modal").on('shown.bs.modal', function() {
+            $("[data-modal-focus]", this).focus();
+          }).on('hidden.bs.modal', function() {
+            $("[data-modal-clear]", this).val("");
+          });
+        }
+
+        function goToLink() {
+          location.href = $(this).attr('data-href');
+        }
+
+        function show() {
+          var $this = $(this);
+          $($this.attr('data-show')).removeClass("hidden").find("select, input").addBack('select, input').prop('disabled', false);
+          $this.trigger("cjis:show");
+        }
+
+        function hide() {
+          var $this = $(this);
+          $($this.attr('data-hide')).addClass("hidden").find("select, input").addBack('select, input').prop('disabled', true);
+          $this.trigger("cjis:hide");
         }
 
         function initDateTimePickers() {
           var dateTimePicker = {format: 'mm/dd/yyyy HH:ii P', autoclose: true, forceParse: false, showMeridian: true};
           var datePicker = {format: 'mm/dd/yyyy', autoclose: true, todayHighlight: true, minView: 2, forceParse: false};
           var timePicker = {format: "HH:ii P", autoclose: true, startView: 1, forceParse: false, showMeridian: true};
-          
+
           $('.hasDateTimePicker').datetimepicker(dateTimePicker);
           $('.hasDatePicker').datetimepicker(datePicker);
-          $('.hasTimePicker').datetimepicker(timePicker).on('show', function (e) {
+          $('.hasTimePicker').datetimepicker(timePicker).on('show', function(e) {
             $(this).datetimepicker('setValue', e.date);
           });
         }
-        
-        var tableSorterOptions = {cssNoSort: 'noSort', widgets: ['saveSort']};
-        initTableSorter();
 
-        function initTableSorter() {
-          $('.sortableTable').tablesorter(tableSorterOptions);
-        }
-        
-        function goToLink() {
-          location.href = $(this).attr('data-href');
-        }
-        
-        function show() {
-          var $this = $(this);
-          $($this.attr('data-show')).removeClass("hidden").find("select, input").addBack('select, input').prop('disabled', false);
-          $this.trigger("cjis:show");
-        }
-        
-        function hide() {
-          var $this = $(this);
-          $($this.attr('data-hide')).addClass("hidden").find("select, input").addBack('select, input').prop('disabled', true);
-          $this.trigger("cjis:hide");
+        function initFocus() {
+          $("[data-focus]").focus();
+          focusIfEmpty($("[data-focus-if-empty]"));
+
+          function focusIfEmpty($el) {
+            if ($el.val() === '') {
+              $el.focus();
+            }
+          }
         }
       });
     </script>

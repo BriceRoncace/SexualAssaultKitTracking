@@ -10,8 +10,9 @@
     <div class="col-sm-offset-4 col-sm-4">
       <div class="panel panel-primary">
         <div class="panel-heading">Reset Password</div>
-        <form action="#" method="POST">
+        <form action="<c:url value="/reset/password"/>" method="POST">
           <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+          <input type="hidden" name="request" value="${param.request}" />
           <div class="panel-body">
             <div class="form-group">
               <label class="control-label required">New Password</label>

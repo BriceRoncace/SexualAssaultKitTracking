@@ -66,7 +66,7 @@ public class SecurityConfig {
       .requestMatchers("/medical/**").hasAnyAuthority("ADMIN", "MEDICAL")
       .requestMatchers("/law-enforcement/**").hasAnyAuthority("ADMIN", "LAW_ENFORCEMENT")
       .requestMatchers("/legal/**").hasAnyAuthority("ADMIN", "LEGAL")
-      .requestMatchers("/organization/new", "organization/save", "/organization/*/remove").hasAuthority("ADMIN")
+      .requestMatchers("/organization/new", "/organization/save", "/organization/*/remove").hasAuthority("ADMIN")
       .requestMatchers("/organization/**").hasAnyAuthority("ADMIN", "ORG_ADMIN")
       .anyRequest().hasAuthority("ADMIN")
     );

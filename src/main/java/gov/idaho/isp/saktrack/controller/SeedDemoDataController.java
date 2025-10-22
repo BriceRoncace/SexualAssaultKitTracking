@@ -28,26 +28,61 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.sql.DataSource;
+import java.util.Optional;
 
 @Controller
 @Profile("dev")
 public class SeedDemoDataController {
-  private final String dbDriver;
+
+  public enum Database {
+    H2("org.h2.Driver", "sql/data-h2.sql"),
+    MSSQL("com.microsoft.sqlserver.jdbc.SQLServerDriver", "sql/data-mssql.sql");
+
+    private final String driverClassName;
+    private final String demoDataSql;
+
+    Database(String driverClassName, String demoDataSql) {
+      this.driverClassName = driverClassName;
+      this.demoDataSql = demoDataSql;
+    }
+
+    public String getDriverClassName() {
+      return driverClassName;
+    }
+
+    public String getDemoDataSql() {
+      return demoDataSql;
+    }
+
+    public static Optional<Database> valueOfDriver(String driver) {
+      if (driver.equalsIgnoreCase(H2.getDriverClassName())) {
+        return Optional.of(H2);
+      }
+      else if (driver.equalsIgnoreCase(MSSQL.getDriverClassName())) {
+        return Optional.of(MSSQL);
+      }
+      else {
+        return Optional.empty();
+      }
+    }
+  }
+
+  private final Database database;
   private final DataSource dataSource;
 
   public SeedDemoDataController(@Value("${spring.datasource.driver-class-name}") String dbDriver, DataSource dataSource) {
-    this.dbDriver = dbDriver;
+    this.database = Database.valueOfDriver(dbDriver).orElse(null);
     this.dataSource = dataSource;
   }
   
   @PostMapping("/seedDemoData")
   public String seedDemoData(RedirectAttributes ra) {
-    if ("org.h2.Driver".equals(dbDriver)) {
+    if (database != null) {
       try {
-        Resource demoData = new ClassPathResource("sql/data-h2.sql");
+        Resource demoData = new ClassPathResource(database.getDemoDataSql());
         DatabasePopulator databasePopulator = new ResourceDatabasePopulator(demoData);
         DatabasePopulatorUtils.execute(databasePopulator, dataSource);
-        ra.addFlashAttribute("messages", "Demo data imported into the H2 database.");
+        ra.addFlashAttribute("messages", "Demo data imported into the" + database.name() + " database.");
       }
       catch (RuntimeException ex) {
         System.out.println(ex);
@@ -55,7 +90,7 @@ public class SeedDemoDataController {
       }
     }
     else {
-      ra.addFlashAttribute("errors", "Demo data only intended for an H2 database.");
+      ra.addFlashAttribute("errors", "Demo data only intended for an H2 or SQL databases.");
     }
     return "redirect:/";
   }

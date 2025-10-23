@@ -82,7 +82,7 @@ public class SeedDemoDataController {
         Resource demoData = new ClassPathResource(database.getDemoDataSql());
         DatabasePopulator databasePopulator = new ResourceDatabasePopulator(demoData);
         DatabasePopulatorUtils.execute(databasePopulator, dataSource);
-        ra.addFlashAttribute("messages", "Demo data imported into the" + database.name() + " database.");
+        ra.addFlashAttribute("messages", "Demo data imported into the " + database.name() + " database.");
       }
       catch (RuntimeException ex) {
         System.out.println(ex);

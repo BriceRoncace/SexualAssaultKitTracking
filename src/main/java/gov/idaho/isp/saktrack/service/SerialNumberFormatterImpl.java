@@ -42,7 +42,7 @@ public class SerialNumberFormatterImpl implements SerialNumberFormatter {
       throw new SexualAssaultKitTrackingException("Could not format non-numeric serial number [" + serialNumber + "]");
     }
 
-    return serialNumber.length() < length ? format(Integer.valueOf(serialNumber)) : serialNumber;
+    return serialNumber.length() < length ? format(Integer.parseInt(serialNumber)) : serialNumber;
   }
 
   @Override

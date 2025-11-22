@@ -16,7 +16,6 @@
 
 package gov.idaho.isp.saktrack;
 
-import gov.idaho.isp.saktrack.util.exception.EmailExceptionHandler;
 import gov.idaho.isp.saktrack.controller.interceptor.ActiveProfileInterceptor;
 import gov.idaho.isp.saktrack.controller.interceptor.DateFormatInterceptor;
 import gov.idaho.isp.saktrack.controller.interceptor.FlashForwardInterceptor;
@@ -25,13 +24,10 @@ import gov.idaho.isp.saktrack.controller.interceptor.OrgUserPasskeyCheckIntercep
 import gov.idaho.isp.saktrack.controller.interceptor.OrganizationInterceptor;
 import gov.idaho.isp.saktrack.controller.interceptor.UserInterceptor;
 import gov.idaho.isp.saktrack.mailer.Mailer;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+import gov.idaho.isp.saktrack.util.exception.EmailExceptionHandler;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -40,6 +36,9 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.resource.ResourceUrlEncodingFilter;
 import org.springframework.web.servlet.resource.VersionResourceResolver;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -95,14 +94,6 @@ public class WebConfig implements WebMvcConfigurer {
   @Bean
   public ResourceUrlEncodingFilter resourceUrlEncodingFilter() {
     return new ResourceUrlEncodingFilter();
-  }
-
-  @Bean
-  public MessageSource messageSource() {
-    ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-    messageSource.setBasename("classpath:messages");
-    messageSource.setDefaultEncoding("UTF-8");
-    return messageSource;
   }
 
   @Bean

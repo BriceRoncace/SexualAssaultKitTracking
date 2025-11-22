@@ -16,6 +16,9 @@
 
 package gov.idaho.isp.saktrack.service;
 
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,8 +26,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
 
 @Service
 public class RangeParserImpl implements RangeParser {
@@ -41,7 +42,7 @@ public class RangeParserImpl implements RangeParser {
       if (isRange(token)) {
         result.addAll(asRange(token));
       }
-      else if (isNumeric(token)) {
+      else if (isNumeric(token) && serialNumberFormatter.isValid(token)) {
         result.add(serialNumberFormatter.format(token));
       }
       else {
@@ -85,8 +86,8 @@ public class RangeParserImpl implements RangeParser {
 
   private List<String> buildRangeInclusive(String start, String end) {
     if (StringUtils.isNumeric(start) && StringUtils.isNumeric(end)) {
-      int startInt = Integer.valueOf(start);
-      int endInt = Integer.valueOf(end);
+      int startInt = Integer.parseInt(start);
+      int endInt = Integer.parseInt(end);
       List<String> range = new ArrayList<>();
       for (int i = startInt; i <= endInt; i++) {
         range.add(serialNumberFormatter.format(i));

@@ -279,7 +279,7 @@ public class SexualAssaultKitRepositoryPlusImpl implements SexualAssaultKitRepos
       return serialNumberFormatter.format(serialNumber);
     }
 
-    return null;
+    return serialNumber;
   }
 
   @Autowired

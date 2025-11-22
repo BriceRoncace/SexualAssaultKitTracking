@@ -20,7 +20,6 @@ import gov.idaho.isp.saktrack.formatter.LocalDateFormatter;
 import gov.idaho.isp.saktrack.hibernate.SpringAwareHibernateInterceptor;
 import gov.idaho.isp.saktrack.mailer.Mailer;
 import gov.idaho.isp.saktrack.mailer.SpringMailer;
-import jakarta.validation.Validator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -31,7 +30,6 @@ import org.springframework.format.Formatter;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -41,7 +39,7 @@ import java.util.Map;
 @EnableAsync
 public class Application extends SpringBootServletInitializer {
 
-  public static void main(String[] args) throws Exception {
+  public static void main(String[] args) {
     SpringApplication.run(Application.class, args);
   }
 
@@ -57,11 +55,6 @@ public class Application extends SpringBootServletInitializer {
     mailer.setInTestMode(testMode);
     mailer.setTestDestinations(testDestinations);
     return mailer;
-  }
-
-  @Bean
-  public Validator getLocalValidatorFactoryBean() {
-    return new LocalValidatorFactoryBean();
   }
 
   @Component

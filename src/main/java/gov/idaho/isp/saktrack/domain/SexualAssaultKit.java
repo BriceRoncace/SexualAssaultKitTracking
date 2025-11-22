@@ -21,6 +21,7 @@ import gov.idaho.isp.saktrack.domain.organization.Organization;
 import gov.idaho.isp.saktrack.util.EventUtil;
 import gov.idaho.isp.saktrack.util.MilestoneUtils;
 import gov.idaho.isp.saktrack.validation.ReviewingProsecutorOrganizationSetIfRequired;
+import gov.idaho.isp.saktrack.validation.SerialNumberValid;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -40,7 +41,6 @@ import jakarta.persistence.OrderColumn;
 import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -63,7 +63,7 @@ public class SexualAssaultKit implements SexualAssaultKitAware, Serializable {
   private Long id;
 
   @NotNull(message = "{serialNumber.null}")
-  @Pattern(regexp = "\\d+", message = "{serialNumber.not.number}")
+  @SerialNumberValid
   private String serialNumber;
 
   @NotNull(message = "{expirationDate.null}")

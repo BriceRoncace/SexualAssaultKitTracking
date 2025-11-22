@@ -65,14 +65,21 @@
         $("[data-send-kits]").click(function() {
           $("#serialNumbersToSend").val(sakTrack.getCheckedSerialNumbers("#inProcessKitsTable"));
         });
-        
+
+        $("#sendKitsModal").on('shown.bs.modal', function() {
+          var $kitSerialsInput = $("#serialNumbersToSend");
+          if (!$kitSerialsInput.val()) {
+            $kitSerialsInput.val(sakTrack.getCheckedSerialNumbers("#newKitsTable"));
+          }
+        });
+
         $("#deleteKitsModal").on('shown.bs.modal', function() {
           var $kitSerialsInput = $("#deleteSerialNumbers");
           if (!$kitSerialsInput.val()) {
             $kitSerialsInput.val(sakTrack.getCheckedSerialNumbers("#newKitsTable"));
           }
         });
-        
+
         $("#createKitBtn").click(function(e) {
           e.preventDefault();
           var $createKitForm = $("#createKitsForm");

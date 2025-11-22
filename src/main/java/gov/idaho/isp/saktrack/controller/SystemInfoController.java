@@ -30,11 +30,6 @@ public class SystemInfoController {
     m.addAttribute("version", version);
     m.addAttribute("systemProperties", System.getProperties());
     m.addAttribute("springBootVersion", SpringBootVersion.getVersion());
-
-    if (true) {
-      throw new RuntimeException("Testing...");
-    }
-
     return "admin/system-info";
   }
 }

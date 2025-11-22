@@ -25,7 +25,7 @@ public class ResetPasswordPair implements PasswordPair {
   @NotBlank(message = "{request.blank}")
   private String request;
 
-  @PasswordPolicy(minSize = 8, capitals = 1, numbers = 1, specials = 1)
+  @PasswordPolicy
   @NotBlank(message = "{reset.password.blank}")
   private String passwordOne;
   private String passwordTwo;

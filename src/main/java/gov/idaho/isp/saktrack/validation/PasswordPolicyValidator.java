@@ -16,24 +16,26 @@
 
 package gov.idaho.isp.saktrack.validation;
 
+import gov.idaho.isp.saktrack.Application;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class PasswordPolicyValidator implements ConstraintValidator<PasswordPolicy, String> {
-  private int capitals;
-  private int numbers;
-  private int specials;
-  private int minSize;
-  private int maxSize;
+  @Autowired
+  private Application.PasswordProperties passwordProperties;
 
   @Override
   public void initialize(PasswordPolicy a) {
-    capitals = a.capitals();
-    numbers = a.numbers();
-    specials = a.specials();
-    minSize = a.minSize();
-    maxSize = a.maxSize();
+    if (passwordProperties == null || passwordProperties.isEmpty()) {
+      passwordProperties = new Application.PasswordProperties();
+      passwordProperties.setMinLength(a.minLength());
+      passwordProperties.setMaxLength(a.maxLength());
+      passwordProperties.setCapitals(a.capitals());
+      passwordProperties.setDigits(a.digits());
+      passwordProperties.setSpecials(a.specials());
+    }
   }
 
   @Override
@@ -41,26 +43,33 @@ public class PasswordPolicyValidator implements ConstraintValidator<PasswordPoli
     if (StringUtils.isBlank(str)) {
       return true;
     }
-    return isCapitalsValid(str) && isNumbersValid(str) && isSpecialsValid(str) && isAtLeastMinSize(str) && isNoMoreThanMaxSize(str);
+
+    boolean valid = isCapitalsValid(str) && isDigitsValid(str) && isSpecialsValid(str) && isAtLeastMinSize(str) && isNoMoreThanMaxSize(str);
+    if (!valid) {
+      cvc.disableDefaultConstraintViolation();
+      cvc.buildConstraintViolationWithTemplate(passwordProperties.getPasswordPolicy()).addConstraintViolation();
+    }
+
+    return valid;
   }
 
   private boolean isCapitalsValid(String str) {
-    return str.replaceAll("[^A-Z]", "").length() >= capitals;
+    return str.replaceAll("[^A-Z]", "").length() >= passwordProperties.getCapitals();
   }
 
-  private boolean isNumbersValid(String str) {
-    return str.replaceAll("[^0-9]", "").length() >= numbers;
+  private boolean isDigitsValid(String str) {
+    return str.replaceAll("[^0-9]", "").length() >= passwordProperties.getDigits();
   }
 
   private boolean isSpecialsValid(String str) {
-    return str.replaceAll("[a-zA-Z0-9]", "").length() >= specials;
+    return str.replaceAll("[a-zA-Z0-9]", "").length() >= passwordProperties.getSpecials();
   }
 
   private boolean isAtLeastMinSize(String str) {
-    return str.length() >= minSize;
+    return str.length() >= passwordProperties.getMinLength();
   }
 
   private boolean isNoMoreThanMaxSize(String str) {
-    return str.length() <= maxSize;
+    return str.length() <= passwordProperties.getMaxLength();
   }
 }

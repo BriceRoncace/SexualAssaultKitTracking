@@ -18,8 +18,6 @@ package gov.idaho.isp.saktrack.domain.organization;
 
 import gov.idaho.isp.saktrack.domain.jurisdiction.Jurisdiction;
 import gov.idaho.isp.saktrack.validation.PasswordPolicy;
-import java.io.Serializable;
-import java.util.Objects;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -33,6 +31,9 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
+import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(indexes = {@Index(name = "AK_Organization_name", columnList="name", unique = true)})
@@ -52,7 +53,7 @@ public class Organization implements Serializable {
   @NotBlank(message = "{name.blank}")
   private String name;
 
-  @PasswordPolicy(minSize = 8, capitals = 1, numbers = 1, specials = 1)
+  @PasswordPolicy
   @NotBlank(message = "{passkey.blank}")
   private String passkey;
 

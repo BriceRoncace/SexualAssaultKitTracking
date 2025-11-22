@@ -106,7 +106,7 @@
                 <tr>
                   <td>7th Column</td>
                   <td>Password</td>
-                  <td>Passwords must be 8 or more characters long and contain at least 1 capital letter, 1 number, and 1 special character. </td>
+                  <td>${passwordProperties.passwordPolicy} </td>
                 </tr>
                 <tr>
                   <td>8th Column</td>

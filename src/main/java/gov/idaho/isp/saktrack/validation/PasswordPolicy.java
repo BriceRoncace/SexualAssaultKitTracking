@@ -16,24 +16,24 @@
 
 package gov.idaho.isp.saktrack.validation;
 
+import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import jakarta.validation.Constraint;
-import jakarta.validation.Payload;
-
 
 @Constraint(validatedBy = PasswordPolicyValidator.class)
 @Target( { ElementType.FIELD, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PasswordPolicy {
-  String message() default "{invalid.password}";
+  String message() default "Invalid Password";
   Class<?>[] groups() default {};
   Class<? extends Payload>[] payload() default {};
+  int minLength() default 0;
+  int maxLength() default 2147483647;
   int capitals() default 0;
-  int numbers() default 0;
+  int digits() default 0;
   int specials() default 0;
-  int minSize() default 0;
-  int maxSize() default 2147483647;
 }

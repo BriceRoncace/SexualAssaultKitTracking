@@ -21,7 +21,7 @@ import gov.idaho.isp.saktrack.validation.PropertiesEqual;
 
 @PropertiesEqual(propertyNameOne = "passwordOne", propertyNameTwo = "passwordTwo", message = "{passwords.do.not.match}")
 public class SimplePasswordPair implements PasswordPair {
-  @PasswordPolicy(minSize = 8, capitals = 1, numbers = 1, specials = 1)
+  @PasswordPolicy
   private String passwordOne;
 
   private String passwordTwo;

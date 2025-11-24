@@ -56,7 +56,7 @@ public class DateFormatInterceptor implements HandlerInterceptor {
     return dateTimeFormat;
   }
 
-  public class NullSafeLocalDateFormatter {
+  public static class NullSafeLocalDateFormatter {
     private final DateTimeFormatter formatter;
 
     public NullSafeLocalDateFormatter(DateTimeFormatter formatter) {
@@ -68,7 +68,7 @@ public class DateFormatInterceptor implements HandlerInterceptor {
     }
   }
 
-  public class NullSafeLocalDateTimeFormatter {
+  public static class NullSafeLocalDateTimeFormatter {
     private final DateTimeFormatter formatter;
 
     public NullSafeLocalDateTimeFormatter(DateTimeFormatter formatter) {

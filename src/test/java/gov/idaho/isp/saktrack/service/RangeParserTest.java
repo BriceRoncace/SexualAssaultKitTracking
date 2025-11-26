@@ -300,6 +300,12 @@ public class RangeParserTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
+  public void failureDueToInvalidNumber2() {
+    String input = "ABC100 AB102";
+    List<String> serialNumbers = prefixParser.parse(input);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
   public void failureDueToInvalidRange() {
     String input = "100 102 -";
     List<String> serialNumbers = noPrefixParser.parse(input);

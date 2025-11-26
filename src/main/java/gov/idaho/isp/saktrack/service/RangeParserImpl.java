@@ -57,7 +57,7 @@ public class RangeParserImpl implements RangeParser {
     if (StringUtils.isBlank(input)) {
       return Collections.emptyList();
     }
-    String[] splitStrings = input.trim().split("[\\s,]+");
+    String[] splitStrings = input.trim().replaceAll(serialNumberFormatter.getSerialNumberPrefix(), "").split("[\\s,]+");
     return asList(splitStrings);
   }
 

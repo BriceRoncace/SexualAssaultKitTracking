@@ -55,6 +55,19 @@ public class RangeParserTest {
   }
 
   @Test
+  public void success1Prefix2() {
+    String input = "ABC100-ABC160\nABC175 ABC176 ABC185-ABC202";
+    List<String> serialNumbers = prefixParser.parse(input);
+
+    List<String> expected = new ArrayList<>();
+    expected.addAll(rangeInclusive("ABC", 100, 160));
+    expected.addAll(rangeInclusive("ABC", 175, 176));
+    expected.addAll(rangeInclusive("ABC", 185, 202));
+
+    Assert.assertEquals(expected, serialNumbers);
+  }
+
+  @Test
   public void success2() {
     String input = "100, 103, 105, 107-199";
     List<String> serialNumbers = noPrefixParser.parse(input);
@@ -71,6 +84,20 @@ public class RangeParserTest {
   @Test
   public void success2Prefix() {
     String input = "100, 103, 105, 107-199";
+    List<String> serialNumbers = prefixParser.parse(input);
+
+    List<String> expected = new ArrayList<>();
+    expected.add("ABC00100");
+    expected.add("ABC00103");
+    expected.add("ABC00105");
+    expected.addAll(rangeInclusive("ABC", 107, 199));
+
+    Assert.assertEquals(expected, serialNumbers);
+  }
+
+  @Test
+  public void success3Prefix() {
+    String input = "ABC100, 103, 105, ABC107-199";
     List<String> serialNumbers = prefixParser.parse(input);
 
     List<String> expected = new ArrayList<>();

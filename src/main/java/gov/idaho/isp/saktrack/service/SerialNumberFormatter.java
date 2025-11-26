@@ -17,6 +17,7 @@
 package gov.idaho.isp.saktrack.service;
 
 public interface SerialNumberFormatter {
+  String getSerialNumberPrefix();
   boolean isValid(String serialNumber);
   String format(String serialNumber);
   String format(int serialNumber);

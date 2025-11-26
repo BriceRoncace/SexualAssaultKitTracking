@@ -42,6 +42,11 @@ public class SerialNumberFormatterImpl implements SerialNumberFormatter {
   }
 
   @Override
+  public String getSerialNumberPrefix() {
+    return prefix;
+  }
+
+  @Override
   public String format(int serialNumber) {
     return format(String.valueOf(serialNumber));
   }
